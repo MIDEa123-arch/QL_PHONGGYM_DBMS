@@ -30,6 +30,8 @@ namespace QL_PHONGGYM.Models
         public string Email { get; set; }
         public Nullable<int> MaLoaiKH { get; set; }
         public string GioiTinh { get; set; }
+        public string TenDangNhap { get; set; }
+        public string MatKhau { get; set; }
     
         public virtual ICollection<CheckIn> CheckIn { get; set; }
         public virtual ICollection<DangKyGoiTap> DangKyGoiTap { get; set; }

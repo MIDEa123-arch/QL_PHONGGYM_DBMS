@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QL_PHONGGYMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QL_PHONGGYMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CheckIn">
           <Key>
             <PropertyRef Name="MaCheckIn" />
@@ -108,6 +108,8 @@
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="MaLoaiKH" Type="int" />
           <Property Name="GioiTinh" Type="nvarchar" MaxLength="60" />
+          <Property Name="TenDangNhap" Type="varchar" MaxLength="300" />
+          <Property Name="MatKhau" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="LichLop">
           <Key>
@@ -551,6 +553,19 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_KhachHangDangKy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TenKH" Type="nvarchar" Mode="In" />
+          <Parameter Name="GioiTinh" Type="nvarchar" Mode="In" />
+          <Parameter Name="NgaySinh" Type="date" Mode="In" />
+          <Parameter Name="SDT" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="TenDangNhap" Type="varchar" Mode="In" />
+          <Parameter Name="MatKhau" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_KhachHangLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TenDangNhap" Type="varchar" Mode="In" />
+          <Parameter Name="MatKhau" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_LapHoaDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MaKH" Type="int" Mode="In" />
           <Parameter Name="GiamGia" Type="decimal" Mode="In" />
@@ -740,7 +755,8 @@
             <End Role="SanPham" EntitySet="SanPham" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QL_PHONGGYMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -876,6 +892,8 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="MaLoaiKH" Type="Int32" />
           <Property Name="GioiTinh" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="TenDangNhap" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="MatKhau" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CheckIn" Relationship="Self.FK_CheckIn_KH" FromRole="KhachHang" ToRole="CheckIn" />
           <NavigationProperty Name="DangKyGoiTap" Relationship="Self.FK_DKGT_KH" FromRole="KhachHang" ToRole="DangKyGoiTap" />
           <NavigationProperty Name="DangKyLop" Relationship="Self.FK_DKLop_KH" FromRole="KhachHang" ToRole="DangKyLop" />
@@ -970,6 +988,16 @@
           <Property Name="SoLuongTon" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChiTietHoaDon" Relationship="Self.FK_CT_SP" FromRole="SanPham" ToRole="ChiTietHoaDon" />
           <NavigationProperty Name="LoaiSanPham" Relationship="Self.FK_SP_LSP" FromRole="SanPham" ToRole="LoaiSanPham" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_CheckIn_KH">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1" />
@@ -1215,7 +1243,7 @@
           <End Role="ChuyenMon" Type="Self.ChuyenMon" Multiplicity="*" />
           <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="QL_PHONGGYMEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="QL_PHONGGYMEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CheckIn" EntityType="Self.CheckIn" />
           <EntitySet Name="ChiTietHoaDon" EntityType="Self.ChiTietHoaDon" />
           <EntitySet Name="ChucVu" EntityType="Self.ChucVu" />
@@ -1233,6 +1261,7 @@
           <EntitySet Name="LopHoc" EntityType="Self.LopHoc" />
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <AssociationSet Name="FK_CheckIn_KH" Association="Self.FK_CheckIn_KH">
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="CheckIn" EntitySet="CheckIn" />
@@ -1318,12 +1347,27 @@
             <End Role="NhanVien" EntitySet="NhanVien" />
           </AssociationSet>
           <FunctionImport Name="f_GetKhachHangHetHanTrongTuan" IsComposable="true" ReturnType="Collection(QL_PHONGGYMModel.f_GetKhachHangHetHanTrongTuan_Result)" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
           <FunctionImport Name="sp_BaoCaoDoanhThu" ReturnType="Collection(Decimal)">
             <Parameter Name="TuNgay" Mode="In" Type="DateTime" />
             <Parameter Name="DenNgay" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="sp_CapNhatLoaiKhachHang">
+            <Parameter Name="MaKH" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_CheckInKhachHang" ReturnType="Collection(String)">
-          <Parameter Name="MaKH" Mode="In" Type="Int32" />
+            <Parameter Name="MaKH" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_DangKyGoiTap">
             <Parameter Name="MaKH" Mode="In" Type="Int32" />
@@ -1340,9 +1384,34 @@
             <Parameter Name="SoBuoi" Mode="In" Type="Int32" />
             <Parameter Name="GiaMoiBuoi" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_GanChuyenMonChoNhanVien">
             <Parameter Name="MaNV" Mode="In" Type="Int32" />
             <Parameter Name="MaCM" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QL_PHONGGYMModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QL_PHONGGYMModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_KhachHangDangKy">
+            <Parameter Name="TenKH" Mode="In" Type="String" />
+            <Parameter Name="GioiTinh" Mode="In" Type="String" />
+            <Parameter Name="NgaySinh" Mode="In" Type="DateTime" />
+            <Parameter Name="SDT" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="TenDangNhap" Mode="In" Type="String" />
+            <Parameter Name="MatKhau" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_KhachHangLogin" ReturnType="Collection(QL_PHONGGYMModel.sp_KhachHangLogin_Result)">
+            <Parameter Name="TenDangNhap" Mode="In" Type="String" />
+            <Parameter Name="MatKhau" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_LapHoaDon">
             <Parameter Name="MaKH" Mode="In" Type="Int32" />
@@ -1352,14 +1421,19 @@
             <Parameter Name="TenDangNhap" Mode="In" Type="String" />
             <Parameter Name="MatKhau" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="sp_ThanhToanHoaDon">
-          <Parameter Name="MaHD" Mode="In" Type="Int32" />
+            <Parameter Name="MaHD" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_ThemChucVu">
-          <Parameter Name="TenChucVu" Mode="In" Type="String" />
+            <Parameter Name="TenChucVu" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_ThemChuyenMon">
-          <Parameter Name="TenChuyenMon" Mode="In" Type="String" />
+            <Parameter Name="TenChuyenMon" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_ThemGoiTap">
             <Parameter Name="TenGoi" Mode="In" Type="String" />
@@ -1392,7 +1466,7 @@
             <Parameter Name="MucGiam" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="sp_ThemLoaiSanPham">
-          <Parameter Name="TenLoaiSP" Mode="In" Type="String" />
+            <Parameter Name="TenLoaiSP" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_ThemLopHoc">
             <Parameter Name="TenLop" Mode="In" Type="String" />
@@ -1418,57 +1492,8 @@
             <Parameter Name="DonGia" Mode="In" Type="Decimal" />
             <Parameter Name="SoLuongTon" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="sysdiagrams" EntityType="QL_PHONGGYMModel.sysdiagrams" />
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_CapNhatLoaiKhachHang">
-            <Parameter Name="MaKH" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QL_PHONGGYMModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QL_PHONGGYMModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_NhanVienLogin_Result">
-          <Property Type="Int32" Name="MaNV" Nullable="false" />
-          <Property Type="String" Name="TenNV" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="MaChucVu" Nullable="true" />
-          <Property Type="String" Name="TenChucVu" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -1480,12 +1505,25 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="sp_KhachHangLogin_Result">
+          <Property Type="Int32" Name="MaKH" Nullable="false" />
+          <Property Type="String" Name="TenKH" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="SDT" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="MaLoaiKH" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_NhanVienLogin_Result">
+          <Property Type="Int32" Name="MaNV" Nullable="false" />
+          <Property Type="String" Name="TenNV" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="MaChucVu" Nullable="true" />
+          <Property Type="String" Name="TenChucVu" Nullable="false" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QL_PHONGGYMModelStoreContainer" CdmEntityContainer="QL_PHONGGYMEntities1">
+        <EntityContainerMapping StorageEntityContainer="QL_PHONGGYMModelStoreContainer" CdmEntityContainer="QL_PHONGGYMEntities2">
           <EntitySetMapping Name="CheckIn">
             <EntityTypeMapping TypeName="QL_PHONGGYMModel.CheckIn">
               <MappingFragment StoreEntitySet="CheckIn">
@@ -1597,6 +1635,8 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="MaLoaiKH" ColumnName="MaLoaiKH" />
                 <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1681,6 +1721,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QL_PHONGGYMModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="NhanVienChuyenMon" TypeName="QL_PHONGGYMModel.NhanVienChuyenMon" StoreEntitySet="NhanVienChuyenMon">
             <EndProperty Name="ChuyenMon">
               <ScalarProperty Name="MaCM" ColumnName="MaCM" />
@@ -1700,50 +1751,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QL_PHONGGYMModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_BaoCaoDoanhThu" FunctionName="QL_PHONGGYMModel.Store.sp_BaoCaoDoanhThu" />
+          <FunctionImportMapping FunctionImportName="sp_CapNhatLoaiKhachHang" FunctionName="QL_PHONGGYMModel.Store.sp_CapNhatLoaiKhachHang" />
           <FunctionImportMapping FunctionImportName="sp_CheckInKhachHang" FunctionName="QL_PHONGGYMModel.Store.sp_CheckInKhachHang" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QL_PHONGGYMModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_DangKyGoiTap" FunctionName="QL_PHONGGYMModel.Store.sp_DangKyGoiTap" />
           <FunctionImportMapping FunctionImportName="sp_DangKyLop" FunctionName="QL_PHONGGYMModel.Store.sp_DangKyLop" />
           <FunctionImportMapping FunctionImportName="sp_DangKyPT" FunctionName="QL_PHONGGYMModel.Store.sp_DangKyPT" />
-          <FunctionImportMapping FunctionImportName="sp_GanChuyenMonChoNhanVien" FunctionName="QL_PHONGGYMModel.Store.sp_GanChuyenMonChoNhanVien" />
-          <FunctionImportMapping FunctionImportName="sp_LapHoaDon" FunctionName="QL_PHONGGYMModel.Store.sp_LapHoaDon" />
-          <FunctionImportMapping FunctionImportName="sp_NhanVienLogin" FunctionName="QL_PHONGGYMModel.Store.sp_NhanVienLogin">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QL_PHONGGYMModel.sp_NhanVienLogin_Result">
-                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
-                <ScalarProperty Name="TenNV" ColumnName="TenNV" />
-                <ScalarProperty Name="MaChucVu" ColumnName="MaChucVu" />
-                <ScalarProperty Name="TenChucVu" ColumnName="TenChucVu" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_ThanhToanHoaDon" FunctionName="QL_PHONGGYMModel.Store.sp_ThanhToanHoaDon" />
-          <FunctionImportMapping FunctionImportName="sp_ThemChucVu" FunctionName="QL_PHONGGYMModel.Store.sp_ThemChucVu" />
-          <FunctionImportMapping FunctionImportName="sp_ThemChuyenMon" FunctionName="QL_PHONGGYMModel.Store.sp_ThemChuyenMon" />
-          <FunctionImportMapping FunctionImportName="sp_ThemGoiTap" FunctionName="QL_PHONGGYMModel.Store.sp_ThemGoiTap" />
-          <FunctionImportMapping FunctionImportName="sp_ThemKhachHang" FunctionName="QL_PHONGGYMModel.Store.sp_ThemKhachHang" />
-          <FunctionImportMapping FunctionImportName="sp_ThemLichLop" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLichLop" />
-          <FunctionImportMapping FunctionImportName="sp_ThemLichTapPT" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLichTapPT" />
-          <FunctionImportMapping FunctionImportName="sp_ThemLoaiKhachHang" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLoaiKhachHang" />
-          <FunctionImportMapping FunctionImportName="sp_ThemLoaiSanPham" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLoaiSanPham" />
-          <FunctionImportMapping FunctionImportName="sp_ThemLopHoc" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLopHoc" />
-          <FunctionImportMapping FunctionImportName="sp_ThemNhanVien" FunctionName="QL_PHONGGYMModel.Store.sp_ThemNhanVien" />
-          <FunctionImportMapping FunctionImportName="sp_ThemSanPham" FunctionName="QL_PHONGGYMModel.Store.sp_ThemSanPham" />
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QL_PHONGGYMModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QL_PHONGGYMModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_CapNhatLoaiKhachHang" FunctionName="QL_PHONGGYMModel.Store.sp_CapNhatLoaiKhachHang" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QL_PHONGGYMModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QL_PHONGGYMModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_GanChuyenMonChoNhanVien" FunctionName="QL_PHONGGYMModel.Store.sp_GanChuyenMonChoNhanVien" />
           <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QL_PHONGGYMModel.Store.sp_helpdiagramdefinition">
             <ResultMapping>
               <ComplexTypeMapping TypeName="QL_PHONGGYMModel.sp_helpdiagramdefinition_Result">
@@ -1763,7 +1780,42 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_KhachHangDangKy" FunctionName="QL_PHONGGYMModel.Store.sp_KhachHangDangKy" />
+          <FunctionImportMapping FunctionImportName="sp_KhachHangLogin" FunctionName="QL_PHONGGYMModel.Store.sp_KhachHangLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QL_PHONGGYMModel.sp_KhachHangLogin_Result">
+                <ScalarProperty Name="MaKH" ColumnName="MaKH" />
+                <ScalarProperty Name="TenKH" ColumnName="TenKH" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MaLoaiKH" ColumnName="MaLoaiKH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_LapHoaDon" FunctionName="QL_PHONGGYMModel.Store.sp_LapHoaDon" />
+          <FunctionImportMapping FunctionImportName="sp_NhanVienLogin" FunctionName="QL_PHONGGYMModel.Store.sp_NhanVienLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QL_PHONGGYMModel.sp_NhanVienLogin_Result">
+                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
+                <ScalarProperty Name="TenNV" ColumnName="TenNV" />
+                <ScalarProperty Name="MaChucVu" ColumnName="MaChucVu" />
+                <ScalarProperty Name="TenChucVu" ColumnName="TenChucVu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QL_PHONGGYMModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_ThanhToanHoaDon" FunctionName="QL_PHONGGYMModel.Store.sp_ThanhToanHoaDon" />
+          <FunctionImportMapping FunctionImportName="sp_ThemChucVu" FunctionName="QL_PHONGGYMModel.Store.sp_ThemChucVu" />
+          <FunctionImportMapping FunctionImportName="sp_ThemChuyenMon" FunctionName="QL_PHONGGYMModel.Store.sp_ThemChuyenMon" />
+          <FunctionImportMapping FunctionImportName="sp_ThemGoiTap" FunctionName="QL_PHONGGYMModel.Store.sp_ThemGoiTap" />
+          <FunctionImportMapping FunctionImportName="sp_ThemKhachHang" FunctionName="QL_PHONGGYMModel.Store.sp_ThemKhachHang" />
+          <FunctionImportMapping FunctionImportName="sp_ThemLichLop" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLichLop" />
+          <FunctionImportMapping FunctionImportName="sp_ThemLichTapPT" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLichTapPT" />
+          <FunctionImportMapping FunctionImportName="sp_ThemLoaiKhachHang" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLoaiKhachHang" />
+          <FunctionImportMapping FunctionImportName="sp_ThemLoaiSanPham" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLoaiSanPham" />
+          <FunctionImportMapping FunctionImportName="sp_ThemLopHoc" FunctionName="QL_PHONGGYMModel.Store.sp_ThemLopHoc" />
+          <FunctionImportMapping FunctionImportName="sp_ThemNhanVien" FunctionName="QL_PHONGGYMModel.Store.sp_ThemNhanVien" />
+          <FunctionImportMapping FunctionImportName="sp_ThemSanPham" FunctionName="QL_PHONGGYMModel.Store.sp_ThemSanPham" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QL_PHONGGYMModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
