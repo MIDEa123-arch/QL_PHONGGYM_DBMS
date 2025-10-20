@@ -1,4 +1,5 @@
-﻿using QL_PHONGGYM.ViewModel;
+﻿using QL_PHONGGYM.Models;
+using QL_PHONGGYM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace QL_PHONGGYM.Repositories.Interfaces
 {
-    internal interface IAccountRepository
+    public interface IAccountRepository
     {
-        void Register(KhachHangRegisterViewModel model);
+        bool CusRegister(KhachHangRegisterViewModel model);
+        KhachHang CusLogin(string tenDangNhap, string matKhau);
     }
 }

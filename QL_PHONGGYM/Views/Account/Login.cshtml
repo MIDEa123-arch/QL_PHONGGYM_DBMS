@@ -1,0 +1,97 @@
+﻿@model QL_PHONGGYM.ViewModel.KhachHangLoginViewModel
+
+@{
+    ViewBag.Title = "Đăng nhập tài khoản";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Đăng Nhập</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* Ẩn dấu chấm trong ValidationSummary */
+        .validation-summary-errors ul {
+            list-style: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+
+        .login-alert {
+            position: fixed;
+            top: 9%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 390px;
+            max-width: 90%;
+            background-color: #ffd8d8;
+            border: 1px solid #dc3545;
+            z-index: 1050;
+        }
+
+            .login-alert .btn-close {
+                outline: none;
+                box-shadow: none;
+            }
+
+                .login-alert .btn-close:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+    </style>
+</head>
+<body class="bg-light">
+    @if (ViewBag.Err != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show login-alert" role="alert">
+            <div class="text-danger" style="font-size: 15px; line-height: 1.2;">@ViewBag.Err</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="container-fluid h-100 p-0">
+        <div class="row h-100 m-0">
+            <!-- Div bên trái -->
+            <div class="col-md-7" style="background-color: #dddddd; height: 100vh;"></div>
+
+            <!-- Div bên phải -->
+            <div class="col-md-5 bg-white text-center d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
+                <span class="text-primary fs-3 fw-bold m-3">Đăng nhập GYM</span>
+
+
+
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new
+                {
+                    role = "form",
+                    @class = "d-flex flex-column align-items-center justify-content-center",
+                    @style = "width: 400px; max-width: 100%;"
+                }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3 w-100 d-flex flex-column">
+                        @Html.LabelFor(m => m.TenDangNhap, new { @class = "form-label text-start" })
+                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control py-2", placeholder = "Nhập tên đăng nhập của bạn", @style = "max-width: 100%;" })
+                        @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger small mt-2 text-start" })
+                    </div>
+
+                    <div class="mb-3 w-100 d-flex flex-column">
+                        @Html.LabelFor(m => m.MatKhau, new { @class = "form-label text-start" })
+                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control py-2", placeholder = "Nhập mật khẩu", @style = "max-width: 100%;" })
+                        @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger small mt-2 text-start" })
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 mb-3 mt-2">Đăng nhập</button>
+
+                    <a href="@Url.Action("ForgotPassword", "Account")" class="text-decoration-none">Quên mật khẩu?</a>
+                }
+            </div>
+
+        </div>
+    </div>
+   
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+</body>
+</html>

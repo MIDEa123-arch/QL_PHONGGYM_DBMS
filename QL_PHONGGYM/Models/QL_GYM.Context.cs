@@ -262,7 +262,7 @@ namespace QL_PHONGGYM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_KhachHangDangKy", tenKHParameter, gioiTinhParameter, ngaySinhParameter, sDTParameter, emailParameter, tenDangNhapParameter, matKhauParameter);
         }
     
-        public virtual ObjectResult<sp_KhachHangLogin_Result> sp_KhachHangLogin(string tenDangNhap, string matKhau)
+        public virtual ObjectResult<KhachHang> sp_KhachHangLogin(string tenDangNhap, string matKhau)
         {
             var tenDangNhapParameter = tenDangNhap != null ?
                 new ObjectParameter("TenDangNhap", tenDangNhap) :
@@ -272,7 +272,20 @@ namespace QL_PHONGGYM.Models
                 new ObjectParameter("MatKhau", matKhau) :
                 new ObjectParameter("MatKhau", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KhachHangLogin_Result>("sp_KhachHangLogin", tenDangNhapParameter, matKhauParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_KhachHangLogin", tenDangNhapParameter, matKhauParameter);
+        }
+    
+        public virtual ObjectResult<KhachHang> sp_KhachHangLogin(string tenDangNhap, string matKhau, MergeOption mergeOption)
+        {
+            var tenDangNhapParameter = tenDangNhap != null ?
+                new ObjectParameter("TenDangNhap", tenDangNhap) :
+                new ObjectParameter("TenDangNhap", typeof(string));
+    
+            var matKhauParameter = matKhau != null ?
+                new ObjectParameter("MatKhau", matKhau) :
+                new ObjectParameter("MatKhau", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_KhachHangLogin", mergeOption, tenDangNhapParameter, matKhauParameter);
         }
     
         public virtual int sp_LapHoaDon(Nullable<int> maKH, Nullable<decimal> giamGia)

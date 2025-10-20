@@ -18,3 +18,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.validation-summary-errors ul {
+    list-style: none;
+}
