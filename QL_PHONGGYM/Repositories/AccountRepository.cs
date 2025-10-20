@@ -17,17 +17,39 @@ namespace QL_PHONGGYM.Repositories
             _context = context;
         }
 
-        public void Register(KhachHangRegisterViewModel model)
+        public bool CusRegister(KhachHangRegisterViewModel model)
         {
-            _context.sp_KhachHangDangKy(
-                model.TenKH,
-                model.GioiTinh,
-                model.NgaySinh,
-                model.SDT,
-                model.Email,
-                model.TenDangNhap,
-                model.MatKhau
-            );
+            try
+            {
+                _context.sp_KhachHangDangKy(
+                    model.TenKH,
+                    model.GioiTinh,
+                    model.NgaySinh,
+                    model.SDT,
+                    model.Email,
+                    model.TenDangNhap,
+                    model.MatKhau
+                );
+
+                return true; 
+            }
+            catch (Exception ex)
+            {
+               
+                throw;
+            }
         }
+
+       public KhachHangLoginResult CusLogin(string tenDangNhap, string matKhau)
+        {
+            return _context.Database.SqlQuery<KhachHangLoginResult>(
+                "EXEC sp_KhachHangLogin @p0, @p1",
+                tenDangNhap, matKhau
+            ).FirstOrDefault();
+        }
+
+
+
+
     }
 }
