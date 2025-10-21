@@ -40,6 +40,9 @@
                     outline: none;
                     box-shadow: none;
                 }
+        .register:hover{
+            text-decoration: underline !important;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -59,8 +62,6 @@
             <!-- Div bên phải -->
             <div class="col-md-5 bg-white text-center d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
                 <span class="text-primary fs-3 fw-bold m-3">Đăng nhập GYM</span>
-
-
 
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new
                 {
@@ -87,6 +88,12 @@
 
                     <a href="@Url.Action("ForgotPassword", "Account")" class="text-decoration-none">Quên mật khẩu?</a>
                 }
+                <div class="mt-5 w-100 text-center d-flex justify-content-center gap-2">
+                    <span class="fs-6">
+                        Bạn chưa có tài khoản?
+                    </span>
+                    <a class="text-primary fs-6 fw-bold text-decoration-none register" href="@Url.Action("Register", "Account")">Đăng ký ngay</a>
+                </div>
             </div>
 
         </div>

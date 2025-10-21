@@ -84,6 +84,7 @@
           <Property Name="TenGoi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ThoiHan" Type="int" Nullable="false" />
           <Property Name="Gia" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="MoTa" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="HoaDon">
           <Key>
@@ -579,6 +580,13 @@
           <Parameter Name="owner_id" Type="int" Mode="In" />
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_SuaGoiTap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaGoiTap" Type="int" Mode="In" />
+          <Parameter Name="TenGoi" Type="nvarchar" Mode="In" />
+          <Parameter Name="ThoiHan" Type="int" Mode="In" />
+          <Parameter Name="Gia" Type="decimal" Mode="In" />
+          <Parameter Name="MoTa" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="sp_ThanhToanHoaDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MaHD" Type="int" Mode="In" />
         </Function>
@@ -592,6 +600,7 @@
           <Parameter Name="TenGoi" Type="nvarchar" Mode="In" />
           <Parameter Name="ThoiHan" Type="int" Mode="In" />
           <Parameter Name="Gia" Type="decimal" Mode="In" />
+          <Parameter Name="MoTa" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="sp_ThemKhachHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TenKH" Type="nvarchar" Mode="In" />
@@ -865,6 +874,7 @@
           <Property Name="ThoiHan" Type="Int32" Nullable="false" />
           <Property Name="Gia" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <NavigationProperty Name="DangKyGoiTap" Relationship="Self.FK_DKGT_GT" FromRole="GoiTap" ToRole="DangKyGoiTap" />
+          <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="HoaDon">
           <Key>
@@ -1438,6 +1448,7 @@
             <Parameter Name="TenGoi" Mode="In" Type="String" />
             <Parameter Name="ThoiHan" Mode="In" Type="Int32" />
             <Parameter Name="Gia" Mode="In" Type="Decimal" />
+            <Parameter Name="MoTa" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_ThemKhachHang">
             <Parameter Name="TenKH" Mode="In" Type="String" />
@@ -1492,6 +1503,13 @@
             <Parameter Name="SoLuongTon" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="sp_SuaGoiTap" ReturnType="Collection(String)">
+            <Parameter Name="MaGoiTap" Mode="In" Type="Int32" />
+            <Parameter Name="TenGoi" Mode="In" Type="String" />
+            <Parameter Name="ThoiHan" Mode="In" Type="Int32" />
+            <Parameter Name="Gia" Mode="In" Type="Decimal" />
+            <Parameter Name="MoTa" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1604,6 +1622,7 @@
           <EntitySetMapping Name="GoiTap">
             <EntityTypeMapping TypeName="QL_PHONGGYMModel.GoiTap">
               <MappingFragment StoreEntitySet="GoiTap">
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
                 <ScalarProperty Name="MaGoiTap" ColumnName="MaGoiTap" />
                 <ScalarProperty Name="TenGoi" ColumnName="TenGoi" />
                 <ScalarProperty Name="ThoiHan" ColumnName="ThoiHan" />
@@ -1807,6 +1826,7 @@
           <FunctionImportMapping FunctionImportName="sp_ThemNhanVien" FunctionName="QL_PHONGGYMModel.Store.sp_ThemNhanVien" />
           <FunctionImportMapping FunctionImportName="sp_ThemSanPham" FunctionName="QL_PHONGGYMModel.Store.sp_ThemSanPham" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QL_PHONGGYMModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_SuaGoiTap" FunctionName="QL_PHONGGYMModel.Store.sp_SuaGoiTap" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -23,6 +23,7 @@ namespace QL_PHONGGYM.Models
         public string TenGoi { get; set; }
         public int ThoiHan { get; set; }
         public decimal Gia { get; set; }
+        public string MoTa { get; set; }
     
         public virtual ICollection<DangKyGoiTap> DangKyGoiTap { get; set; }
     }

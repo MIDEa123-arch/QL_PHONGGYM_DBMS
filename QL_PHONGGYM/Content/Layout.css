@@ -1,0 +1,36 @@
+﻿.nav-item.dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+
+.dropdown-submenu > .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 0.1rem;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+
+.form-control:focus,
+.btn:focus {
+    outline: none !important; 
+    box-shadow: none !important; 
+}
+
+.login-btn{
+    background-color: #f3f3f3;
+    width: 150px;
+    border-radius: 6px 6px;
+    padding: 10px 0px 10px 0px;
+    cursor: pointer;
+}
+
+    .login-btn:hover {
+        background-color: #e6e6e6;
+    }
+
