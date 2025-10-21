@@ -358,7 +358,7 @@ namespace QL_PHONGGYM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemChuyenMon", tenChuyenMonParameter);
         }
     
-        public virtual int sp_ThemGoiTap(string tenGoi, Nullable<int> thoiHan, Nullable<decimal> gia)
+        public virtual int sp_ThemGoiTap(string tenGoi, Nullable<int> thoiHan, Nullable<decimal> gia, string moTa)
         {
             var tenGoiParameter = tenGoi != null ?
                 new ObjectParameter("TenGoi", tenGoi) :
@@ -372,7 +372,11 @@ namespace QL_PHONGGYM.Models
                 new ObjectParameter("Gia", gia) :
                 new ObjectParameter("Gia", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemGoiTap", tenGoiParameter, thoiHanParameter, giaParameter);
+            var moTaParameter = moTa != null ?
+                new ObjectParameter("MoTa", moTa) :
+                new ObjectParameter("MoTa", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemGoiTap", tenGoiParameter, thoiHanParameter, giaParameter, moTaParameter);
         }
     
         public virtual int sp_ThemKhachHang(string tenKH, string gioiTinh, Nullable<System.DateTime> ngaySinh, string sDT, string email, Nullable<int> maLoaiKH)
@@ -562,6 +566,31 @@ namespace QL_PHONGGYM.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<string> sp_SuaGoiTap(Nullable<int> maGoiTap, string tenGoi, Nullable<int> thoiHan, Nullable<decimal> gia, string moTa)
+        {
+            var maGoiTapParameter = maGoiTap.HasValue ?
+                new ObjectParameter("MaGoiTap", maGoiTap) :
+                new ObjectParameter("MaGoiTap", typeof(int));
+    
+            var tenGoiParameter = tenGoi != null ?
+                new ObjectParameter("TenGoi", tenGoi) :
+                new ObjectParameter("TenGoi", typeof(string));
+    
+            var thoiHanParameter = thoiHan.HasValue ?
+                new ObjectParameter("ThoiHan", thoiHan) :
+                new ObjectParameter("ThoiHan", typeof(int));
+    
+            var giaParameter = gia.HasValue ?
+                new ObjectParameter("Gia", gia) :
+                new ObjectParameter("Gia", typeof(decimal));
+    
+            var moTaParameter = moTa != null ?
+                new ObjectParameter("MoTa", moTa) :
+                new ObjectParameter("MoTa", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_SuaGoiTap", maGoiTapParameter, tenGoiParameter, thoiHanParameter, giaParameter, moTaParameter);
         }
     }
 }

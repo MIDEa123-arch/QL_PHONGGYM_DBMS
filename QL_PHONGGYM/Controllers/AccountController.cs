@@ -3,6 +3,7 @@ using QL_PHONGGYM.Repositories;
 using QL_PHONGGYM.Repositories.Interfaces;
 using QL_PHONGGYM.ViewModel;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace QL_PHONGGYM.Controllers
@@ -71,7 +72,10 @@ namespace QL_PHONGGYM.Controllers
                 if (user != null)
                 {
                     Session["MaKH"] = user.MaKH;
-                    Session["TenKH"] = user.TenKH;
+                    string fullName = user.TenKH;                 
+                    string firstName = fullName.Split(' ').Last();
+                    Session["TenKH"] = firstName;
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
