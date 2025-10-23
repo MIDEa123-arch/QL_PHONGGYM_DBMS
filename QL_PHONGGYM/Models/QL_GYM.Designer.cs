@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Database\QL_PHONGGYM\QL_PHONGGYM\Models\QL_GYM.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Web Develop\QL_PHONGGYM\QL_PHONGGYM_DBMS\QL_PHONGGYM\Models\QL_GYM.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -193,6 +193,12 @@
           <Property Name="MaLoaiSP" Type="int" />
           <Property Name="DonGia" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="SoLuongTon" Type="int" Nullable="false" />
+          <Property Name="GiaKhuyenMai" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="Hang" Type="nvarchar" MaxLength="100" />
+          <Property Name="XuatXu" Type="nvarchar" MaxLength="100" />
+          <Property Name="BaoHanh" Type="nvarchar" MaxLength="50" />
+          <Property Name="MoTaChung" Type="nvarchar" MaxLength="1000" />
+          <Property Name="MoTaChiTiet" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -653,6 +659,12 @@
           <Parameter Name="MaLoaiSP" Type="int" Mode="In" />
           <Parameter Name="DonGia" Type="decimal" Mode="In" />
           <Parameter Name="SoLuongTon" Type="int" Mode="In" />
+          <Parameter Name="GiaKhuyenMai" Type="decimal" Mode="In" />
+          <Parameter Name="Hang" Type="nvarchar" Mode="In" />
+          <Parameter Name="XuatXu" Type="nvarchar" Mode="In" />
+          <Parameter Name="BaoHanh" Type="nvarchar" Mode="In" />
+          <Parameter Name="MoTaChung" Type="nvarchar" Mode="In" />
+          <Parameter Name="MoTaChiTiet" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="QL_PHONGGYMModelStoreContainer">
@@ -997,6 +1009,12 @@
           <Property Name="SoLuongTon" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChiTietHoaDon" Relationship="Self.FK_CT_SP" FromRole="SanPham" ToRole="ChiTietHoaDon" />
           <NavigationProperty Name="LoaiSanPham" Relationship="Self.FK_SP_LSP" FromRole="SanPham" ToRole="LoaiSanPham" />
+          <Property Name="GiaKhuyenMai" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="Hang" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="XuatXu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BaoHanh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MoTaChung" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MoTaChiTiet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1501,6 +1519,12 @@
             <Parameter Name="MaLoaiSP" Mode="In" Type="Int32" />
             <Parameter Name="DonGia" Mode="In" Type="Decimal" />
             <Parameter Name="SoLuongTon" Mode="In" Type="Int32" />
+            <Parameter Name="GiaKhuyenMai" Mode="In" Type="Decimal" />
+            <Parameter Name="Hang" Mode="In" Type="String" />
+            <Parameter Name="XuatXu" Mode="In" Type="String" />
+            <Parameter Name="BaoHanh" Mode="In" Type="String" />
+            <Parameter Name="MoTaChung" Mode="In" Type="String" />
+            <Parameter Name="MoTaChiTiet" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="sp_SuaGoiTap" ReturnType="Collection(String)">
@@ -1731,6 +1755,12 @@
           <EntitySetMapping Name="SanPham">
             <EntityTypeMapping TypeName="QL_PHONGGYMModel.SanPham">
               <MappingFragment StoreEntitySet="SanPham">
+                <ScalarProperty Name="MoTaChiTiet" ColumnName="MoTaChiTiet" />
+                <ScalarProperty Name="MoTaChung" ColumnName="MoTaChung" />
+                <ScalarProperty Name="BaoHanh" ColumnName="BaoHanh" />
+                <ScalarProperty Name="XuatXu" ColumnName="XuatXu" />
+                <ScalarProperty Name="Hang" ColumnName="Hang" />
+                <ScalarProperty Name="GiaKhuyenMai" ColumnName="GiaKhuyenMai" />
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
                 <ScalarProperty Name="TenSP" ColumnName="TenSP" />
                 <ScalarProperty Name="MaLoaiSP" ColumnName="MaLoaiSP" />

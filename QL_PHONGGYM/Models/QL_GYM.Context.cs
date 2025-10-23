@@ -542,7 +542,7 @@ namespace QL_PHONGGYM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemNhanVien", maChucVuParameter, tenDangNhapParameter, matKhauParameter, gioiTinhParameter, tenNVParameter, sDTParameter, ngaySinhParameter);
         }
     
-        public virtual int sp_ThemSanPham(string tenSP, Nullable<int> maLoaiSP, Nullable<decimal> donGia, Nullable<int> soLuongTon)
+        public virtual int sp_ThemSanPham(string tenSP, Nullable<int> maLoaiSP, Nullable<decimal> donGia, Nullable<int> soLuongTon, Nullable<decimal> giaKhuyenMai, string hang, string xuatXu, string baoHanh, string moTaChung, string moTaChiTiet)
         {
             var tenSPParameter = tenSP != null ?
                 new ObjectParameter("TenSP", tenSP) :
@@ -560,7 +560,31 @@ namespace QL_PHONGGYM.Models
                 new ObjectParameter("SoLuongTon", soLuongTon) :
                 new ObjectParameter("SoLuongTon", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemSanPham", tenSPParameter, maLoaiSPParameter, donGiaParameter, soLuongTonParameter);
+            var giaKhuyenMaiParameter = giaKhuyenMai.HasValue ?
+                new ObjectParameter("GiaKhuyenMai", giaKhuyenMai) :
+                new ObjectParameter("GiaKhuyenMai", typeof(decimal));
+    
+            var hangParameter = hang != null ?
+                new ObjectParameter("Hang", hang) :
+                new ObjectParameter("Hang", typeof(string));
+    
+            var xuatXuParameter = xuatXu != null ?
+                new ObjectParameter("XuatXu", xuatXu) :
+                new ObjectParameter("XuatXu", typeof(string));
+    
+            var baoHanhParameter = baoHanh != null ?
+                new ObjectParameter("BaoHanh", baoHanh) :
+                new ObjectParameter("BaoHanh", typeof(string));
+    
+            var moTaChungParameter = moTaChung != null ?
+                new ObjectParameter("MoTaChung", moTaChung) :
+                new ObjectParameter("MoTaChung", typeof(string));
+    
+            var moTaChiTietParameter = moTaChiTiet != null ?
+                new ObjectParameter("MoTaChiTiet", moTaChiTiet) :
+                new ObjectParameter("MoTaChiTiet", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemSanPham", tenSPParameter, maLoaiSPParameter, donGiaParameter, soLuongTonParameter, giaKhuyenMaiParameter, hangParameter, xuatXuParameter, baoHanhParameter, moTaChungParameter, moTaChiTietParameter);
         }
     
         public virtual int sp_upgraddiagrams()

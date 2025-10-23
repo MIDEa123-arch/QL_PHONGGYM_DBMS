@@ -24,6 +24,12 @@ namespace QL_PHONGGYM.Models
         public Nullable<int> MaLoaiSP { get; set; }
         public decimal DonGia { get; set; }
         public int SoLuongTon { get; set; }
+        public Nullable<decimal> GiaKhuyenMai { get; set; }
+        public string Hang { get; set; }
+        public string XuatXu { get; set; }
+        public string BaoHanh { get; set; }
+        public string MoTaChung { get; set; }
+        public string MoTaChiTiet { get; set; }
     
         public virtual ICollection<ChiTietHoaDon> ChiTietHoaDon { get; set; }
         public virtual LoaiSanPham LoaiSanPham { get; set; }

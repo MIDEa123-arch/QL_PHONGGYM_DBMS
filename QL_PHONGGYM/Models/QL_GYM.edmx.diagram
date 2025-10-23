@@ -44,6 +44,8 @@
         <AssociationConnector Association="QL_PHONGGYMModel.FK_LichLop_NV" ManuallyRouted="false" />
         <AssociationConnector Association="QL_PHONGGYMModel.FK_SP_LSP" ManuallyRouted="false" />
         <AssociationConnector Association="QL_PHONGGYMModel.NhanVienChuyenMon" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QL_PHONGGYMModel.HINHANH" Width="1.5" PointX="10.5" PointY="26" />
+        <AssociationConnector Association="QL_PHONGGYMModel.FK_HinhAnh_SanPham" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
