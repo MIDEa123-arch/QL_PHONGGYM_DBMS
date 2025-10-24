@@ -17,6 +17,7 @@ namespace QL_PHONGGYM.Models
         public GoiTap()
         {
             this.DangKyGoiTap = new HashSet<DangKyGoiTap>();
+            this.ChiTietGioHang = new HashSet<ChiTietGioHang>();
         }
     
         public int MaGoiTap { get; set; }
@@ -26,5 +27,6 @@ namespace QL_PHONGGYM.Models
         public string MoTa { get; set; }
     
         public virtual ICollection<DangKyGoiTap> DangKyGoiTap { get; set; }
+        public virtual ICollection<ChiTietGioHang> ChiTietGioHang { get; set; }
     }
 }

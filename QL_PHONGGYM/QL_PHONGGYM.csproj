@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -44,8 +45,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -125,10 +129,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CheckIn.cs">
+      <DependentUpon>QL_GYM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChiTietGioHang.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietHoaDon.cs">
@@ -149,10 +157,16 @@
     <Compile Include="Models\DangKyPT.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DiaChi.cs">
+      <DependentUpon>QL_GYM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\f_GetKhachHangHetHanTrongTuan_Result.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GoiTap.cs">
+      <DependentUpon>QL_GYM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HINHANH.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HoaDon.cs">
@@ -206,6 +220,9 @@
     <Compile Include="Models\sp_KhachHangLogin_Result.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_LayGioHang_Result.cs">
+      <DependentUpon>QL_GYM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_NhanVienLogin_Result.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
@@ -214,11 +231,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
-    <Compile Include="Repositories\Interfaces\IAccountRepository.cs" />
-    <Compile Include="Repositories\ListService.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="ViewModel\KhachHangLoginResult.cs" />
     <Compile Include="ViewModel\KhachHangLoginViewModel.cs" />
     <Compile Include="ViewModel\KhachHangRegisterViewModel.cs" />
+    <Compile Include="ViewModel\SanPhamViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -237,11 +254,47 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Images\Aerobics.jpg" />
+    <Content Include="Content\Images\ao-bra-nu-hong-1.jpg" />
+    <Content Include="Content\Images\arrow.png" />
+    <Content Include="Content\Images\Boxing.jpg" />
+    <Content Include="Content\Images\curse-preworkout-punch-1.jpg" />
+    <Content Include="Content\Images\Dụng cụ tập nhỏ.png" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\New Combat.jpg" />
+    <Content Include="Content\Images\New Pump.jpg" />
+    <Content Include="Content\Images\nike-brasilia-bag-den-1.jpg" />
+    <Content Include="Content\Images\nike-cap-heritage-trang-1.jpg" />
+    <Content Include="Content\Images\nike-dri-fit-short-xam-1.jpg" />
+    <Content Include="Content\Images\nike-gloves-nam-1.jpg" />
+    <Content Include="Content\Images\nike-indy-bra-trang-1.jpg" />
+    <Content Include="Content\Images\nike-one-legging-nu-den-1.jpg" />
+    <Content Include="Content\Images\nike-pro-dri-fit-den-1.jpg" />
+    <Content Include="Content\Images\nike-pro-tights-nam-1.jpg" />
+    <Content Include="Content\Images\nike-socks-combo-1.jpg" />
+    <Content Include="Content\Images\nike-tech-fleece-den-1.jpg" />
+    <Content Include="Content\Images\now-omega3-1.jpg" />
+    <Content Include="Content\Images\now-vitd3-1.jpg" />
+    <Content Include="Content\Images\on-protein-bar-box-1.jpg" />
+    <Content Include="Content\Images\on-serious-mass-banana-1.jpg" />
+    <Content Include="Content\Images\on-whey-vanilla-1.jpg" />
+    <Content Include="Content\Images\Phụ kiện tập luyện.png" />
     <Content Include="Content\Images\poster.jpeg" />
     <Content Include="Content\Images\poster1.jpeg" />
     <Content Include="Content\Images\poster2.jpeg" />
+    <Content Include="Content\Images\poster3.jpeg" />
+    <Content Include="Content\Images\poster4.jpeg" />
+    <Content Include="Content\Images\poster5.jpeg" />
+    <Content Include="Content\Images\Quần áo tập luyện.png" />
+    <Content Include="Content\Images\rule1-casein-choco-1.jpg" />
+    <Content Include="Content\Images\rule1-creatine-1.jpg" />
+    <Content Include="Content\Images\rule1-whey-choco-1.jpg" />
+    <Content Include="Content\Images\search.png" />
+    <Content Include="Content\Images\tat-co-cao-combo-1.jpg" />
+    <Content Include="Content\Images\Thực phẩm bổ sung.png" />
     <Content Include="Content\Images\user.png" />
+    <Content Include="Content\Images\xtend-bcaa-watermelon-1.jpg" />
+    <Content Include="Content\Images\Yoga.jpg" />
     <Content Include="Content\Layout.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -295,7 +348,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Home\ClassMenu.cshtml" />
+    <Content Include="Views\Product\ClassMenu.cshtml" />
+    <Content Include="Views\Product\CategoriesMenu.cshtml" />
+    <Content Include="Views\Product\BrandMenu.cshtml" />
+    <Content Include="Views\Product\OriginMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -365,7 +421,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

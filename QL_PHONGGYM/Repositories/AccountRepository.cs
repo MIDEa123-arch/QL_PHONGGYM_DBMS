@@ -31,16 +31,16 @@ namespace QL_PHONGGYM.Repositories
                     model.MatKhau
                 );
 
-                return true; 
+                return true;
             }
             catch (Exception ex)
             {
-               
+
                 throw;
             }
         }
 
-       public KhachHangLoginResult CusLogin(string tenDangNhap, string matKhau)
+        public KhachHangLoginResult CusLogin(string tenDangNhap, string matKhau)
         {
             return _context.Database.SqlQuery<KhachHangLoginResult>(
                 "EXEC sp_KhachHangLogin @p0, @p1",
@@ -48,8 +48,21 @@ namespace QL_PHONGGYM.Repositories
             ).FirstOrDefault();
         }
 
+        public bool DangKyThu(string HoTen, string SoDienThoai, string Email)
+        {
+            try
+            {
+                string sql = "EXEC sp_DangKyTapThu @TenKH, @SDT, @Email";
+                _context.Database.ExecuteSqlCommand(sql, new SqlParameter("@TenKH", HoTen), new SqlParameter("@SDT", SoDienThoai),
+                                                    new SqlParameter("@Email", (object)Email ?? DBNull.Value)
+                );
 
-
-
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi đăng ký tập thử: " + (ex.InnerException?.Message ?? ex.Message));
+            }
+        }
     }
 }

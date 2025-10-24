@@ -12,7 +12,7 @@ namespace QL_PHONGGYM.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Objects;
+    using System.Data.Entity.Core.Objects;
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
@@ -46,6 +46,9 @@ namespace QL_PHONGGYM.Models
         public DbSet<NhanVien> NhanVien { get; set; }
         public DbSet<SanPham> SanPham { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public DbSet<HINHANH> HINHANH { get; set; }
+        public DbSet<ChiTietGioHang> ChiTietGioHang { get; set; }
+        public DbSet<DiaChi> DiaChi { get; set; }
     
         [EdmFunction("QL_PHONGGYMEntities2", "f_GetKhachHangHetHanTrongTuan")]
         public virtual IQueryable<f_GetKhachHangHetHanTrongTuan_Result> f_GetKhachHangHetHanTrongTuan()
@@ -615,6 +618,123 @@ namespace QL_PHONGGYM.Models
                 new ObjectParameter("MoTa", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_SuaGoiTap", maGoiTapParameter, tenGoiParameter, thoiHanParameter, giaParameter, moTaParameter);
+        }
+    
+        public virtual int sp_DatAnhChinh(Nullable<int> maSP, Nullable<int> maHinh)
+        {
+            var maSPParameter = maSP.HasValue ?
+                new ObjectParameter("MaSP", maSP) :
+                new ObjectParameter("MaSP", typeof(int));
+    
+            var maHinhParameter = maHinh.HasValue ?
+                new ObjectParameter("MaHinh", maHinh) :
+                new ObjectParameter("MaHinh", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DatAnhChinh", maSPParameter, maHinhParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> sp_ThemHinhAnh(Nullable<int> maSP, string url)
+        {
+            var maSPParameter = maSP.HasValue ?
+                new ObjectParameter("MaSP", maSP) :
+                new ObjectParameter("MaSP", typeof(int));
+    
+            var urlParameter = url != null ?
+                new ObjectParameter("Url", url) :
+                new ObjectParameter("Url", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_ThemHinhAnh", maSPParameter, urlParameter);
+        }
+    
+        public virtual int sp_XoaHinhAnh(Nullable<int> maHinh)
+        {
+            var maHinhParameter = maHinh.HasValue ?
+                new ObjectParameter("MaHinh", maHinh) :
+                new ObjectParameter("MaHinh", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_XoaHinhAnh", maHinhParameter);
+        }
+    
+        public virtual int sp_CapNhatSoLuongGioHang(Nullable<int> maChiTietGH, Nullable<int> soLuongMoi)
+        {
+            var maChiTietGHParameter = maChiTietGH.HasValue ?
+                new ObjectParameter("MaChiTietGH", maChiTietGH) :
+                new ObjectParameter("MaChiTietGH", typeof(int));
+    
+            var soLuongMoiParameter = soLuongMoi.HasValue ?
+                new ObjectParameter("SoLuongMoi", soLuongMoi) :
+                new ObjectParameter("SoLuongMoi", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CapNhatSoLuongGioHang", maChiTietGHParameter, soLuongMoiParameter);
+        }
+    
+        public virtual ObjectResult<sp_LayGioHang_Result> sp_LayGioHang(Nullable<int> maKH)
+        {
+            var maKHParameter = maKH.HasValue ?
+                new ObjectParameter("MaKH", maKH) :
+                new ObjectParameter("MaKH", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LayGioHang_Result>("sp_LayGioHang", maKHParameter);
+        }
+    
+        public virtual int sp_ThemVaoGioHang(Nullable<int> maKH, Nullable<int> maSP, Nullable<int> maGoiTap, Nullable<int> maLop, Nullable<int> soLuong)
+        {
+            var maKHParameter = maKH.HasValue ?
+                new ObjectParameter("MaKH", maKH) :
+                new ObjectParameter("MaKH", typeof(int));
+    
+            var maSPParameter = maSP.HasValue ?
+                new ObjectParameter("MaSP", maSP) :
+                new ObjectParameter("MaSP", typeof(int));
+    
+            var maGoiTapParameter = maGoiTap.HasValue ?
+                new ObjectParameter("MaGoiTap", maGoiTap) :
+                new ObjectParameter("MaGoiTap", typeof(int));
+    
+            var maLopParameter = maLop.HasValue ?
+                new ObjectParameter("MaLop", maLop) :
+                new ObjectParameter("MaLop", typeof(int));
+    
+            var soLuongParameter = soLuong.HasValue ?
+                new ObjectParameter("SoLuong", soLuong) :
+                new ObjectParameter("SoLuong", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemVaoGioHang", maKHParameter, maSPParameter, maGoiTapParameter, maLopParameter, soLuongParameter);
+        }
+    
+        public virtual int sp_XoaGioHang(Nullable<int> maKH)
+        {
+            var maKHParameter = maKH.HasValue ?
+                new ObjectParameter("MaKH", maKH) :
+                new ObjectParameter("MaKH", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_XoaGioHang", maKHParameter);
+        }
+    
+        public virtual int sp_XoaKhoiGioHang(Nullable<int> maChiTietGH)
+        {
+            var maChiTietGHParameter = maChiTietGH.HasValue ?
+                new ObjectParameter("MaChiTietGH", maChiTietGH) :
+                new ObjectParameter("MaChiTietGH", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_XoaKhoiGioHang", maChiTietGHParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> sp_DangKyTapThu(string tenKH, string sDT, string email)
+        {
+            var tenKHParameter = tenKH != null ?
+                new ObjectParameter("TenKH", tenKH) :
+                new ObjectParameter("TenKH", typeof(string));
+    
+            var sDTParameter = sDT != null ?
+                new ObjectParameter("SDT", sDT) :
+                new ObjectParameter("SDT", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_DangKyTapThu", tenKHParameter, sDTParameter, emailParameter);
         }
     }
 }

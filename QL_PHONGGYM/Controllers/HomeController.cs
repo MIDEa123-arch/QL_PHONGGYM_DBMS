@@ -11,17 +11,42 @@ namespace QL_PHONGGYM.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult ClassMenu()
+        private readonly ProductRepository _productRepo;
+        private readonly AccountRepository _accountRepo;
+        public HomeController()
         {
-            ListService listService = new ListService();   
-            List<ChuyenMon> list = listService.GetList();
-
-            return PartialView(list);
+            _productRepo = new ProductRepository(new QL_PHONGGYMEntities2());
+            _accountRepo = new AccountRepository(new QL_PHONGGYMEntities2());
         }
         public ActionResult Index()
         {
-            return View();
+            var list = _productRepo.GetGoiTaps();
+            ViewBag.usaProducts = _productRepo.GetSanPhams().Where(sp => sp.XuatXu == "USA" && sp.LoaiSP == "Thực phẩm bổ sung").Take(10).ToList();
+            ViewBag.nikeProducts = _productRepo.GetSanPhams().Where(sp => sp.Hang == "Nike").Take(10).ToList();
+            ViewBag.Class = _productRepo.GetChuyenMons().Take(5).ToList();
+            return View(list);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult SignForFree(string HoTen, string SoDienThoai, string Email)
+        {
+            try
+            {
+                bool isSuccess = _accountRepo.DangKyThu(HoTen, SoDienThoai, Email);
+
+                if (isSuccess)
+                    return Json(new { success = true, message = "Đăng ký thành công!" });
+                else
+                    return Json(new { success = false, message = "Đăng ký thất bại." });
+            }
+            catch (Exception ex)
+            {
+                string err = ex.InnerException?.Message ?? ex.Message;
+                return Json(new { success = false, message = err });
+            }
+        }
+
 
         public ActionResult About()
         {

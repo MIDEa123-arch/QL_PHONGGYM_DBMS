@@ -21,6 +21,8 @@ namespace QL_PHONGGYM.Models
             this.DangKyLop = new HashSet<DangKyLop>();
             this.DangKyPT = new HashSet<DangKyPT>();
             this.HoaDon = new HashSet<HoaDon>();
+            this.ChiTietGioHang = new HashSet<ChiTietGioHang>();
+            this.DiaChi = new HashSet<DiaChi>();
         }
     
         public int MaKH { get; set; }
@@ -39,5 +41,7 @@ namespace QL_PHONGGYM.Models
         public virtual ICollection<DangKyPT> DangKyPT { get; set; }
         public virtual ICollection<HoaDon> HoaDon { get; set; }
         public virtual LoaiKhachHang LoaiKhachHang { get; set; }
+        public virtual ICollection<ChiTietGioHang> ChiTietGioHang { get; set; }
+        public virtual ICollection<DiaChi> DiaChi { get; set; }
     }
 }

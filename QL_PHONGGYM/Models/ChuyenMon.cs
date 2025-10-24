@@ -22,6 +22,7 @@ namespace QL_PHONGGYM.Models
     
         public int MaCM { get; set; }
         public string TenChuyenMon { get; set; }
+        public string MoTa { get; set; }
     
         public virtual ICollection<LopHoc> LopHoc { get; set; }
         public virtual ICollection<NhanVien> NhanVien { get; set; }

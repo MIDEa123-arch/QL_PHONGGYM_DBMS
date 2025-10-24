@@ -1,6 +1,5 @@
 ﻿using QL_PHONGGYM.Models;
 using QL_PHONGGYM.Repositories;
-using QL_PHONGGYM.Repositories.Interfaces;
 using QL_PHONGGYM.ViewModel;
 using System;
 using System.Linq;

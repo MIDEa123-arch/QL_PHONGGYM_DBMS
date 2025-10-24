@@ -17,6 +17,8 @@ namespace QL_PHONGGYM.Models
         public SanPham()
         {
             this.ChiTietHoaDon = new HashSet<ChiTietHoaDon>();
+            this.HINHANH = new HashSet<HINHANH>();
+            this.ChiTietGioHang = new HashSet<ChiTietGioHang>();
         }
     
         public int MaSP { get; set; }
@@ -33,5 +35,7 @@ namespace QL_PHONGGYM.Models
     
         public virtual ICollection<ChiTietHoaDon> ChiTietHoaDon { get; set; }
         public virtual LoaiSanPham LoaiSanPham { get; set; }
+        public virtual ICollection<HINHANH> HINHANH { get; set; }
+        public virtual ICollection<ChiTietGioHang> ChiTietGioHang { get; set; }
     }
 }
