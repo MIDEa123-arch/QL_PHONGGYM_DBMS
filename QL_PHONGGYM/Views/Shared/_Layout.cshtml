@@ -58,37 +58,27 @@
                                 <div class="d-flex flex-wrap gap-2 mt-2">
 
                                     <a class="py-2 px-3 text-center btn btn-outline-primary fs-6"
-                                       href="#"
-                                       data-min="0"
-                                       data-max="100000">
+                                       href="@Url.Action("Product", "Product", new { minPrice = 0, maxPrice = 100000 })">
                                         Dưới 100.000đ
                                     </a>
 
                                     <a class="py-2 px-3 text-center btn btn-outline-primary fs-6"
-                                       href="#"
-                                       data-min="100000"
-                                       data-max="300000">
+                                       href="@Url.Action("Product", "Product", new { minPrice = 100000, maxPrice = 300000 })">
                                         100.000đ - 300.000đ
                                     </a>
 
                                     <a class="py-2 px-3 text-center btn btn-outline-primary fs-6"
-                                       href="#"
-                                       data-min="300000"
-                                       data-max="500000">
+                                       href="@Url.Action("Product", "Product", new { minPrice = 300000, maxPrice = 500000 })">
                                         300.000đ - 500.000đ
                                     </a>
 
                                     <a class="py-2 px-3 text-center btn btn-outline-primary fs-6"
-                                       href="#"
-                                       data-min="500000"
-                                       data-max="1000000">
+                                       href="@Url.Action("Product", "Product", new { minPrice = 500000, maxPrice = 1000000 })">
                                         500.000đ - 1.000.000đ
                                     </a>
 
                                     <a class="py-2 px-3 text-center btn btn-outline-primary fs-6"
-                                       href="#"
-                                       data-min="1000000"
-                                       data-max="99999999">
+                                       href="@Url.Action("Product", "Product", new { minPrice = 1000000, maxPrice = 99999999})">
                                         Trên 1.000.000đ
                                     </a>
 
@@ -177,11 +167,11 @@
     <div class="container-fluid bg-white p-0">
         @RenderBody()
     </div>
-    <footer class="bg-white text-black py-5">
+    <footer class="bg-white text-black py-5 mt-4">
         <div class="container">
             <div class="row justify-content-center mb-4">
                 <div class="col-auto">
-                    <a href="#" class="text-black text-decoration-none mx-3">Về The New Gym</a>
+                    <a href="#" class="text-black text-decoration-none mx-3">Về The Gym</a>
                 </div>
                 <div class="col-auto">
                     <a href="#" class="text-black text-decoration-none mx-3">Hệ Thống Phòng Tập</a>

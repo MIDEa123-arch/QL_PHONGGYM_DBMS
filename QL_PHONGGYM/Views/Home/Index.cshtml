@@ -63,18 +63,27 @@
     <h6 class="text-uppercase fw-bold mb-2 text-secondary">Thực phẩm bổ sung</h6>
     <p class="d-flex gap-5 align-items-end">
         <span class="text-uppercase fw-bold fs-5 mb-0">Made in USA</span>
-        <a class="link-dark fw-bold fs-6" href="#">View All</a>
+        <a class="link-dark fw-bold fs-6" href="@Url.Action("Product", "Product", new {xuatXu = "USA"})">View All</a>
     </p>
 
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2">
         @foreach (var item in ViewBag.usaProducts)
         {
             <div class="col">
-                <a href="@Url.Action("ProductDetail", "Store", new { id = item.MaSP })"
-                   class="card h-100 border-1 text-decoration-none">
+                <a href="@Url.Action("ProductDetail", "Product", new { id = item.MaSP })"
+                   class="card h-100 border-1 text-decoration-none @(item.SoLuongTon == 0 ? "opacity-75" : "")">
                     <div class="position-relative">
                         <img src="@Url.Content("~/Content/Images/" + item.UrlHinhAnhChinh)"
                              class="card-img-top" alt="@item.TenSP" style="object-fit: cover; height: 16rem;">
+
+                        @if (item.SoLuongTon == 0)
+                        {
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                                 style="background-color: rgba(0,0,0,0.5);">
+                                <span class="badge bg-danger fs-5 py-2 px-4">HẾT HÀNG</span>
+                            </div>
+                        }
+
                         <span class="badge bg-white text-dark position-absolute bottom-0 start-0 m-2 small fw-semibold">
                             @item.XuatXu
                         </span>
@@ -84,18 +93,24 @@
                             <div class="fw-bold small text-dark">@item.TenSP</div>
                             <div class="text-secondary small">@item.Hang</div>
                         </div>
-                        @if (item.GiaKhuyenMai != null && item.GiaKhuyenMai < item.DonGia)
+                        @if (item.SoLuongTon == 0)
+                        {
+                            <div class="fw-bold text-muted mt-1">
+                                <span class="badge bg-secondary">Hết hàng</span>
+                            </div>
+                        }
+                        else if (item.GiaKhuyenMai != null && item.GiaKhuyenMai < item.DonGia)
                         {
                             <div class="fw-bold text-danger mt-1">
-                                @item.GiaKhuyenMai.ToString("N0") VNĐ
+                                @item.GiaKhuyenMai.ToString("N0").Replace(",", ".").Replace("'", ".") VNĐ
                                 <span class="text-secondary text-decoration-line-through ms-1 small">
-                                    @item.DonGia.ToString("N0") VNĐ
+                                    @item.DonGia.ToString("N0").Replace(",", ".").Replace("'", ".") VNĐ
                                 </span>
                             </div>
                         }
                         else
                         {
-                            <div class="fw-bold text-dark mt-1">@item.DonGia.ToString("N0") VNĐ</div>
+                            <div class="fw-bold text-dark mt-1">@item.DonGia.ToString("N0").Replace(",", ".").Replace("'", ".") VNĐ</div>
                         }
                     </div>
                 </a>
@@ -126,14 +141,14 @@
     <h6 class="text-uppercase fw-bold mb-2 text-secondary">Quần áo tập luyện</h6>
     <p class="d-flex gap-5 align-items-end">
         <span class="text-uppercase fw-bold fs-5 mb-0">Nike</span>
-        <a class="link-dark fw-bold fs-6" href="#">View All</a>
+        <a class="link-dark fw-bold fs-6" href="@Url.Action("Product", "Product", new {hang = "Nike"})">View All</a>
     </p>
 
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2">
         @foreach (var item in ViewBag.nikeProducts)
         {
             <div class="col">
-                <a href="@Url.Action("ProductDetail", "Store", new { id = item.MaSP })"
+                <a href="@Url.Action("ProductDetail", "Product", new { id = item.MaSP })"
                    class="card h-100 border-1 text-decoration-none">
                     <div class="position-relative">
                         <img src="@Url.Content("~/Content/Images/" + item.UrlHinhAnhChinh)"
@@ -147,18 +162,24 @@
                             <div class="fw-bold small text-dark">@item.TenSP</div>
                             <div class="text-secondary small">@item.Hang</div>
                         </div>
-                        @if (item.GiaKhuyenMai != null && item.GiaKhuyenMai < item.DonGia)
+                        @if (item.SoLuongTon == 0)
+                        {
+                            <div class="fw-bold text-muted mt-1">
+                                <span class="badge bg-secondary">Hết hàng</span>
+                            </div>
+                        }
+                        else if (item.GiaKhuyenMai != null && item.GiaKhuyenMai < item.DonGia)
                         {
                             <div class="fw-bold text-danger mt-1">
-                                @item.GiaKhuyenMai.ToString("N0") VNĐ
+                                @item.GiaKhuyenMai.ToString("N0").Replace(",", ".").Replace("'", ".") VNĐ
                                 <span class="text-secondary text-decoration-line-through ms-1 small">
-                                    @item.DonGia.ToString("N0") VNĐ
+                                    @item.DonGia.ToString("N0").Replace(",", ".").Replace("'", ".") VNĐ
                                 </span>
                             </div>
                         }
                         else
                         {
-                            <div class="fw-bold text-dark mt-1">@item.DonGia.ToString("N0") VNĐ</div>
+                            <div class="fw-bold text-dark mt-1">@item.DonGia.ToString("N0").Replace(",", ".").Replace("'", ".") VNĐ</div>
                         }
                     </div>
                 </a>

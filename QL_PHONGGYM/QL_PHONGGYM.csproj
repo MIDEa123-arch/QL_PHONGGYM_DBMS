@@ -285,7 +285,11 @@
     <Content Include="Content\Images\poster3.jpeg" />
     <Content Include="Content\Images\poster4.jpeg" />
     <Content Include="Content\Images\poster5.jpeg" />
+    <Content Include="Content\Images\PosterProduct.jpeg" />
     <Content Include="Content\Images\promotion1.jpg" />
+    <Content Include="Content\Images\promotion2.jpg" />
+    <Content Include="Content\Images\promotion3.jpg" />
+    <Content Include="Content\Images\promotion4.jpg" />
     <Content Include="Content\Images\Quần áo tập luyện.png" />
     <Content Include="Content\Images\rule1-casein-choco-1.jpg" />
     <Content Include="Content\Images\rule1-creatine-1.jpg" />
@@ -356,6 +360,8 @@
     <Content Include="Views\Product\CategoriesMenu.cshtml" />
     <Content Include="Views\Product\BrandMenu.cshtml" />
     <Content Include="Views\Product\OriginMenu.cshtml" />
+    <Content Include="Views\Product\Product.cshtml" />
+    <Content Include="Views\Product\ProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

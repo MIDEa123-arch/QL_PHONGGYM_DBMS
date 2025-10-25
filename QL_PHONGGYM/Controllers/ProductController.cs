@@ -17,6 +17,44 @@ namespace QL_PHONGGYM.Controllers
             _productRepo = new ProductRepository(new QL_PHONGGYMEntities2());
         }
 
+        public ActionResult ProductDetail(int id)
+        {
+            var sanpham = _productRepo.GetSanPhams().FirstOrDefault(sp => sp.MaSP == id);
+            return View(sanpham);
+        }
+
+        public ActionResult Product(string loaisp, string hang, string xuatXu, decimal? maxPrice, decimal? minPrice)
+        {
+            var list = _productRepo.GetSanPhams();
+
+            if (!string.IsNullOrEmpty(xuatXu))
+            {
+                list = list.Where(p => p.XuatXu.Contains(xuatXu)).ToList();
+            }
+            if (!string.IsNullOrEmpty(loaisp))
+            {
+                list = list.Where(p => p.LoaiSP.Contains(loaisp)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(hang))
+            {
+                list = list.Where(p => p.Hang.Contains(hang)).ToList();
+            }
+
+            if (minPrice.HasValue)
+            {
+                list = list.Where(p => p.DonGia >= minPrice.Value).ToList();
+            }
+
+            if (maxPrice.HasValue)
+            {
+                list = list.Where(p => p.DonGia <= maxPrice.Value).ToList();
+            }
+
+            ViewBag.LoaiSP = _productRepo.GetLoaiSanPhams().ToList();
+            ViewBag.Hang = list.Where(p => p.Hang != null).Select(p => p.Hang).Distinct().ToList();
+            return View(list);
+        }
         public ActionResult ClassMenu()
         {
             var list = _productRepo.GetChuyenMons();
