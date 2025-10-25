@@ -262,6 +262,10 @@
                     <button type="submit" class="btn btn-primary w-100 mb-3 mt-2">Đăng nhập</button>
 
                     <a href="@Url.Action("ForgotPassword", "Account")" class="text-decoration-none">Quên mật khẩu?</a>
+                    <div class="mt-5 d-flex gap-2">
+                        <span class="small text-muted">Bạn chưa có tài khoản</span>
+                        <a class="small" href="@Url.Action("Register", "Account")">Đăng ký ngay</a>
+                    </div>
                 }
             </div>
         </div>
