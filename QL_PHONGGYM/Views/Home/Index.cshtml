@@ -5,6 +5,16 @@
     ViewBag.Title = "Index";
 }
 
+<style>
+    .extended-card img {
+        filter: brightness(70%) !important;
+    }
+
+    .extended-card:hover img {
+        filter: brightness(100%) !important;
+    }
+
+</style>
 <div class="w-100 py-5" style="background-color: #c5eff7; border-top: 2px solid #5eb1ec">
     <div class="d-flex flex-column gap-2 text-center container mx-auto">
         <span class="text-dark text-uppercase fs-3 fw-bold">Hội viên The Gym</span>
@@ -180,12 +190,95 @@
     </div>
 </div>
 
-<div class="container-fluid bg-light mt-4">
-    <div class="container py-5 row mx-auto p-0">
+<div class="container-fluid bg-light py-5 mt-5 px-0">
+    <div class="bg-light container-fluid text-center mb-3">
+        <p class="fs-2 fw-bold mb-2">Testimonial</p>
+        <p class="small fw-light text-muted">What our customers say</p>
+    </div>
+    <div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators" style="bottom: -30px;">
+            <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="1" class="bg-dark" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="2" class="bg-dark" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner pb-5">
+            <div class="carousel-item active">
+                <div class="w-75 mx-auto d-flex flex-column justify-content-center align-items-center px-3">
+                    <img src="@Url.Content("~/Content/Images/user1.png")" class="rounded-circle mb-3" style="width: 90px; height: 90px; object-fit: cover;" />
+                    <div class="text-center fst-italic text-secondary w-100" style="font-size: 1.2rem; line-height: 1.8;">
+                        "The Gym thật sự là một trải nghiệm tuyệt vời cho bất cứ ai muốn cải thiện sức khỏe và vóc dáng. Không chỉ có hệ thống máy móc hiện đại, sạch sẽ, mà không gian còn rất thoải mái, tạo cảm giác hứng thú mỗi khi bước vào. Các huấn luyện viên chuyên nghiệp, nhiệt tình, luôn sẵn sàng hướng dẫn từng động tác chuẩn xác để tránh chấn thương. Mình đặc biệt thích các lớp group class vì vừa có động lực vừa được học thêm nhiều kỹ thuật mới. Đây là nơi lý tưởng để giải tỏa stress."
+                    </div>
+                    <p class="fw-bold mt-5 fs-6 mb-0">- Jane Doe</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="w-75 mx-auto d-flex flex-column justify-content-center align-items-center px-3">
+                    <img src="@Url.Content("~/Content/Images/user2.png")" class="rounded-circle mb-3" style="width: 90px; height: 90px; object-fit: cover;" />
+                    <div class="text-center fst-italic text-secondary w-100" style="font-size: 1.2rem; line-height: 1.8;">
+                        "Mình đã thử khá nhiều phòng gym khác nhau, nhưng The Gym thực sự làm mình ấn tượng. Môi trường tập luyện rất năng động, máy móc đầy đủ, từ cardio đến free weights, và luôn được bảo trì tốt. Điều mình thích nhất là sự thân thiện và quan tâm của nhân viên, họ luôn nhắc nhở bạn khởi động, hướng dẫn sử dụng thiết bị an toàn và kiểm tra tiến độ tập luyện của bạn. Ngoài ra, không gian phòng thay đồ và tắm rửa sạch sẽ, rộng rãi, tạo cảm giác thoải mái, không bị ngột ngạt."
+                    </div>
+                    <p class="fw-bold mt-5 fs-6 mb-0">- Bill Smith</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="w-75 mx-auto d-flex flex-column justify-content-center align-items-center px-3">
+                    <img src="@Url.Content("~/Content/Images/user3.png")" class="rounded-circle mb-3" style="width: 90px; height: 90px; object-fit: cover;" />
+                    <div class="text-center fst-italic text-secondary w-100" style="font-size: 1.2rem; line-height: 1.8;">
+                        "Một điểm cộng lớn của The Gym là không gian rất hiện đại, máy móc mới và đầy đủ tiện nghi. Các khu vực tập luyện được phân chia rõ ràng, có khu cardio, khu tạ tự do, khu functional training và cả phòng group class. Mình đặc biệt thích các thiết bị smart machine, có thể theo dõi tiến độ tập luyện qua app của gym. Ngoài ra, đội ngũ huấn luyện viên chuyên nghiệp, nhiệt tình và luôn lắng nghe, điều chỉnh động tác của bạn để tối đa hóa hiệu quả và giảm thiểu rủi ro chấn thương."
+                    </div>
+                    <p class="fw-bold mt-5 fs-6 mb-0">- Athur Mogarn</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-white py-5">
+    <div class="container">
+        <div class="row row-cols-md-3 row-cols-lg-4 d-flex justify-content-center">
+            <div class="col">
+                <a href="" class="card h-100 text-decoration-none rounded-4 extended-card position-relative overflow-hidden">
+                    <img src="@Url.Content("~/Content/Images/promotion1.jpg")" class="card-img" style="object-fit: cover; height: 28rem;">
+                    <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center text-white text-center p-4">
+                        <h2 class="fw-bold mb-0 text-uppercase" style="font-size: 2.5rem;">Join a PT program</h2>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="" class="card h-100 text-decoration-none rounded-4 extended-card position-relative overflow-hidden">
+                    <img src="@Url.Content("~/Content/Images/promotion2.jpg")" class="card-img" style="object-fit: cover; height: 28rem;">
+                    <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center text-white text-center p-4">
+                        <h2 class="fw-bold mb-0 text-uppercase" style="font-size: 2.5rem;">workout tips</h2>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="" class="card h-100 text-decoration-none rounded-4 extended-card position-relative overflow-hidden">
+                    <img src="@Url.Content("~/Content/Images/promotion3.jpg")" class="card-img" style="object-fit: cover; height: 28rem;">
+                    <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center text-white text-center p-4">
+                        <h2 class="fw-bold mb-0 text-uppercase" style="font-size: 2.5rem;">about us</h2>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="" class="card h-100 text-decoration-none rounded-4 extended-card position-relative overflow-hidden">
+                    <img src="@Url.Content("~/Content/Images/promotion4.jpg")" class="card-img" style="object-fit: cover; height: 28rem;">
+                    <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center text-white text-center p-4">
+                        <h2 class="fw-bold mb-0 text-uppercase" style="font-size: 2.5rem;">Become a member</h2>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-info mt-4">
+    <div class="container py-5 row mx-auto">
         <div class="col-md-6 p-0">
             <div class="w-75">
-                <h1 class="text-wrap fw-bold text-dark">TRẢI NGHIỆM MIỄN PHÍ NGAY!</h1>
-                <p class="mt-3 small text-wrap text-dark">
+                <h1 class="text-wrap fw-bold text-white">TRẢI NGHIỆM MIỄN PHÍ NGAY!</h1>
+                <p class="mt-3 small text-wrap text-white">
                     Hãy thử điều gì đó mới mẻ trong năm nay bằng cách tham gia thế giới trải nghiệm thú vị và vui nhộn từ chúng tôi.
                     Chúng tôi cung cấp DÙNG THỬ MIỄN PHÍ 7 ngày cho tất cả khách mới. Để lại thông tin của bạn bên cạnh và chúng tôi sẽ liên hệ với bạn trong 24 giờ tới.
                 </p>
@@ -207,13 +300,14 @@
                     <input type="email" name="Email" class="form-control border-0 border-bottom rounded-0 shadow-none" placeholder="Email*" />
                 </div>
 
-                <button type="submit" class="btn btn-outline-primary btn-info text-white border-0 fw-bold px-4">ĐĂNG KÝ</button>
+                <button type="submit" class="btn btn-outline-primary btn-secondary text-white border-0 fw-bold px-4">ĐĂNG KÝ</button>
 
                 <div id="message" class="mt-3 small fw-semibold"></div>
             </form>
         </div>
     </div>
 </div>
+
 
 @Scripts.Render("~/bundles/jquery")
 <script>

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -156,7 +156,7 @@
 
         </div>
     </nav>
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin-top: 90px">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin-top: 80px">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -175,8 +175,58 @@
         </div>
     </div>
     <div class="container-fluid bg-white p-0">
-            @RenderBody()
+        @RenderBody()
     </div>
+    <footer class="bg-white text-black py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-auto">
+                    <a href="#" class="text-black text-decoration-none mx-3">Về The New Gym</a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black text-decoration-none mx-3">Hệ Thống Phòng Tập</a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black text-decoration-none mx-3">Tuyển Dụng</a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black text-decoration-none mx-3">Tin Tức</a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black text-decoration-none mx-3">Liên Hệ</a>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mb-5">
+                <div class="col-auto">
+                    <a href="#" class="text-black text-decoration-none mx-3">Chính Sách Bảo Mật</a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black text-decoration-none mx-3">Chăm Sóc Khách Hàng / Liên Hệ</a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black text-decoration-none mx-3">Điều Khoản & Điều Kiện</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-100">
+            <hr />
+            <div class="row justify-content-center mt-4 container mx-auto">
+                <div class="col-auto">
+                    <a href="#" class="text-black fs-5 mx-3"><i class="fab fa-facebook"></i></a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black fs-5 mx-3"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black fs-5 mx-3"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="text-black fs-5 mx-3"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

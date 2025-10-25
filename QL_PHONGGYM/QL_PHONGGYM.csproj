@@ -285,6 +285,7 @@
     <Content Include="Content\Images\poster3.jpeg" />
     <Content Include="Content\Images\poster4.jpeg" />
     <Content Include="Content\Images\poster5.jpeg" />
+    <Content Include="Content\Images\promotion1.jpg" />
     <Content Include="Content\Images\Quần áo tập luyện.png" />
     <Content Include="Content\Images\rule1-casein-choco-1.jpg" />
     <Content Include="Content\Images\rule1-creatine-1.jpg" />
@@ -293,6 +294,9 @@
     <Content Include="Content\Images\tat-co-cao-combo-1.jpg" />
     <Content Include="Content\Images\Thực phẩm bổ sung.png" />
     <Content Include="Content\Images\user.png" />
+    <Content Include="Content\Images\user1.png" />
+    <Content Include="Content\Images\user2.png" />
+    <Content Include="Content\Images\user3.png" />
     <Content Include="Content\Images\xtend-bcaa-watermelon-1.jpg" />
     <Content Include="Content\Images\Yoga.jpg" />
     <Content Include="Content\Layout.css" />
