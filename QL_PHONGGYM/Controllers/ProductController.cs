@@ -29,26 +29,26 @@ namespace QL_PHONGGYM.Controllers
 
             if (!string.IsNullOrEmpty(xuatXu))
             {
-                list = list.Where(p => p.XuatXu.Contains(xuatXu)).ToList();
+                list = list.Where(p => p.XuatXu.Contains(xuatXu)).OrderByDescending(sp => sp.SoLuongTon).ToList();
             }
             if (!string.IsNullOrEmpty(loaisp))
             {
-                list = list.Where(p => p.LoaiSP.Contains(loaisp)).ToList();
+                list = list.Where(p => p.LoaiSP.Contains(loaisp)).OrderByDescending(sp => sp.SoLuongTon).ToList();
             }
 
             if (!string.IsNullOrEmpty(hang))
             {
-                list = list.Where(p => p.Hang.Contains(hang)).ToList();
+                list = list.Where(p => p.Hang.Contains(hang)).OrderByDescending(sp => sp.SoLuongTon).ToList();
             }
 
             if (minPrice.HasValue)
             {
-                list = list.Where(p => p.DonGia >= minPrice.Value).ToList();
+                list = list.Where(p => p.DonGia >= minPrice.Value).OrderByDescending(sp => sp.SoLuongTon).ToList();
             }
 
             if (maxPrice.HasValue)
             {
-                list = list.Where(p => p.DonGia <= maxPrice.Value).ToList();
+                list = list.Where(p => p.DonGia <= maxPrice.Value).OrderByDescending(sp => sp.SoLuongTon).ToList();
             }
 
             ViewBag.LoaiSP = _productRepo.GetLoaiSanPhams().ToList();

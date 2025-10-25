@@ -21,8 +21,8 @@ namespace QL_PHONGGYM.Controllers
         public ActionResult Index()
         {
             var list = _productRepo.GetGoiTaps();
-            ViewBag.usaProducts = _productRepo.GetSanPhams().Where(sp => sp.XuatXu == "USA" && sp.LoaiSP == "Thực phẩm bổ sung").Take(10).ToList();
-            ViewBag.nikeProducts = _productRepo.GetSanPhams().Where(sp => sp.Hang == "Nike").Take(10).ToList();
+            ViewBag.usaProducts = _productRepo.GetSanPhams().Where(sp => sp.XuatXu == "USA" && sp.LoaiSP == "Thực phẩm bổ sung").OrderByDescending(sp => sp.SoLuongTon).Take(10).ToList();
+            ViewBag.nikeProducts = _productRepo.GetSanPhams().Where(sp => sp.Hang == "Nike").OrderByDescending(sp => sp.SoLuongTon).Take(10).ToList();
             ViewBag.Class = _productRepo.GetChuyenMons().Take(5).ToList();
             return View(list);
         }
