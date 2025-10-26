@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>Đăng Nhập</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        /* Ẩn dấu chấm trong ValidationSummary */
         .validation-summary-errors ul {
             list-style: none;
             padding-left: 0;
@@ -59,7 +59,7 @@
         .gym-logo {
             display: flex;
             gap: 20px;
-            margin-top:35px;
+            margin-top: 35px;
             margin-bottom: 35px;
             justify-content: center;
             align-items: center;
@@ -69,7 +69,6 @@
             height: 60px;
             width: auto;
             object-fit: contain;
-
         }
 
         .membership-title {
@@ -153,6 +152,27 @@
             font-style: italic;
             font-weight: 500;
         }
+
+        /* Style cho password toggle */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 18px;
+            user-select: none;
+            z-index: 10;
+        }
+
+            .password-toggle:hover {
+                color: #0d6efd;
+            }
     </style>
 </head>
 <body class="bg-light">
@@ -233,8 +253,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Div bên phải - Form đăng nhập gốc -->
             <div class="col-md-5 bg-white text-center d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
                 <span class="text-primary fs-3 fw-bold m-3">Đăng nhập GYM</span>
 
@@ -246,6 +264,7 @@
                 }))
                 {
                     @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.ReturnUrl, new { value = ViewBag.ReturnUrl })
 
                     <div class="mb-3 w-100 d-flex flex-column">
                         @Html.LabelFor(m => m.TenDangNhap, new { @class = "form-label text-start" })
@@ -255,7 +274,10 @@
 
                     <div class="mb-3 w-100 d-flex flex-column">
                         @Html.LabelFor(m => m.MatKhau, new { @class = "form-label text-start" })
-                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control py-2", placeholder = "Nhập mật khẩu", @style = "max-width: 100%;" })
+                        <div class="password-wrapper w-100">
+                            @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control py-2", @id = "passwordInput", placeholder = "Nhập mật khẩu", @style = "max-width: 100%; padding-right: 40px;" })
+                            <i class="bi bi-eye-slash password-toggle" id="togglePassword"></i>
+                        </div>
                         @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger small mt-2 text-start" })
                     </div>
 
@@ -271,6 +293,25 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(function () {
+            $('#togglePassword').on('click', function () {
+                var $pwd = $('#passwordInput');
+                if ($pwd.attr('type') === 'password') {
+                    $pwd.attr('type', 'text');
+                    $(this).removeClass('bi-eye-slash').addClass('bi-eye');
+                } else {
+                    $pwd.attr('type', 'password');
+                    $(this).removeClass('bi-eye').addClass('bi-eye-slash');
+                }
+            });
+        });
+    </script>
+
+
 </body>
 </html>

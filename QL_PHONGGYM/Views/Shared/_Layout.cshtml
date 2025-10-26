@@ -91,8 +91,7 @@
                         <a class="nav-link text-black fs-6 dropdown-toggle  text-uppercase fs-6" href="#">
                             Dịch vụ
                         </a>
-                        <ul class="dropdown-menu border-0 bg-light p-0">
-                            <!-- Lớp học có sub-menu -->
+                        <ul class="dropdown-menu border-0 bg-light p-0">                           
                             <li class="dropdown-submenu">
                                 <a class="dropdown-item dropdown-toggle py-2 fs-6 pe-5" href="#">
                                     Lớp học
@@ -102,7 +101,6 @@
                                 </ul>
                             </li>
 
-                            <!-- Dịch vụ khác -->
                             <li>
                                 <a class="dropdown-item py-2 fs-6 pe-5" href="#">Đăng ký PT</a>
                             </li>
@@ -121,9 +119,8 @@
             </div>
             <div class="d-flex align-items-center ms-3">
                 @if (Session["TenKH"] == null)
-                {
-                    <!-- Chưa đăng nhập -->
-                    <a class="login-btn text-decoration-none d-flex justify-content-center" href="@Url.Action("Login", "Account")">
+                {                 
+                    <a class="login-btn text-decoration-none d-flex justify-content-center" href="@Url.Action("Login", "Account", new { returnUrl = Request.RawUrl })">
                         <span class="text-dark" style="font-size: 16px">Đăng nhập</span>
                         <img src="@Url.Content("~/Content/Images/user.png")" class="ms-2" style="width: 15%" />
                     </a>

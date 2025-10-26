@@ -51,5 +51,6 @@ namespace QL_PHONGGYM.ViewModel
         [Display(Name = "Xác nhận mật khẩu")]
         [Compare("MatKhau", ErrorMessage = "Mật khẩu và mật khẩu xác nhận không khớp.")]
         public string XacNhanMatKhau { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

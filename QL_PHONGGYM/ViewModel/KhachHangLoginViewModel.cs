@@ -18,5 +18,6 @@ namespace QL_PHONGGYM.ViewModel
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
         public string MatKhau { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

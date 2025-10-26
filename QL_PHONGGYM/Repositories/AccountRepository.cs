@@ -33,7 +33,7 @@ namespace QL_PHONGGYM.Repositories
 
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
 
                 throw;

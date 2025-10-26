@@ -17,15 +17,16 @@ namespace QL_PHONGGYM.Controllers
         }
 
         // GET: /Account/Register
-        public ActionResult Register()
+        public ActionResult Register(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         // POST: /Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(KhachHangRegisterViewModel model)
+        public ActionResult Register(KhachHangRegisterViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -36,7 +37,14 @@ namespace QL_PHONGGYM.Controllers
                     if (isSuccess)
                     {
                         TempData["SuccessMessage"] = "Đăng ký thành công! Vui lòng đăng nhập.";
+
+                        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                        {
+                            return RedirectToAction("Login", "Account", new { returnUrl = returnUrl });
+                        }
+
                         return RedirectToAction("Login", "Account");
+
                     }
                     else
                     {
@@ -54,15 +62,16 @@ namespace QL_PHONGGYM.Controllers
             return View(model);
         }
 
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         // POST: /Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(KhachHangLoginViewModel model)
+        public ActionResult Login(KhachHangLoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -71,15 +80,18 @@ namespace QL_PHONGGYM.Controllers
                 if (user != null)
                 {
                     Session["MaKH"] = user.MaKH;
-                    string fullName = user.TenKH;                 
+                    string fullName = user.TenKH;
                     string firstName = fullName.Split(' ').Last();
                     Session["TenKH"] = firstName;
+
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                        return Redirect(returnUrl);
 
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ViewBag.Err =  "Tên đăng nhập hoặc mật khẩu không chính xác.";
+                    ViewBag.Err = "Tên đăng nhập hoặc mật khẩu không chính xác.";
                 }
             }
             return View(model);
@@ -90,7 +102,7 @@ namespace QL_PHONGGYM.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
     }
 }
