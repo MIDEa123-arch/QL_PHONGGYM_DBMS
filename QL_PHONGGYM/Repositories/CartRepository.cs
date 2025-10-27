@@ -1,4 +1,5 @@
 ﻿using QL_PHONGGYM.Models;
+using QL_PHONGGYM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -31,6 +32,19 @@ namespace QL_PHONGGYM.Repositories
                 );
 
                 return true;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public List<GioHangViewModel> GetCart(int maKH)
+        {            
+            try
+            {
+                var cart = _context.Database.SqlQuery<GioHangViewModel>("EXEC sp_LayGioHang @MaKH", new SqlParameter("@MaKH", maKH)).ToList();
+                return cart;
             }
             catch
             {
