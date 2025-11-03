@@ -15,8 +15,8 @@ namespace QL_PHONGGYM.Controllers
         private readonly AccountRepository _accountRepo;
         public HomeController()
         {
-            _productRepo = new ProductRepository(new QL_PHONGGYMEntities2());
-            _accountRepo = new AccountRepository(new QL_PHONGGYMEntities2());
+            _productRepo = new ProductRepository(new QL_PHONGGYMEntities());
+            _accountRepo = new AccountRepository(new QL_PHONGGYMEntities());
         }
         public ActionResult Index()
         {

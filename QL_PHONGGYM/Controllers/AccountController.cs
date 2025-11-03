@@ -13,7 +13,7 @@ namespace QL_PHONGGYM.Controllers
 
         public AccountController()
         {
-            _accountRepo = new AccountRepository(new QL_PHONGGYMEntities2());
+            _accountRepo = new AccountRepository(new QL_PHONGGYMEntities());
         }
 
         // GET: /Account/Register

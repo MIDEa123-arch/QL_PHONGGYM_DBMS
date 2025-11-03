@@ -9,9 +9,9 @@ namespace QL_PHONGGYM.Repositories
 {
     public class ProductRepository
     {
-        private readonly QL_PHONGGYMEntities2 _context;
+        private readonly QL_PHONGGYMEntities _context;
 
-        public ProductRepository(QL_PHONGGYMEntities2 context)
+        public ProductRepository(QL_PHONGGYMEntities context)
         {
             _context = context;
         }

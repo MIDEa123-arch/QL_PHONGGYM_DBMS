@@ -134,16 +134,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CheckIn.cs">
-      <DependentUpon>QL_GYM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ChiTietGioHang.cs">
-      <DependentUpon>QL_GYM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ChiTietHoaDon.cs">
-      <DependentUpon>QL_GYM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ChucVu.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChuyenMon.cs">
@@ -159,9 +150,6 @@
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DiaChi.cs">
-      <DependentUpon>QL_GYM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\f_GetKhachHangHetHanTrongTuan_Result.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GoiTap.cs">
@@ -189,9 +177,6 @@
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LopHoc.cs">
-      <DependentUpon>QL_GYM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NhanVien.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\QL_GYM.Context.cs">
@@ -222,12 +207,6 @@
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_LayGioHang_Result.cs">
-      <DependentUpon>QL_GYM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_NhanVienLogin_Result.cs">
-      <DependentUpon>QL_GYM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>QL_GYM.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -487,6 +466,7 @@
     <Content Include="Views\Product\ProductDetail.cshtml" />
     <Content Include="Views\Shared\_LayoutPageCart.cshtml" />
     <Content Include="Views\CartCheckout\ToCheckOut.cshtml" />
+    <Content Include="Views\CartCheckout\ThanhToan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

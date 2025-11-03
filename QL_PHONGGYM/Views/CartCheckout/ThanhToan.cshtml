@@ -1,0 +1,100 @@
+﻿@model IEnumerable<QL_PHONGGYM.ViewModel.GioHangViewModel>
+
+@{
+    ViewBag.Title = "ThanhToan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ThanhToan</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaChiTietGH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaKH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaGoiTap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaLop)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DonGia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GiaKhuyenMaiSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayThem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenMonHang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnhDaiDienSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuongTon)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaChiTietGH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaKH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaSP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaGoiTap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaLop)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoLuong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DonGia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GiaKhuyenMaiSP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayThem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenMonHang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AnhDaiDienSP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoLuongTon)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

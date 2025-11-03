@@ -10,9 +10,9 @@ namespace QL_PHONGGYM.Repositories
 {
     public class AccountRepository
     {
-        private readonly QL_PHONGGYMEntities2 _context;
+        private readonly QL_PHONGGYMEntities _context;
 
-        public AccountRepository(QL_PHONGGYMEntities2 context)
+        public AccountRepository(QL_PHONGGYMEntities context)
         {
             _context = context;
         }

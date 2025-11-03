@@ -6,18 +6,31 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace QL_PHONGGYM.Repositories
 {
     public class CartRepository
     {
-        private readonly QL_PHONGGYMEntities2 _context;
+        private readonly QL_PHONGGYMEntities _context;
 
-        public CartRepository(QL_PHONGGYMEntities2 context)
+        public CartRepository(QL_PHONGGYMEntities context)
         {
             _context = context;
         }
 
+        public void XoaDaChon(FormCollection form, int makh)
+        {
+            var list = _context.ChiTietGioHang.ToList().Where(kh => kh.MaKH == makh).Where(sp => form[sp.MaSP.ToString()] != null).ToList();
+            _context.ChiTietGioHang.RemoveRange(list);
+            _context.SaveChanges();
+        }
+
+        public List<GioHangViewModel> ChonSanPham(FormCollection form, int makh, List<GioHangViewModel> cart)
+        {
+            var list = cart.Where(kh => kh.MaKH == makh).Where(sp => form[sp.MaSP.ToString()] != null).ToList();
+            return list;                        
+        }
         public bool AddToCart(int maKH, int? maSP, int? maGoiTap, int? maLop, int soLuong)
         {
             try

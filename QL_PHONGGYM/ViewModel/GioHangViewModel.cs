@@ -14,8 +14,10 @@ namespace QL_PHONGGYM.ViewModel
         public int? MaLop { get; set; }
         public int? SoLuong { get; set; }
         public decimal DonGia { get; set; }
+        public decimal? GiaKhuyenMaiSP { get; set; }
         public DateTime NgayThem { get; set; }
         public string TenMonHang { get; set; }
         public string AnhDaiDienSP { get; set; }
+        public int SoLuongTon { get; set; }
     }
 }

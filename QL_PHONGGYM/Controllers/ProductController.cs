@@ -15,8 +15,8 @@ namespace QL_PHONGGYM.Controllers
 
         public ProductController()
         {
-            _productRepo = new ProductRepository(new QL_PHONGGYMEntities2());
-            _cartRepo = new CartRepository(new QL_PHONGGYMEntities2());
+            _productRepo = new ProductRepository(new QL_PHONGGYMEntities());
+            _cartRepo = new CartRepository(new QL_PHONGGYMEntities());
         }
         [HttpPost]
         public JsonResult AddToCart(int maSP, int soLuong)
