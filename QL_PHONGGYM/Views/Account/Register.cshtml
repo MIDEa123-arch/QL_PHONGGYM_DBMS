@@ -6,7 +6,6 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -15,25 +14,90 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
-        .validation-summary-errors ul {
-            list-style: none;
-            padding-left: 0;
-            margin-left: 0;
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
-        .gym-logo {
+        body {
+            background: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .register-container {
+            min-height: 100vh;
             display: flex;
-            gap: 20px;
-            justify-content: center;
             align-items: center;
-            margin-bottom: 30px;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .register-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            margin: 20px auto;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
         .logo-img {
-            height: 120px;
+            height: 80px;
             width: auto;
             object-fit: contain;
+            margin-bottom: 20px;
         }
+
+        .main-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0d6efd;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 15px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e0e0;
+            display: inline-block;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #0d6efd;
+                box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+            }
 
         .password-wrapper {
             position: relative;
@@ -41,7 +105,7 @@
 
         .password-toggle {
             position: absolute;
-            right: 12px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
@@ -49,141 +113,308 @@
             font-size: 18px;
             user-select: none;
             z-index: 10;
+            transition: color 0.3s ease;
         }
 
             .password-toggle:hover {
                 color: #0d6efd;
             }
+
+        .gender-options {
+            display: flex;
+            gap: 30px;
+            margin-top: 10px;
+        }
+
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+        .form-check-label {
+            font-size: 15px;
+            color: #495057;
+            cursor: pointer;
+        }
+
+        .btn-register {
+            background-color: #0d6efd;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-register:hover {
+                background-color: #0b5ed7;
+            }
+
+        .email-note {
+            font-size: 13px;
+            color: #28a745;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+            .back-link a {
+                color: #0d6efd;
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 15px;
+                transition: color 0.3s ease;
+            }
+
+                .back-link a:hover {
+                    color: #0b5ed7;
+                    text-decoration: underline;
+                }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 30px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .text-danger {
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .validation-summary-errors ul {
+            list-style: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .register-container {
+                padding: 20px 10px;
+            }
+
+            .register-card {
+                padding: 30px 20px;
+                border-radius: 15px;
+            }
+
+            .main-title {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .logo-img {
+                height: 60px;
+            }
+
+            .form-control {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+
+            .btn-register {
+                padding: 12px 30px;
+                font-size: 15px;
+            }
+
+            .gender-options {
+                gap: 20px;
+            }
+
+            .row {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .col-md-6 {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .register-card {
+                padding: 25px 15px;
+            }
+
+            .main-title {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+        }
+
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
     </style>
 </head>
-<body class="bg-light pb-5">
-    <div class="text-center mx-auto" style="max-width: 700px">
-
-        <div class="h2 text-primary mb-5" style="margin-top:20px;">Đăng ký trở thành GYM-MEMBER</div>
-        <div class="gym-logo mt-5">
-            <img src="~/Content/Images/logo.png" alt="Logo" class="logo-img" />
-        </div>
-
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                @TempData["SuccessMessage"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<body>
+    <div class="register-container">
+        <div class="register-card">
+            <div class="header-section">
+                <img src="~/Content/Images/logo.png" alt="Logo" class="logo-img" />
+                <h1 class="main-title">Đăng ký GYM-MEMBER</h1>
+                <p class="subtitle">Tạo tài khoản để nhận nhiều ưu đãi hấp dẫn</p>
             </div>
-        }
 
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                @TempData["ErrorMessage"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
 
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post,
-               new
-               {
-                   role = "form",
-                   style = "max-width: 700px",
-                   @class = "text-center d-flex flex-column align-items-center align-content-center justify-content-center"
-               }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.ReturnUrl, new { value = ViewBag.ReturnUrl })
-            <div class="w-100 text-start">
-                <h5 class="mb-3">Thông tin cá nhân</h5>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        @Html.LabelFor(m => m.TenKH, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.TenKH, new { @class = "form-control", placeholder = "Nhập họ và tên", @style = "max-width: 350px" })
-                        @Html.ValidationMessageFor(m => m.TenKH, "", new { @class = "text-danger small mt-2" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ReturnUrl, new { value = ViewBag.ReturnUrl })
+
+                <div class="form-section">
+                    <h2 class="section-title">Thông tin cá nhân</h2>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.TenKH, "Họ và tên", new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.TenKH, new { @class = "form-control", placeholder = "Nguyễn Văn A" })
+                            @Html.ValidationMessageFor(m => m.TenKH, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.NgaySinh, "Ngày sinh", new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(m => m.NgaySinh, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        @Html.LabelFor(m => m.NgaySinh, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @style = "max-width: 350px" })
-                        @Html.ValidationMessageFor(m => m.NgaySinh, "", new { @class = "text-danger small mt-2" })
+
+                    <div class="mb-3">
+                        @Html.Label("Giới tính", new { @class = "form-label" })
+                        <div class="gender-options">
+                            <div class="form-check">
+                                @Html.RadioButtonFor(m => m.GioiTinh, "Nam", new { @class = "form-check-input", id = "Nam" })
+                                <label class="form-check-label" for="Nam">Nam</label>
+                            </div>
+                            <div class="form-check">
+                                @Html.RadioButtonFor(m => m.GioiTinh, "Nữ", new { @class = "form-check-input", id = "Nu" })
+                                <label class="form-check-label" for="Nu">Nữ</label>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.GioiTinh, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.SDT, "Số điện thoại", new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.SDT, new { @class = "form-control", placeholder = "0987654321" })
+                            @Html.ValidationMessageFor(m => m.SDT, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.Email, "Email (Không bắt buộc)", new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "email@example.com" })
+                            <div class="email-note">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Hóa đơn VAT sẽ được gửi qua email này</span>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    @Html.Label("Giới tính", new { @class = "form-label" })
-                    <div class="d-flex gap-4 mt-1">
-                        <div class="form-check">
-                            @Html.RadioButtonFor(m => m.GioiTinh, "Nam", new { @class = "form-check-input", id = "Nam" })
-                            <label class="form-check-label" for="Nam">Nam</label>
-                        </div>
-                        <div class="form-check">
-                            @Html.RadioButtonFor(m => m.GioiTinh, "Nữ", new { @class = "form-check-input", id = "Nu" })
-                            <label class="form-check-label" for="Nu">Nữ</label>
-                        </div>
-                    </div>
-                    @Html.ValidationMessageFor(m => m.GioiTinh, "", new { @class = "text-danger small mt-2" })
-                </div>
-            </div>
+                <div class="form-section">
+                    <h2 class="section-title">Tài khoản đăng nhập</h2>
 
-            <div class="w-100 text-start">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        @Html.LabelFor(m => m.SDT, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.SDT, new { @class = "form-control", placeholder = "Nhập số điện thoại", @style = "max-width: 350px" })
-                        @Html.ValidationMessageFor(m => m.SDT, "", new { @class = "text-danger small" })
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.TenDangNhap, "Tên đăng nhập", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "Chọn tên đăng nhập" })
+                        @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
                     </div>
-                    <div class="col-md-6 mb-3">
-                        @Html.LabelFor(m => m.Email, "Email (Không bắt buộc)", new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập email", @style = "max-width: 350px" })
-                        <label class="form-check-label small text-success mt-2" style="font-size:13px">
-                            ✓ Hóa đơn VAT khi mua hàng sẽ được gửi qua email này
-                        </label>
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small mt-2" })
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.MatKhau, "Mật khẩu", new { @class = "form-label" })
+                            <div class="password-wrapper">
+                                @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu", @id = "passwordInput1", @style = "padding-right: 45px;" })
+                                <i class="bi bi-eye-slash password-toggle" id="togglePassword1"></i>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            @Html.LabelFor(m => m.XacNhanMatKhau, "Xác nhận mật khẩu", new { @class = "form-label" })
+                            <div class="password-wrapper">
+                                @Html.PasswordFor(m => m.XacNhanMatKhau, new { @class = "form-control", placeholder = "Nhập lại mật khẩu", @id = "passwordInput2", @style = "padding-right: 45px;" })
+                                <i class="bi bi-eye-slash password-toggle" id="togglePassword2"></i>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.XacNhanMatKhau, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="w-100 text-start">
-                <h4 class="h5 mb-3">Tạo tài khoản</h4>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        @Html.LabelFor(m => m.TenDangNhap, new { @class = "form-label" })
-                        <div class="input-group">
-                            @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "Nhập tên đăng nhập của bạn", @style = "max-width: 700px" })
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        @Html.LabelFor(m => m.MatKhau, new { @class = "form-label" })
-                        <div class="password-wrapper">
-                            @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu của bạn", @id = "passwordInput1", @style = "max-width: 350px; padding-right: 40px;" })
-                            <i class="bi bi-eye-slash password-toggle" id="togglePassword1"></i>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger small mt-2" })
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        @Html.LabelFor(m => m.XacNhanMatKhau, new { @class = "form-label" })
-                        <div class="password-wrapper">
-                            @Html.PasswordFor(m => m.XacNhanMatKhau, new { @class = "form-control", placeholder = "Nhập lại mật khẩu", @id = "passwordInput2", @style = "max-width: 350px; padding-right: 40px;" })
-                            <i class="bi bi-eye-slash password-toggle" id="togglePassword2"></i>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.XacNhanMatKhau, "", new { @class = "text-danger small mt-2" })
-                    </div>
-                </div>
-            </div>
+                <button type="submit" class="btn btn-register">
+                    <i class="bi bi-person-plus me-2"></i>Đăng ký ngay
+                </button>
+            }
 
-            <div class="mt-3 w-100 text-start">
-                <div class="w-100">
-                    <input type="submit" value="Đăng ký" class="btn btn-primary btn-lg px-3 fs-6" />
-                </div>
+            <div class="back-link">
+                @Html.ActionLink("← Quay lại đăng nhập", "Login", "Account")
             </div>
-        }
-
-        <div class="d-flex gap-3 w-100 mt-4">
-            @Html.ActionLink(
-                "Quay lại đăng nhập",
-                "Login",
-                "Account",
-                null,
-                new { @class = "text-secondary small" }
-            )
         </div>
     </div>
 
@@ -192,6 +423,7 @@
 
     <script>
         $(function () {
+            // Toggle password visibility for first password field
             $('#togglePassword1').on('click', function () {
                 var $pwd = $('#passwordInput1');
                 if ($pwd.attr('type') === 'password') {
@@ -203,6 +435,7 @@
                 }
             });
 
+            // Toggle password visibility for confirm password field
             $('#togglePassword2').on('click', function () {
                 var $pwd = $('#passwordInput2');
                 if ($pwd.attr('type') === 'password') {
@@ -213,17 +446,12 @@
                     $(this).removeClass('bi-eye').addClass('bi-eye-slash');
                 }
             });
-        });
-    </script>
 
-    <script>
-        window.setTimeout(function () {
-            let alertEl = document.querySelector('.alert-dismissible');
-            if (alertEl) {
-                alertEl.classList.remove('show');
-                alertEl.classList.add('hide');
-            }
-        }, 5000);
+            // Auto-dismiss alerts after 5 seconds
+            window.setTimeout(function () {
+                $('.alert-dismissible').fadeOut('slow');
+            }, 5000);
+        });
     </script>
 </body>
 </html>

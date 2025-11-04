@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace QL_PHONGGYM.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : Controller 
     {
         private readonly AccountRepository _accountRepo;
 

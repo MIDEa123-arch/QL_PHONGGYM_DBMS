@@ -1,0 +1,164 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.NhanVien
+
+@{
+    ViewBag.Title = "Xóa Nhân Viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Giữ tông đơn giản, nhẹ nhàng */
+    .delete-page {
+        max-width: 880px;
+        margin: 36px auto;
+        padding: 0 16px;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .panel {
+        background: #f8fbff; /* xanh nhạt */
+        border: 1px solid #e6f0fb;
+        border-radius: 10px;
+        padding: 22px;
+    }
+
+    .panel .heading {
+        color: #1e3a8a;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e6f0fb;
+    }
+
+    .row {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+    }
+
+    .col {
+        flex: 1 1 48%;
+        min-width: 220px;
+    }
+
+    label.field-label {
+        display: block;
+        margin-bottom: 6px;
+        color: #283046;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .field-value {
+        background: #fff;
+        border: 1px solid #e9eef6;
+        padding: 10px 12px;
+        border-radius: 6px;
+        color: #333;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .btn-cancel,
+    .btn-delete {
+        padding: 10px 18px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-delete:hover { background: #c82333; }
+
+    .btn-cancel {
+        background: #6c757d;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-cancel:hover { background: #5a6268; }
+
+    /* Responsive */
+    @@media (max-width: 680px) {
+        .col { flex: 1 1 100%; }
+        .actions { flex-direction: column-reverse; align-items: stretch; }
+    }
+</style>
+
+<div class="delete-page">
+    <div class="panel">
+        <div class="heading">Xác nhận xóa nhân viên</div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.MaNV)
+
+            <div class="row">
+                <div class="col">
+                    <label class="field-label">Chức vụ</label>
+                    <div class="field-value">
+                        @(Model.ChucVu != null && !string.IsNullOrWhiteSpace(Model.ChucVu.TenChucVu)
+                            ? Model.ChucVu.TenChucVu
+                            : "Không có dữ liệu")
+                    </div>
+                </div>
+
+                <div class="col">
+                    <label class="field-label">Tên đăng nhập</label>
+                    <div class="field-value">@(!string.IsNullOrEmpty(Model.TenDangNhap) ? Model.TenDangNhap : "Không có dữ liệu")</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="field-label">Mật khẩu</label>
+                    <div class="field-value">@(!string.IsNullOrEmpty(Model.MatKhau) ? Model.MatKhau : "Không có dữ liệu")</div>
+                </div>
+
+                <div class="col">
+                    <label class="field-label">Tên nhân viên</label>
+                    <div class="field-value">@(!string.IsNullOrEmpty(Model.TenNV) ? Model.TenNV : "Không có dữ liệu")</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="field-label">Giới tính</label>
+                    <div class="field-value">@(!string.IsNullOrEmpty(Model.GioiTinh) ? Model.GioiTinh : "Không có dữ liệu")</div>
+                </div>
+
+                <div class="col">
+                    <label class="field-label">Số điện thoại</label>
+                    <div class="field-value">@(!string.IsNullOrEmpty(Model.SDT) ? Model.SDT : "Không có dữ liệu")</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="field-label">Ngày sinh</label>
+                    <div class="field-value">
+                        @(Model.NgaySinh.HasValue ? Model.NgaySinh.Value.ToString("dd/MM/yyyy") : "Không có dữ liệu")
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn-delete">Xóa</button>
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn-cancel" })
+            </div>
+        }
+    </div>
+</div>

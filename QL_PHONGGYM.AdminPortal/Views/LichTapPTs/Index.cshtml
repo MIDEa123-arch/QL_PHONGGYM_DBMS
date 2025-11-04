@@ -1,0 +1,62 @@
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.LichTapPT>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaLichPT)
+        <th>
+            @Html.DisplayNameFor(model => model.DangKyPT.MaDKPT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayTap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GioBatDau)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GioKetThuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaLichPT)
+        <td>
+            @Html.DisplayFor(modelItem => item.DangKyPT.MaDKPT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayTap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GioBatDau)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GioKetThuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrangThai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaLichPT }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaLichPT }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaLichPT })
+        </td>
+    </tr>
+}
+
+</table>

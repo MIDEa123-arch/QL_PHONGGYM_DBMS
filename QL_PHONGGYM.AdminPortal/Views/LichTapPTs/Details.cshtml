@@ -1,0 +1,65 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.LichTapPT
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LichTapPT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaLichPT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaLichPT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DangKyPT.MaDKPT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DangKyPT.MaDKPT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayTap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayTap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GioBatDau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GioBatDau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GioKetThuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GioKetThuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaLichPT }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
