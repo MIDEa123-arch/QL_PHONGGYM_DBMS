@@ -14,6 +14,12 @@ namespace QL_PHONGGYM.Models
     
     public partial class HoaDon
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public HoaDon()
+        {
+            this.ChiTietHoaDon = new HashSet<ChiTietHoaDon>();
+        }
+    
         public int MaHD { get; set; }
         public int MaKH { get; set; }
         public System.DateTime NgayLap { get; set; }
@@ -23,5 +29,7 @@ namespace QL_PHONGGYM.Models
         public Nullable<decimal> GiamGia { get; set; }
     
         public virtual KhachHang KhachHang { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDon { get; set; }
     }
 }

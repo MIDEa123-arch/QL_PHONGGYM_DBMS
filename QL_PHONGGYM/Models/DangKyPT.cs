@@ -18,6 +18,7 @@ namespace QL_PHONGGYM.Models
         public DangKyPT()
         {
             this.LichTapPT = new HashSet<LichTapPT>();
+            this.ChiTietHoaDon = new HashSet<ChiTietHoaDon>();
         }
     
         public int MaDKPT { get; set; }
@@ -31,5 +32,7 @@ namespace QL_PHONGGYM.Models
         public virtual KhachHang KhachHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LichTapPT> LichTapPT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDon { get; set; }
     }
 }

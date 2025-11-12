@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QL_PHONGGYMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QL_PHONGGYMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChiTietGioHang">
           <Key>
             <PropertyRef Name="MaChiTietGH" />
@@ -17,6 +17,19 @@
           <Property Name="SoLuong" Type="int" Nullable="false" />
           <Property Name="DonGia" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="NgayThem" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChiTietHoaDon">
+          <Key>
+            <PropertyRef Name="MaCTHD" />
+          </Key>
+          <Property Name="MaCTHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaHD" Type="int" Nullable="false" />
+          <Property Name="MaDKGT" Type="int" />
+          <Property Name="MaDKPT" Type="int" />
+          <Property Name="MaDKLop" Type="int" />
+          <Property Name="MaSP" Type="int" />
+          <Property Name="SoLuong" Type="int" />
+          <Property Name="DonGia" Type="decimal" Precision="12" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="ChuyenMon">
           <Key>
@@ -71,6 +84,7 @@
           <Property Name="PhuongXa" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="DiaChiCuThe" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="LaDiaChiMacDinh" Type="bit" Nullable="false" />
+          <Property Name="NgayThem" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="GoiTap">
           <Key>
@@ -184,6 +198,66 @@
           <Property Name="MoTaChung" Type="nvarchar" MaxLength="1000" />
           <Property Name="MoTaChiTiet" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK_CT_HD">
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HoaDon">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_HD_DKGT">
+          <End Role="DangKyGoiTap" Type="Self.DangKyGoiTap" Multiplicity="0..1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DangKyGoiTap">
+              <PropertyRef Name="MaDKGT" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaDKGT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_HD_DKLop">
+          <End Role="DangKyLop" Type="Self.DangKyLop" Multiplicity="0..1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DangKyLop">
+              <PropertyRef Name="MaDKLop" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaDKLop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_HD_DKPT">
+          <End Role="DangKyPT" Type="Self.DangKyPT" Multiplicity="0..1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DangKyPT">
+              <PropertyRef Name="MaDKPT" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaDKPT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_SP">
+          <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SanPham">
+              <PropertyRef Name="MaSP" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DiaChi_KhachHang">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -477,6 +551,7 @@
         </Function>
         <EntityContainer Name="QL_PHONGGYMModelStoreContainer">
           <EntitySet Name="ChiTietGioHang" EntityType="Self.ChiTietGioHang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChiTietHoaDon" EntityType="Self.ChiTietHoaDon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChuyenMon" EntityType="Self.ChuyenMon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DangKyGoiTap" EntityType="Self.DangKyGoiTap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DangKyLop" EntityType="Self.DangKyLop" Schema="dbo" store:Type="Tables" />
@@ -492,6 +567,26 @@
           <EntitySet Name="LoaiSanPham" EntityType="Self.LoaiSanPham" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LopHoc" EntityType="Self.LopHoc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CT_HD" Association="Self.FK_CT_HD">
+            <End Role="HoaDon" EntitySet="HoaDon" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_HD_DKGT" Association="Self.FK_CT_HD_DKGT">
+            <End Role="DangKyGoiTap" EntitySet="DangKyGoiTap" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_HD_DKLop" Association="Self.FK_CT_HD_DKLop">
+            <End Role="DangKyLop" EntitySet="DangKyLop" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_HD_DKPT" Association="Self.FK_CT_HD_DKPT">
+            <End Role="DangKyPT" EntitySet="DangKyPT" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_SP" Association="Self.FK_CT_SP">
+            <End Role="SanPham" EntitySet="SanPham" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
           <AssociationSet Name="FK_DiaChi_KhachHang" Association="Self.FK_DiaChi_KhachHang">
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="DiaChi" EntitySet="DiaChi" />
@@ -557,8 +652,7 @@
             <End Role="SanPham" EntitySet="SanPham" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QL_PHONGGYMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -600,6 +694,7 @@
           <Property Name="TrangThai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GoiTap" Relationship="Self.FK_DKGT_GT" FromRole="DangKyGoiTap" ToRole="GoiTap" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_DKGT_KH" FromRole="DangKyGoiTap" ToRole="KhachHang" />
+          <NavigationProperty Name="ChiTietHoaDon" Relationship="QL_PHONGGYMModel.FK_CT_HD_DKGT" FromRole="DangKyGoiTap" ToRole="ChiTietHoaDon" />
         </EntityType>
         <EntityType Name="DangKyLop">
           <Key>
@@ -612,6 +707,7 @@
           <Property Name="TrangThai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_DKLop_KH" FromRole="DangKyLop" ToRole="KhachHang" />
           <NavigationProperty Name="LopHoc" Relationship="Self.FK_DKLop_Lop" FromRole="DangKyLop" ToRole="LopHoc" />
+          <NavigationProperty Name="ChiTietHoaDon" Relationship="QL_PHONGGYMModel.FK_CT_HD_DKLop" FromRole="DangKyLop" ToRole="ChiTietHoaDon" />
         </EntityType>
         <EntityType Name="DangKyPT">
           <Key>
@@ -626,6 +722,7 @@
           <Property Name="TrangThai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_DKPT_KH" FromRole="DangKyPT" ToRole="KhachHang" />
           <NavigationProperty Name="LichTapPT" Relationship="Self.FK_LichPT_DKPT" FromRole="DangKyPT" ToRole="LichTapPT" />
+          <NavigationProperty Name="ChiTietHoaDon" Relationship="QL_PHONGGYMModel.FK_CT_HD_DKPT" FromRole="DangKyPT" ToRole="ChiTietHoaDon" />
         </EntityType>
         <EntityType Name="DiaChi">
           <Key>
@@ -639,6 +736,7 @@
           <Property Name="DiaChiCuThe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LaDiaChiMacDinh" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_DiaChi_KhachHang" FromRole="DiaChi" ToRole="KhachHang" />
+          <Property Name="NgayThem" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="GoiTap">
           <Key>
@@ -674,6 +772,7 @@
           <Property Name="TrangThai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="GiamGia" Type="Decimal" Precision="12" Scale="2" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_HoaDon_KH" FromRole="HoaDon" ToRole="KhachHang" />
+          <NavigationProperty Name="ChiTietHoaDon" Relationship="QL_PHONGGYMModel.FK_CT_HD" FromRole="HoaDon" ToRole="ChiTietHoaDon" />
         </EntityType>
         <EntityType Name="KhachHang">
           <Key>
@@ -772,6 +871,7 @@
           <NavigationProperty Name="ChiTietGioHang" Relationship="Self.FK_GioHang_SanPham_LoggedIn" FromRole="SanPham" ToRole="ChiTietGioHang" />
           <NavigationProperty Name="HINHANH" Relationship="Self.FK_HinhAnh_SanPham" FromRole="SanPham" ToRole="HINHANH" />
           <NavigationProperty Name="LoaiSanPham" Relationship="Self.FK_SP_LSP" FromRole="SanPham" ToRole="LoaiSanPham" />
+          <NavigationProperty Name="ChiTietHoaDon" Relationship="QL_PHONGGYMModel.FK_CT_SP" FromRole="SanPham" ToRole="ChiTietHoaDon" />
         </EntityType>
         <Association Name="FK_GioHang_GoiTap_LoggedIn">
           <End Role="GoiTap" Type="Self.GoiTap" Multiplicity="0..1">
@@ -1124,7 +1224,7 @@
             <Parameter Name="GiamGia" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="sp_LayGioHang" ReturnType="Collection(QL_PHONGGYMModel.sp_LayGioHang_Result)">
-            <Parameter Name="MaKH" Mode="In" Type="Int32" />
+          <Parameter Name="MaKH" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_renamediagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1139,11 +1239,32 @@
             <Parameter Name="SoLuong" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_XoaGioHang">
-            <Parameter Name="MaKH" Mode="In" Type="Int32" />
+          <Parameter Name="MaKH" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_XoaKhoiGioHang">
-            <Parameter Name="MaChiTietGH" Mode="In" Type="Int32" />
+          <Parameter Name="MaChiTietGH" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="ChiTietHoaDon" EntityType="QL_PHONGGYMModel.ChiTietHoaDon" />
+          <AssociationSet Name="FK_CT_HD" Association="QL_PHONGGYMModel.FK_CT_HD">
+            <End Role="HoaDon" EntitySet="HoaDon" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_HD_DKGT" Association="QL_PHONGGYMModel.FK_CT_HD_DKGT">
+            <End Role="DangKyGoiTap" EntitySet="DangKyGoiTap" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_HD_DKLop" Association="QL_PHONGGYMModel.FK_CT_HD_DKLop">
+            <End Role="DangKyLop" EntitySet="DangKyLop" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_HD_DKPT" Association="QL_PHONGGYMModel.FK_CT_HD_DKPT">
+            <End Role="DangKyPT" EntitySet="DangKyPT" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_SP" Association="QL_PHONGGYMModel.FK_CT_SP">
+            <End Role="SanPham" EntitySet="SanPham" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1176,6 +1297,84 @@
           <Property Type="Decimal" Name="GiaKhuyenMaiSP" Nullable="true" Precision="12" Scale="2" />
           <Property Type="Int32" Name="SoLuongTon" Nullable="true" />
         </ComplexType>
+        <EntityType Name="ChiTietHoaDon">
+          <Key>
+            <PropertyRef Name="MaCTHD" />
+          </Key>
+          <Property Name="MaCTHD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaHD" Type="Int32" Nullable="false" />
+          <Property Name="MaDKGT" Type="Int32" />
+          <Property Name="MaDKPT" Type="Int32" />
+          <Property Name="MaDKLop" Type="Int32" />
+          <Property Name="MaSP" Type="Int32" />
+          <Property Name="SoLuong" Type="Int32" />
+          <Property Name="DonGia" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <NavigationProperty Name="HoaDon" Relationship="QL_PHONGGYMModel.FK_CT_HD" FromRole="ChiTietHoaDon" ToRole="HoaDon" />
+          <NavigationProperty Name="DangKyGoiTap" Relationship="QL_PHONGGYMModel.FK_CT_HD_DKGT" FromRole="ChiTietHoaDon" ToRole="DangKyGoiTap" />
+          <NavigationProperty Name="DangKyLop" Relationship="QL_PHONGGYMModel.FK_CT_HD_DKLop" FromRole="ChiTietHoaDon" ToRole="DangKyLop" />
+          <NavigationProperty Name="DangKyPT" Relationship="QL_PHONGGYMModel.FK_CT_HD_DKPT" FromRole="ChiTietHoaDon" ToRole="DangKyPT" />
+          <NavigationProperty Name="SanPham" Relationship="QL_PHONGGYMModel.FK_CT_SP" FromRole="ChiTietHoaDon" ToRole="SanPham" />
+        </EntityType>
+        <Association Name="FK_CT_HD">
+          <End Type="QL_PHONGGYMModel.HoaDon" Role="HoaDon" Multiplicity="1" />
+          <End Type="QL_PHONGGYMModel.ChiTietHoaDon" Role="ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HoaDon">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_HD_DKGT">
+          <End Type="QL_PHONGGYMModel.DangKyGoiTap" Role="DangKyGoiTap" Multiplicity="0..1" />
+          <End Type="QL_PHONGGYMModel.ChiTietHoaDon" Role="ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DangKyGoiTap">
+              <PropertyRef Name="MaDKGT" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaDKGT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_HD_DKLop">
+          <End Type="QL_PHONGGYMModel.DangKyLop" Role="DangKyLop" Multiplicity="0..1" />
+          <End Type="QL_PHONGGYMModel.ChiTietHoaDon" Role="ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DangKyLop">
+              <PropertyRef Name="MaDKLop" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaDKLop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_HD_DKPT">
+          <End Type="QL_PHONGGYMModel.DangKyPT" Role="DangKyPT" Multiplicity="0..1" />
+          <End Type="QL_PHONGGYMModel.ChiTietHoaDon" Role="ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DangKyPT">
+              <PropertyRef Name="MaDKPT" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaDKPT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_SP">
+          <End Type="QL_PHONGGYMModel.SanPham" Role="SanPham" Multiplicity="0..1" />
+          <End Type="QL_PHONGGYMModel.ChiTietHoaDon" Role="ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SanPham">
+              <PropertyRef Name="MaSP" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="MaSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1245,6 +1444,7 @@
           <EntitySetMapping Name="DiaChi">
             <EntityTypeMapping TypeName="QL_PHONGGYMModel.DiaChi">
               <MappingFragment StoreEntitySet="DiaChi">
+                <ScalarProperty Name="NgayThem" ColumnName="NgayThem" />
                 <ScalarProperty Name="MaDC" ColumnName="MaDC" />
                 <ScalarProperty Name="MaKH" ColumnName="MaKH" />
                 <ScalarProperty Name="TinhThanhPho" ColumnName="TinhThanhPho" />
@@ -1438,6 +1638,20 @@
           <FunctionImportMapping FunctionImportName="sp_ThemVaoGioHang" FunctionName="QL_PHONGGYMModel.Store.sp_ThemVaoGioHang" />
           <FunctionImportMapping FunctionImportName="sp_XoaGioHang" FunctionName="QL_PHONGGYMModel.Store.sp_XoaGioHang" />
           <FunctionImportMapping FunctionImportName="sp_XoaKhoiGioHang" FunctionName="QL_PHONGGYMModel.Store.sp_XoaKhoiGioHang" />
+          <EntitySetMapping Name="ChiTietHoaDon">
+            <EntityTypeMapping TypeName="QL_PHONGGYMModel.ChiTietHoaDon">
+              <MappingFragment StoreEntitySet="ChiTietHoaDon">
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+                <ScalarProperty Name="MaDKLop" ColumnName="MaDKLop" />
+                <ScalarProperty Name="MaDKPT" ColumnName="MaDKPT" />
+                <ScalarProperty Name="MaDKGT" ColumnName="MaDKGT" />
+                <ScalarProperty Name="MaHD" ColumnName="MaHD" />
+                <ScalarProperty Name="MaCTHD" ColumnName="MaCTHD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

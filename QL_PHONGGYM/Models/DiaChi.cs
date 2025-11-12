@@ -21,6 +21,7 @@ namespace QL_PHONGGYM.Models
         public string PhuongXa { get; set; }
         public string DiaChiCuThe { get; set; }
         public bool LaDiaChiMacDinh { get; set; }
+        public System.DateTime NgayThem { get; set; }
     
         public virtual KhachHang KhachHang { get; set; }
     }

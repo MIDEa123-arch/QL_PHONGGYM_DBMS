@@ -498,16 +498,31 @@ document.addEventListener("DOMContentLoaded", function () {
     var toast = new bootstrap.Toast(toastEl);
 
     var btnAddToCart = document.getElementById('btnAddToCart');
+    var quantityInput = document.getElementById('quantity');
+    var hiddenQty = document.getElementById('quantityHidden');
+    var tonKho = parseInt(quantityInput.max);
+
+    // Đồng bộ hidden input
+    hiddenQty.value = quantityInput.value;
+
+    // Khi thay đổi số lượng
+    quantityInput.addEventListener("input", function () {
+        let val = parseInt(this.value) || 1;
+
+        if (val >= tonKho) {
+            val = tonKho; // không vượt quá tồn kho
+            this.value = val;
+        } else if (val <= 1) {
+            val = 1; // không nhỏ hơn 1
+            this.value = val;
+        }
+
+        hiddenQty.value = val;
+    });
+
     btnAddToCart?.addEventListener('click', function () {
         var maSP = this.dataset.id;
-        var quantityInput = document.getElementById('quantity');
         var soLuong = parseInt(quantityInput.value);
-        var tonKho = parseInt(quantityInput.max);
-
-        if (soLuong > tonKho) {
-            soLuong = tonKho;
-            quantityInput.value = tonKho;
-        }
 
         fetch('@Url.Action("AddToCart", "Product")', {
             method: 'POST',
@@ -525,13 +540,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(err => console.error(err));
     });
 });
-    const visibleQty = document.getElementById("quantity");
-    const hiddenQty = document.getElementById("quantityHidden");   
-    hiddenQty.value = visibleQty.value;
-
-    visibleQty.addEventListener("input", function () {
-        hiddenQty.value = this.value;
-    });
 </script>
+
 
 

@@ -19,6 +19,7 @@ namespace QL_PHONGGYM.Models
         {
             this.ChiTietGioHang = new HashSet<ChiTietGioHang>();
             this.HINHANH = new HashSet<HINHANH>();
+            this.ChiTietHoaDon = new HashSet<ChiTietHoaDon>();
         }
     
         public int MaSP { get; set; }
@@ -38,5 +39,7 @@ namespace QL_PHONGGYM.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HINHANH> HINHANH { get; set; }
         public virtual LoaiSanPham LoaiSanPham { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDon { get; set; }
     }
 }

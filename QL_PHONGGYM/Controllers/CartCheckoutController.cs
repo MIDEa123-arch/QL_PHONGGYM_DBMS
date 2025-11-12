@@ -12,11 +12,72 @@ namespace QL_PHONGGYM.Controllers
     public class CartCheckoutController : Controller
     {
         private readonly CartRepository _cartRepo;
+        private readonly KhachHangRepository _cusRepo;
 
         public CartCheckoutController()
         {            
             _cartRepo = new CartRepository(new QL_PHONGGYMEntities());
+            _cusRepo = new KhachHangRepository(new QL_PHONGGYMEntities());
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TaoHoaDon(FormCollection form)
+        {
+            var cart = (List<GioHangViewModel>)Session["thanhtoan"];
+            int maKH = (int)Session["MaKH"];
+            _cartRepo.TaoHoaDon(form, maKH, cart);
+            return RedirectToAction("ToCheckOut");
+        }
+
+        public ActionResult ThanhToanfinal()
+        {            
+            int maKH = (int)Session["MaKH"];
+            var kh = _cusRepo.ThongTinKH(maKH);
+
+            ViewBag.Khachhang = kh;
+            ViewBag.LoaiKh = kh.MaLoaiKH.HasValue ? _cusRepo.LoaiKh(kh.MaLoaiKH.Value) : null;
+            ViewBag.DiaChi = Session["Diachi"] as DiaChi;
+
+            var cart = (List<GioHangViewModel>)Session["thanhtoan"];
+            return View(cart.OrderByDescending(sp => sp.NgayThem));
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThanhToanfinal(FormCollection form)
+        {
+            int maKH = (int)Session["MaKH"];
+
+            _cusRepo.ThemDiaChi(maKH, form);
+            var cart = (List<GioHangViewModel>)Session["thanhtoan"];
+
+            return RedirectToAction("ThanhToanfinal");
+        }
+
+        public ActionResult GiamSoLuong(int id)
+        {
+            _cartRepo.Xoa(id);
+            return RedirectToAction("ToCheckOut");
+            
+        }
+
+        public ActionResult TangSoLuong(int id)
+        {
+            _cartRepo.Them(id);
+            return RedirectToAction("ToCheckOut");
+
+        }
+
+        public ActionResult XoaDon(int id)
+        {
+            int maKH = (int)Session["MaKH"];
+            _cartRepo.XoaDon(id, maKH);           
+
+            return RedirectToAction("ToCheckOut");
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -26,15 +87,14 @@ namespace QL_PHONGGYM.Controllers
 
             if (actionType == "delete")
             {
-                _cartRepo.XoaDaChon(form, maKH);
-                Session["cart"] = _cartRepo.GetCart(maKH);
+                _cartRepo.XoaDaChon(form, maKH);                
                 return RedirectToAction("ToCheckOut");
-            }
+            }   
             else if (actionType == "checkout")
             {
 
-                var list = _cartRepo.ChonSanPham(form, maKH, (List<GioHangViewModel>)Session["cart"]);
-                Session["cart"] = list;
+                var list = _cartRepo.ChonSanPham(form, maKH);
+                Session["thanhtoan"] = list;
                 return RedirectToAction("ThanhToan");
             }
 
@@ -43,14 +103,28 @@ namespace QL_PHONGGYM.Controllers
 
         public ActionResult ThanhToan()
         {
-            var list = (List<GioHangViewModel>)Session["cart"];
+            int maKH = (int)Session["MaKH"];
+            var list = (List<GioHangViewModel>)Session["thanhtoan"];
+            var kh = _cusRepo.ThongTinKH(maKH);
 
-            return View(list);
+            if (kh.MaLoaiKH.HasValue)
+            {
+                ViewBag.LoaiKh = _cusRepo.LoaiKh(kh.MaLoaiKH.Value);
+            }
+            else
+            {
+                ViewBag.LoaiKh = null;
+            }
+            var diaChi = _cusRepo.GetDiaChi(maKH);
+            ViewBag.Khachhang = kh;
+            ViewBag.DiaChi = diaChi;
+            Session["Diachi"] = diaChi;
+            return View(list.OrderByDescending(sp => sp.NgayThem));
         }
         public ActionResult ToCheckOut()
         {
             int maKH = (int)Session["MaKH"];
-            var cart = _cartRepo.GetCart(maKH);
+            var cart = _cartRepo.GetCart(maKH).OrderByDescending(sp => sp.NgayThem);
             
             return View(cart);
         }

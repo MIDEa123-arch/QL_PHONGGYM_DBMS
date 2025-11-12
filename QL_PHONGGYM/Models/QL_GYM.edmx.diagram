@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1b9a55ee3f904f5f8fa5cb10b577b978" Name="Diagram1">
+      <Diagram DiagramId="1b9a55ee3f904f5f8fa5cb10b577b978" Name="Diagram1" ZoomLevel="95">
         <EntityTypeShape EntityType="QL_PHONGGYMModel.ChiTietGioHang" Width="1.5" PointX="13.25" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_PHONGGYMModel.ChuyenMon" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_PHONGGYMModel.DangKyGoiTap" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_PHONGGYMModel.DangKyLop" Width="1.5" PointX="8.25" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_PHONGGYMModel.DangKyPT" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_PHONGGYMModel.DiaChi" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_PHONGGYMModel.DiaChi" Width="1.5" PointX="5.625" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_PHONGGYMModel.GoiTap" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_PHONGGYMModel.HINHANH" Width="1.5" PointX="13.25" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_PHONGGYMModel.HoaDon" Width="1.5" PointX="5.25" PointY="19.125" IsExpanded="true" />
@@ -37,6 +37,12 @@
         <AssociationConnector Association="QL_PHONGGYMModel.FK_KhachHang_LoaiKH" ManuallyRouted="false" />
         <AssociationConnector Association="QL_PHONGGYMModel.FK_LichLop_Lop" ManuallyRouted="false" />
         <AssociationConnector Association="QL_PHONGGYMModel.FK_SP_LSP" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QL_PHONGGYMModel.ChiTietHoaDon" Width="1.5" PointX="13.25" PointY="10.625" />
+        <AssociationConnector Association="QL_PHONGGYMModel.FK_CT_HD" />
+        <AssociationConnector Association="QL_PHONGGYMModel.FK_CT_HD_DKGT" />
+        <AssociationConnector Association="QL_PHONGGYMModel.FK_CT_HD_DKLop" />
+        <AssociationConnector Association="QL_PHONGGYMModel.FK_CT_HD_DKPT" />
+        <AssociationConnector Association="QL_PHONGGYMModel.FK_CT_SP" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

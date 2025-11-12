@@ -2,9 +2,11 @@
 using QL_PHONGGYM.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,17 +21,124 @@ namespace QL_PHONGGYM.Repositories
             _context = context;
         }
 
+        public void TaoHoaDon(FormCollection form, int makh, List<GioHangViewModel> cart)
+        {
+            HoaDon hoaDon = new HoaDon
+            {
+                MaKH = makh,
+                TongTien = Convert.ToDecimal(form["tongTien"]),
+                ThanhTien = Convert.ToDecimal(form["thanhTien"]),
+                TrangThai = form["paymentMethod"] == "BANK" ? "Đã thanh toán" : "Chưa thanh toán",
+                GiamGia = Convert.ToDecimal(form["giamGia"]),
+                NgayLap = DateTime.Now,
+            };
+
+            _context.HoaDon.Add(hoaDon);
+            _context.SaveChanges();
+
+            foreach (var item in cart)
+            {
+                if (item.MaSP != null)
+                {
+                    var DonGia = item.GiaKhuyenMaiSP ?? item.DonGia;
+                    ChiTietHoaDon ct = new ChiTietHoaDon
+                    {
+                        MaHD = hoaDon.MaHD,
+                        MaSP = item.MaSP,
+                        MaDKGT = null,
+                        MaDKLop = null,
+                        MaDKPT = null,
+                        SoLuong = item.SoLuong ?? 1,
+                        DonGia = DonGia                       
+                    };
+                    _context.ChiTietHoaDon.Add(ct);
+                    XoaDon(item.MaSP.Value, makh);
+                }                             
+            }
+            _context.SaveChanges();
+        }
+        public void Xoa(int id)
+        {
+            var item = _context.ChiTietGioHang.FirstOrDefault(sp => sp.MaSP == id);
+            item.SoLuong = item.SoLuong - 1;
+
+            if (item.SoLuong <= 0)
+                _context.ChiTietGioHang.Remove(item);
+
+            _context.SaveChanges();
+        }
+        public void Them(int id)
+        {
+            var item = _context.ChiTietGioHang.FirstOrDefault(sp => sp.MaSP == id);
+            var product = _context.SanPham.FirstOrDefault(sp => sp.MaSP == id);
+            if (item.SoLuong >= product.SoLuongTon)
+            {
+                item.SoLuong = product.SoLuongTon;
+            }
+            item.SoLuong = item.SoLuong + 1;
+            _context.SaveChanges();
+        }
+        public void XoaDon(int id, int makh)
+        {
+
+
+            var item = _context.ChiTietGioHang.FirstOrDefault(c => c.MaKH == makh &&
+                                                            ((c.MaSP != null && c.MaSP == id) ||
+                                                             (c.MaGoiTap != null && c.MaGoiTap == id) ||
+                                                             (c.MaLop != null && c.MaLop == id)));
+            if (item != null)
+            {
+                _context.ChiTietGioHang.Remove(item);
+                _context.SaveChanges();
+            }
+
+        }
         public void XoaDaChon(FormCollection form, int makh)
         {
-            var list = _context.ChiTietGioHang.ToList().Where(kh => kh.MaKH == makh).Where(sp => form[sp.MaSP.ToString()] != null).ToList();
-            _context.ChiTietGioHang.RemoveRange(list);
+            string[] selected = form.GetValues("selectedItems");
+            List<int> selectedIds = selected.Select(int.Parse).ToList();
+            foreach (var id in selectedIds)
+            {
+                var item = _context.ChiTietGioHang.FirstOrDefault(c => c.MaKH == makh && c.MaSP == id);
+                if (item == null)
+                {
+                    item = _context.ChiTietGioHang.FirstOrDefault(c => c.MaKH == makh && c.MaGoiTap == id);
+                }
+                if (item == null)
+                {
+                    item = _context.ChiTietGioHang.FirstOrDefault(c => c.MaKH == makh && c.MaLop == id);
+                }
+                if (item != null)
+                    _context.ChiTietGioHang.Remove(item);
+            }
+
             _context.SaveChanges();
         }
 
-        public List<GioHangViewModel> ChonSanPham(FormCollection form, int makh, List<GioHangViewModel> cart)
+
+        public List<GioHangViewModel> ChonSanPham(FormCollection form, int makh)
         {
-            var list = cart.Where(kh => kh.MaKH == makh).Where(sp => form[sp.MaSP.ToString()] != null).ToList();
-            return list;                        
+            string[] selected = form.GetValues("selectedItems");
+            List<int> selectedIds = selected.Select(int.Parse).ToList();
+            List<GioHangViewModel> list = new List<GioHangViewModel>();
+            var cart = GetCart(makh);
+
+            foreach (var id in selectedIds)
+            {
+                var item = cart.FirstOrDefault(c => c.MaKH == makh && c.MaSP == id);
+                if (item == null)
+                {
+                    item = cart.FirstOrDefault(c => c.MaKH == makh && c.MaGoiTap == id);
+                }
+                if (item == null)
+                {
+                    item = cart.FirstOrDefault(c => c.MaKH == makh && c.MaLop == id);
+                }
+                if (item != null)
+                    list.Add(item);
+            }
+
+            return list;
         }
         public bool AddToCart(int maKH, int? maSP, int? maGoiTap, int? maLop, int soLuong)
         {
@@ -53,10 +162,29 @@ namespace QL_PHONGGYM.Repositories
         }
 
         public List<GioHangViewModel> GetCart(int maKH)
-        {            
+        {
             try
             {
-                var cart = _context.Database.SqlQuery<GioHangViewModel>("EXEC sp_LayGioHang @MaKH", new SqlParameter("@MaKH", maKH)).ToList();
+                var cart = _context.ChiTietGioHang
+                    .Where(c => c.MaKH == maKH)
+                    .Select(c => new GioHangViewModel
+                    {
+                        MaChiTietGH = c.MaChiTietGH,
+                        MaKH = c.MaKH,
+                        MaSP = c.MaSP,
+                        MaGoiTap = c.MaGoiTap,
+                        MaLop = c.MaLop,
+                        SoLuong = c.SoLuong,
+                        DonGia = c.DonGia,
+                        NgayThem = c.NgayThem,
+                        GiaKhuyenMaiSP = c.MaSP != null ? c.SanPham.GiaKhuyenMai : null,
+                        TenMonHang = c.MaSP != null ? c.SanPham.TenSP
+                                     : c.MaGoiTap != null ? c.GoiTap.TenGoi
+                                     : c.LopHoc.TenLop,
+                        AnhDaiDienSP = c.MaSP != null ? c.SanPham.HINHANH.FirstOrDefault(a => a.IsMain.HasValue && a.IsMain.Value == true).Url : null,
+                        SoLuongTon = c.MaSP != null ? c.SanPham.SoLuongTon : 0
+                    }).ToList();
+
                 return cart;
             }
             catch
@@ -64,6 +192,8 @@ namespace QL_PHONGGYM.Repositories
                 throw;
             }
         }
+
+
 
     }
 }

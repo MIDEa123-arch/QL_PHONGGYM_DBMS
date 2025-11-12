@@ -14,6 +14,12 @@ namespace QL_PHONGGYM.Models
     
     public partial class DangKyGoiTap
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DangKyGoiTap()
+        {
+            this.ChiTietHoaDon = new HashSet<ChiTietHoaDon>();
+        }
+    
         public int MaDKGT { get; set; }
         public int MaKH { get; set; }
         public int MaGoiTap { get; set; }
@@ -24,5 +30,7 @@ namespace QL_PHONGGYM.Models
     
         public virtual GoiTap GoiTap { get; set; }
         public virtual KhachHang KhachHang { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDon { get; set; }
     }
 }

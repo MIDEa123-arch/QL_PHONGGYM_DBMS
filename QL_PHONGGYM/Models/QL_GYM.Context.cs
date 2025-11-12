@@ -43,6 +43,7 @@ namespace QL_PHONGGYM.Models
         public virtual DbSet<LoaiSanPham> LoaiSanPham { get; set; }
         public virtual DbSet<LopHoc> LopHoc { get; set; }
         public virtual DbSet<SanPham> SanPham { get; set; }
+        public virtual DbSet<ChiTietHoaDon> ChiTietHoaDon { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

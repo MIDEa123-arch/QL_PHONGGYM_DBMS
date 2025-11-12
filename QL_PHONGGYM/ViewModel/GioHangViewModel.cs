@@ -19,5 +19,18 @@ namespace QL_PHONGGYM.ViewModel
         public string TenMonHang { get; set; }
         public string AnhDaiDienSP { get; set; }
         public int SoLuongTon { get; set; }
+
+        public decimal ThanhTien
+        {
+            get
+            {
+                int sl = SoLuong ?? 1;
+                decimal gia = GiaKhuyenMaiSP.HasValue && GiaKhuyenMaiSP.Value < DonGia
+                              ? GiaKhuyenMaiSP.Value
+                              : DonGia;
+                return sl * gia;
+            }
+        }
     }
+
 }
