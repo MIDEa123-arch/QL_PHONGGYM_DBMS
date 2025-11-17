@@ -129,6 +129,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartCheckoutController.cs" />
+    <Compile Include="Controllers\GoiTapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
@@ -304,6 +305,7 @@
     <Content Include="Content\Images\bong-yoga-65cm-3.jpg" />
     <Content Include="Content\Images\bong-yoga-65cm-4.jpg" />
     <Content Include="Content\Images\Boxing.jpg" />
+    <Content Include="Content\Images\check.png" />
     <Content Include="Content\Images\cod.png" />
     <Content Include="Content\Images\con-lan-bung-1.jpg" />
     <Content Include="Content\Images\con-lan-bung-2.jpg" />
@@ -574,16 +576,18 @@
     <Content Include="Views\Product\CategoriesMenu.cshtml" />
     <Content Include="Views\Product\BrandMenu.cshtml" />
     <Content Include="Views\Product\OriginMenu.cshtml" />
-    <Content Include="Views\Product\Product.cshtml" />
     <Content Include="Views\Product\ProductDetail.cshtml" />
     <Content Include="Views\Shared\_LayoutPageCart.cshtml" />
     <Content Include="Views\CartCheckout\ToCheckOut.cshtml" />
     <Content Include="Views\CartCheckout\ThanhToan.cshtml" />
     <Content Include="Views\CartCheckout\ThanhToanfinal.cshtml" />
+    <Content Include="Views\CartCheckout\ThanhToanThanhCong.cshtml" />
+    <Content Include="Views\Product\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Services\" />
+    <Folder Include="Views\GoiTap\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

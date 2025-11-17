@@ -149,6 +149,7 @@
                         <div class="input-group">
                             @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control", placeholder = "Nhập tên đăng nhập của bạn", @style = "max-width: 700px" })
                         </div>
+                        @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger small mt-2" })
                     </div>
                     <div class="col-md-6 mb-3">
                         @Html.LabelFor(m => m.MatKhau, new { @class = "form-label" })

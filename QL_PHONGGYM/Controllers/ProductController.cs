@@ -1,5 +1,6 @@
 ﻿using QL_PHONGGYM.Models;
 using QL_PHONGGYM.Repositories;
+using QL_PHONGGYM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,13 @@ namespace QL_PHONGGYM.Controllers
         public ActionResult ProductDetail(int id)
         {
             var list = _productRepo.GetSanPhams().ToList();
+            if (TempData["CurrentList"] != null)
+            {
+                var tempList = TempData["CurrentList"] as List<SanPhamViewModel>;
+                if (tempList != null)
+                    list = tempList;
+            }    
+            
             var sanpham = list.FirstOrDefault(sp => sp.MaSP == id);
 
             ViewBag.SpDiCung = list.Where(sp => sp.LoaiSP == sanpham.LoaiSP && sp.MaSP != sanpham.MaSP).Take(5).ToList();
@@ -68,38 +76,95 @@ namespace QL_PHONGGYM.Controllers
             return View(sanpham);
         }
 
-        public ActionResult Product(string loaisp, string hang, string xuatXu, decimal? maxPrice, decimal? minPrice)
+        public ActionResult Product(string loaisp, string hang, string xuatXu, decimal? maxPrice, decimal? minPrice, int? sapXepTheoTen, int? sapXepTheoGia)
         {
-            var list = _productRepo.GetSanPhams();
-
+            var list = _productRepo.GetSanPhams().ToList();
+            
             if (!string.IsNullOrEmpty(xuatXu))
-            {
-                list = list.Where(p => p.XuatXu.Contains(xuatXu)).OrderByDescending(sp => sp.SoLuongTon).ToList();
-            }
+                list = list.Where(p => p.XuatXu.Contains(xuatXu)).ToList();
+
             if (!string.IsNullOrEmpty(loaisp))
-            {
-                list = list.Where(p => p.LoaiSP.Contains(loaisp)).OrderByDescending(sp => sp.SoLuongTon).ToList();
-            }
+                list = list.Where(p => p.LoaiSP.Contains(loaisp)).ToList();
 
             if (!string.IsNullOrEmpty(hang))
-            {
-                list = list.Where(p => p.Hang.Contains(hang)).OrderByDescending(sp => sp.SoLuongTon).ToList();
-            }
+                list = list.Where(p => p.Hang.Contains(hang)).ToList();
 
             if (minPrice.HasValue)
-            {
-                list = list.Where(p => p.DonGia >= minPrice.Value).OrderByDescending(sp => sp.SoLuongTon).ToList();
-            }
+                list = list.Where(p => p.DonGia >= minPrice.Value).ToList();
 
             if (maxPrice.HasValue)
+                list = list.Where(p => p.DonGia <= maxPrice.Value).ToList();
+
+            if (sapXepTheoTen != null)
             {
-                list = list.Where(p => p.DonGia <= maxPrice.Value).OrderByDescending(sp => sp.SoLuongTon).ToList();
+                if (sapXepTheoTen == 0)             
+                    list = list.OrderBy(p => p.TenSP).ToList();
+                else                                 
+                    list = list.OrderByDescending(p => p.TenSP).ToList();
+            }
+
+            if (sapXepTheoGia != null)
+            {
+                if (sapXepTheoGia == 0)
+                    list = list.OrderBy(p => p.DonGia).ToList();
+                else 
+                    list = list.OrderByDescending(p => p.DonGia).ToList();
             }
 
             ViewBag.LoaiSP = _productRepo.GetLoaiSanPhams().ToList();
-            ViewBag.Hang = list.Where(p => p.Hang != null).Select(p => p.Hang).Distinct().ToList();
+            var allProducts = _productRepo.GetSanPhams();
+            ViewBag.Hang = allProducts.Where(p => p.Hang != null).Select(p => p.Hang).Distinct().ToList();
+
+            TempData["CurrentList"] = list;
             return View(list);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Product(FormCollection form, int? sapXepTheoTen, int? sapXepTheoGia)
+        {
+            var list = _productRepo.GetSanPhams().ToList();
+
+            bool khuyenMai = form["khuyenmai"] == "on";
+            bool conHang = form["conhang"] == "on";
+            var giaList = form.GetValues("gia");            
+            var loaiList = form.GetValues("loaisanpham");
+            var hangList = form.GetValues("hang");
+
+            if (khuyenMai)
+                list = list.Where(p => p.GiaKhuyenMai != null).ToList();
+            if (conHang)
+                list = list.Where(p => p.SoLuongTon > 0).ToList();
+
+            string gia = form["gia"];
+            if (!string.IsNullOrEmpty(gia))
+            {
+                var parts = gia.Split('-');
+                decimal min = Convert.ToDecimal(parts[0]);
+                decimal max = Convert.ToDecimal(parts[1]);
+                list = list.Where(p => p.DonGia >= min && p.DonGia <= max).ToList();
+            }
+
+            if (loaiList != null)
+                list = list.Where(p => loaiList.Contains(p.LoaiSP)).ToList();
+
+            if (hangList != null)
+                list = list.Where(p => hangList.Contains(p.Hang)).ToList();
+
+            if (sapXepTheoTen != null)
+                list = (sapXepTheoTen == 0) ? list.OrderBy(p => p.TenSP).ToList() : list.OrderByDescending(p => p.TenSP).ToList();
+
+            if (sapXepTheoGia != null)
+                list = (sapXepTheoGia == 0) ? list.OrderBy(p => p.DonGia).ToList() : list.OrderByDescending(p => p.DonGia).ToList();
+
+            ViewBag.LoaiSP = _productRepo.GetLoaiSanPhams().ToList();
+
+            var allProducts = _productRepo.GetSanPhams();
+            ViewBag.Hang = allProducts.Where(p => p.Hang != null).Select(p => p.Hang).Distinct().ToList();
+
+            return View(list.ToList());
+        }
+
         public ActionResult ClassMenu()
         {
             var list = _productRepo.GetChuyenMons();

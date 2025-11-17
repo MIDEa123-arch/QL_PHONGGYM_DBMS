@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace QL_PHONGGYM.Repositories
 {
@@ -69,9 +70,14 @@ namespace QL_PHONGGYM.Repositories
                     NgayThem = DateTime.Now
                 };
 
-                _context.DiaChi.Add(diaChiMoi);
-                _context.SaveChanges();
+                _context.DiaChi.Add(diaChiMoi);                
             }
+            else
+            {
+                diaChiTonTai.NgayThem = DateTime.Now;
+                _context.Entry(diaChiTonTai).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
         }
     }
 }

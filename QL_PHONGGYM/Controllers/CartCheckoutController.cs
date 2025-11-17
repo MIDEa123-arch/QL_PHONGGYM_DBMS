@@ -27,7 +27,7 @@ namespace QL_PHONGGYM.Controllers
             var cart = (List<GioHangViewModel>)Session["thanhtoan"];
             int maKH = (int)Session["MaKH"];
             _cartRepo.TaoHoaDon(form, maKH, cart);
-            return RedirectToAction("ToCheckOut");
+            return RedirectToAction("ThanhToanThanhCong");
         }
 
         public ActionResult ThanhToanfinal()
@@ -43,6 +43,11 @@ namespace QL_PHONGGYM.Controllers
             return View(cart.OrderByDescending(sp => sp.NgayThem));
         }
 
+        public ActionResult ThanhToanThanhCong()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -51,6 +56,8 @@ namespace QL_PHONGGYM.Controllers
             int maKH = (int)Session["MaKH"];
 
             _cusRepo.ThemDiaChi(maKH, form);
+            Session["Diachi"] = _cusRepo.GetDiaChi(maKH);
+
             var cart = (List<GioHangViewModel>)Session["thanhtoan"];
 
             return RedirectToAction("ThanhToanfinal");
