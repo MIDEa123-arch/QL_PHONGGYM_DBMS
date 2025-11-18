@@ -1,7 +1,7 @@
-﻿@model QL_PHONGGYM.AdminPortal.Models.LichLop
+﻿@model QL_PHONGGYM.AdminPortal.Models.DangKyPT
 
 @{
-    ViewBag.Title = "Xóa Lịch Lớp";
+    ViewBag.Title = "Xóa Đăng Ký PT";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,24 +23,21 @@
         margin-bottom: 10px;
     }
 
-    .delete-warning {
-        font-size: 15px;
-        color: #c0392b;
-        background: #ffe5e5;
-        padding: 10px 15px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-        border-left: 4px solid #e63939;
+    .warning-text {
+        font-size: 16px;
+        font-weight: 600;
+        color: #d9534f;
+        margin-bottom: 15px;
     }
 
-    .details-table dt {
+    .delete-table dt {
         font-weight: 600;
         color: #0d4ea6;
         width: 160px;
         padding: 8px 0;
     }
 
-    .details-table dd {
+    .delete-table dd {
         margin-left: 180px;
         padding: 8px 0;
         color: #00315c;
@@ -58,7 +55,7 @@
     }
 
         .btn-delete:hover {
-            background: #bb2d3b;
+            background: #c82333;
         }
 
     .btn-back {
@@ -76,29 +73,26 @@
         }
 </style>
 
-
 <div class="delete-card">
-    <div class="delete-title">🗑 Xóa Lịch Lớp</div>
+    <div class="delete-title">🗑 Xóa Đăng Ký PT</div>
+    <p class="warning-text">Bạn có chắc chắn muốn xóa đăng ký PT này không?</p>
+    <hr />
 
-    <div class="delete-warning">
-        ⚠ Bạn có chắc chắn muốn xóa lịch lớp này không? Hành động này không thể hoàn tác.
-    </div>
+    <dl class="delete-table dl-horizontal">
+        <dt>Khách hàng</dt>
+        <dd>@Html.DisplayFor(model => model.KhachHang.TenKH)</dd>
 
-    <dl class="details-table dl-horizontal">
-        <dt>Lớp học</dt>
-        <dd>@Html.DisplayFor(model => model.LopHoc.TenLop)</dd>
+        <dt>Nhân viên PT</dt>
+        <dd>@Html.DisplayFor(model => model.NhanVien.TenDangNhap)</dd>
 
-        <dt>Giáo viên</dt>
-        <dd>@Html.DisplayFor(model => model.NhanVien.TenNV)</dd>
+        <dt>Số buổi</dt>
+        <dd>@Html.DisplayFor(model => model.SoBuoi)</dd>
 
-        <dt>Ngày học</dt>
-        <dd>@Html.DisplayFor(model => model.NgayHoc)</dd>
+        <dt>Giá mỗi buổi</dt>
+        <dd>@Html.DisplayFor(model => model.GiaMoiBuoi)</dd>
 
-        <dt>Giờ bắt đầu</dt>
-        <dd>@Html.DisplayFor(model => model.GioBatDau)</dd>
-
-        <dt>Giờ kết thúc</dt>
-        <dd>@Html.DisplayFor(model => model.GioKetThuc)</dd>
+        <dt>Ngày đăng ký</dt>
+        <dd>@Html.DisplayFor(model => model.NgayDangKy)</dd>
 
         <dt>Trạng thái</dt>
         <dd>@Html.DisplayFor(model => model.TrangThai)</dd>
@@ -107,7 +101,6 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
         <div style="margin-top: 20px;">
             <input type="submit" value="Xóa" class="btn-delete" />
             @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn-back" })

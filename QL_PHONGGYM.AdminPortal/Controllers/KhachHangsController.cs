@@ -18,11 +18,11 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
         // GET: KhachHangs
         public ActionResult Index()
         {
-            return View(db.KhachHang.ToList());
+            return View(db.KhachHangs.ToList());
         }
         public ActionResult Index1()
         {
-            return View(db.KhachHang.ToList());
+            return View(db.KhachHangs.ToList());
         }
 
         // GET: KhachHangs/Details/5
@@ -32,7 +32,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KhachHang khachHang = db.KhachHang.Find(id);
+            KhachHang khachHang = db.KhachHangs.Find(id);
             if (khachHang == null)
             {
                 return HttpNotFound();
@@ -55,7 +55,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.KhachHang.Add(khachHang);
+                db.KhachHangs.Add(khachHang);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -70,7 +70,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KhachHang khachHang = db.KhachHang.Find(id);
+            KhachHang khachHang = db.KhachHangs.Find(id);
             if (khachHang == null)
             {
                 return HttpNotFound();
@@ -101,7 +101,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KhachHang khachHang = db.KhachHang.Find(id);
+            KhachHang khachHang = db.KhachHangs.Find(id);
             if (khachHang == null)
             {
                 return HttpNotFound();
@@ -114,8 +114,8 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            KhachHang khachHang = db.KhachHang.Find(id);
-            db.KhachHang.Remove(khachHang);
+            KhachHang khachHang = db.KhachHangs.Find(id);
+            db.KhachHangs.Remove(khachHang);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

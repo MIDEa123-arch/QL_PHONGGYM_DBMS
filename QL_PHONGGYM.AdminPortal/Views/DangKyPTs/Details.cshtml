@@ -1,7 +1,7 @@
-﻿@model QL_PHONGGYM.AdminPortal.Models.LichLop
+﻿@model QL_PHONGGYM.AdminPortal.Models.DangKyPT
 
 @{
-    ViewBag.Title = "Chi Tiết Lịch Lớp";
+    ViewBag.Title = "Chi Tiết Đăng Ký PT";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,8 +12,8 @@
         border-radius: 10px;
         border: 1px solid #d0e3ff;
         max-width: 750px;
-        margin: 20px auto;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        margin: 25px auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     }
 
     .details-title {
@@ -21,12 +21,6 @@
         font-weight: bold;
         color: #0a53be;
         margin-bottom: 10px;
-    }
-
-    .details-sub {
-        font-size: 15px;
-        color: #3d6fc2;
-        margin-bottom: 20px;
     }
 
     .details-table dt {
@@ -44,16 +38,16 @@
     }
 
     .btn-edit {
-        background: #0d6efd;
+        background: #007bff;
         color: white !important;
-        padding: 10px 18px;
+        padding: 10px 16px;
         border-radius: 6px;
         text-decoration: none;
         transition: 0.2s;
     }
 
         .btn-edit:hover {
-            background: #0b5ed7;
+            background: #0069d9;
         }
 
     .btn-back {
@@ -62,7 +56,7 @@
         padding: 10px 16px;
         border-radius: 6px;
         text-decoration: none;
-        margin-left: 10px;
+        margin-left: 8px;
         transition: 0.2s;
     }
 
@@ -71,33 +65,32 @@
         }
 </style>
 
-
 <div class="details-card">
-    <div class="details-title">📘 Chi Tiết Lịch Lớp</div>
-    <div class="details-sub">Thông tin chi tiết lớp học và lịch giảng dạy.</div>
+    <div class="details-title">📌 Chi Tiết Đăng Ký PT</div>
+    <hr />
 
     <dl class="details-table dl-horizontal">
-        <dt>Lớp học</dt>
-        <dd>@Html.DisplayFor(model => model.LopHoc.TenLop)</dd>
+        <dt>Khách hàng</dt>
+        <dd>@Html.DisplayFor(model => model.KhachHang.TenKH)</dd>
 
-        <dt>Giáo viên</dt>
-        <dd>@Html.DisplayFor(model => model.NhanVien.TenNV)</dd>
+        <dt>Nhân viên PT</dt>
+        <dd>@Html.DisplayFor(model => model.NhanVien.TenDangNhap)</dd>
 
-        <dt>Ngày học</dt>
-        <dd>@Html.DisplayFor(model => model.NgayHoc)</dd>
+        <dt>Số buổi</dt>
+        <dd>@Html.DisplayFor(model => model.SoBuoi)</dd>
 
-        <dt>Giờ bắt đầu</dt>
-        <dd>@Html.DisplayFor(model => model.GioBatDau)</dd>
+        <dt>Giá mỗi buổi</dt>
+        <dd>@Html.DisplayFor(model => model.GiaMoiBuoi)</dd>
 
-        <dt>Giờ kết thúc</dt>
-        <dd>@Html.DisplayFor(model => model.GioKetThuc)</dd>
+        <dt>Ngày đăng ký</dt>
+        <dd>@Html.DisplayFor(model => model.NgayDangKy)</dd>
 
         <dt>Trạng thái</dt>
         <dd>@Html.DisplayFor(model => model.TrangThai)</dd>
     </dl>
 
     <div style="margin-top: 20px;">
-        @Html.ActionLink("✏ Sửa", "Edit", new { id = Model.MaLichLop }, new { @class = "btn-edit" })
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.MaDKPT }, new { @class = "btn-edit" })
         @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn-back" })
     </div>
 </div>

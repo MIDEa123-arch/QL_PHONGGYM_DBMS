@@ -11,107 +11,116 @@ using QL_PHONGGYM.AdminPortal.Models;
 
 namespace QL_PHONGGYM.AdminPortal.Controllers
 {
-    public class LoaiKhachHangsController : Controller
+    public class DangKyLopsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: LoaiKhachHangs
+        // GET: DangKyLops
         public ActionResult Index()
         {
-            return View(db.LoaiKhachHangs.ToList());
+            var dangKyLops = db.DangKyLops.Include(d => d.KhachHang).Include(d => d.LopHoc);
+            return View(dangKyLops.ToList());
         }
 
-        // GET: LoaiKhachHangs/Details/5
+        // GET: DangKyLops/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiKhachHang loaiKhachHang = db.LoaiKhachHangs.Find(id);
-            if (loaiKhachHang == null)
+            DangKyLop dangKyLop = db.DangKyLops.Find(id);
+            if (dangKyLop == null)
             {
                 return HttpNotFound();
             }
-            return View(loaiKhachHang);
+            return View(dangKyLop);
         }
 
-        // GET: LoaiKhachHangs/Create
+        // GET: DangKyLops/Create
         public ActionResult Create()
         {
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH");
+            ViewBag.MaLop = new SelectList(db.LopHocs, "MaLop", "TenLop");
             return View();
         }
 
-        // POST: LoaiKhachHangs/Create
+        // POST: DangKyLops/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaLoaiKH,TenLoai,MucGiam")] LoaiKhachHang loaiKhachHang)
+        public ActionResult Create([Bind(Include = "MaDKLop,MaKH,MaLop,NgayDangKy,TrangThai")] DangKyLop dangKyLop)
         {
             if (ModelState.IsValid)
             {
-                db.LoaiKhachHangs.Add(loaiKhachHang);
+                db.DangKyLops.Add(dangKyLop);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(loaiKhachHang);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", dangKyLop.MaKH);
+            ViewBag.MaLop = new SelectList(db.LopHocs, "MaLop", "TenLop", dangKyLop.MaLop);
+            return View(dangKyLop);
         }
 
-        // GET: LoaiKhachHangs/Edit/5
+        // GET: DangKyLops/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiKhachHang loaiKhachHang = db.LoaiKhachHangs.Find(id);
-            if (loaiKhachHang == null)
+            DangKyLop dangKyLop = db.DangKyLops.Find(id);
+            if (dangKyLop == null)
             {
                 return HttpNotFound();
             }
-            return View(loaiKhachHang);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", dangKyLop.MaKH);
+            ViewBag.MaLop = new SelectList(db.LopHocs, "MaLop", "TenLop", dangKyLop.MaLop);
+            return View(dangKyLop);
         }
 
-        // POST: LoaiKhachHangs/Edit/5
+        // POST: DangKyLops/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaLoaiKH,TenLoai,MucGiam")] LoaiKhachHang loaiKhachHang)
+        public ActionResult Edit([Bind(Include = "MaDKLop,MaKH,MaLop,NgayDangKy,TrangThai")] DangKyLop dangKyLop)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(loaiKhachHang).State = EntityState.Modified;
+                db.Entry(dangKyLop).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(loaiKhachHang);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", dangKyLop.MaKH);
+            ViewBag.MaLop = new SelectList(db.LopHocs, "MaLop", "TenLop", dangKyLop.MaLop);
+            return View(dangKyLop);
         }
 
-        // GET: LoaiKhachHangs/Delete/5
+        // GET: DangKyLops/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiKhachHang loaiKhachHang = db.LoaiKhachHangs.Find(id);
-            if (loaiKhachHang == null)
+            DangKyLop dangKyLop = db.DangKyLops.Find(id);
+            if (dangKyLop == null)
             {
                 return HttpNotFound();
             }
-            return View(loaiKhachHang);
+            return View(dangKyLop);
         }
 
-        // POST: LoaiKhachHangs/Delete/5
+        // POST: DangKyLops/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LoaiKhachHang loaiKhachHang = db.LoaiKhachHangs.Find(id);
-            db.LoaiKhachHangs.Remove(loaiKhachHang);
+            DangKyLop dangKyLop = db.DangKyLops.Find(id);
+            db.DangKyLops.Remove(dangKyLop);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

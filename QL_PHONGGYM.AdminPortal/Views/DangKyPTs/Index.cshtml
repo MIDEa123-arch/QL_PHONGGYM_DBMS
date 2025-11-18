@@ -1,6 +1,6 @@
-﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.NhanVien>
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.DangKyPT>
 @{
-    ViewBag.Title = "Quản Lý Nhân Viên";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -52,16 +52,17 @@
         overflow-x: auto;
     }
 
-    .table-custom {
+    .table {
         width: 100%;
         margin: 0;
+        border-collapse: collapse;
     }
 
-    .table-custom thead {
+    .table thead {
         background: #5dade2;
     }
 
-    .table-custom thead th {
+    .table thead th {
         color: white;
         font-weight: 500;
         padding: 15px;
@@ -71,19 +72,28 @@
         white-space: nowrap;
     }
 
-    .table-custom tbody tr {
+    .table tbody tr {
         border-bottom: 1px solid #e9ecef;
         transition: all 0.3s;
     }
 
-    .table-custom tbody tr:hover {
+    .table tbody tr:hover {
         background: #f0f8ff;
     }
 
-    .table-custom tbody td {
+    .table tbody td {
         padding: 15px;
         vertical-align: middle;
         font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .table tbody td:first-child {
+        font-weight: 600;
+    }
+
+    .table tbody td:last-child {
+        white-space: normal;
     }
 
     .action-links a {
@@ -124,24 +134,16 @@
         background: #da190b;
     }
 
-    .gender-badge {
-        padding: 5px 12px;
-        border-radius: 15px;
-        font-size: 12px;
+    .price {
+        color: #e74c3c;
         font-weight: 600;
     }
 
-    .gender-male {
-        background: #e3f2fd;
-        color: #1976d2;
-    }
-
-    .gender-female {
-        background: #fce4ec;
-        color: #c2185b;
-    }
-
     @@media (max-width: 768px) {
+        .container-custom {
+            padding: 20px;
+        }
+
         .table-container {
             padding: 15px;
         }
@@ -158,55 +160,64 @@
 
 <div class="container-custom">
     <div class="page-header">
-        <h2>👥 Quản Lý Nhân Viên</h2>
+        <h2>🏋️ Quản Lý Đăng Ký PT</h2>
     </div>
 
-    <div style="margin-bottom: 20px;">
-        @Html.ActionLink("➕ Thêm Nhân Viên Mới", "Create", null, new { @class = "btn-create" })
-    </div>
+    <p style="margin-bottom: 20px;">
+        @Html.ActionLink("➕ Thêm Đăng Ký PT Mới", "Create", null, new { @class = "btn-create" })
+    </p>
 
     <div class="table-container">
-        <table class="table-custom">
-            <thead>
+        <table class="table">
+            <tr>
+                <th>
+                    Tên Khách Hàng
+                </th>
+                <th style="padding-right:60px">
+                    PT
+                </th>
+                <th>
+                    Số Buổi
+                </th>
+                <th>
+                    Giá Mỗi Buổi
+                </th>
+                <th>
+                    Ngày Đăng Ký
+                </th>
+                <th>
+                    Trạng Thái
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>Mã Nhân Viên</th>
-                    <th>Tên Nhân Viên</th>
-                    <th>Chức Vụ</th>
-                    <th>Giới Tính</th>
-                    <th>Số Điện Thoại</th>
-                    <th>Ngày Sinh</th>
-                    <th>Tên Đăng Nhập</th>
-                    <th>Mật Khẩu</th>
-                    <th>Thao Tác</th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NhanVien.TenNV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoBuoi)
+                    </td>
+                    <td>
+                        <span class="price">@Html.DisplayFor(modelItem => item.GiaMoiBuoi)</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayDangKy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrangThai)
+                    </td>
+                    <td class="action-links">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaDKPT }, new { @class = "btn-edit" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaDKPT }, new { @class = "btn-details" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaDKPT }, new { @class = "btn-delete" })
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td style="text-align:center">@item.MaNV</td>
-                        <td><strong>@item.TenNV</strong></td>
-                        <td>@item.ChucVu.TenChucVu</td>
-                        <td>
-                            @if (item.GioiTinh != null)
-                            {
-                                <span class="gender-badge @(item.GioiTinh.ToLower() == "nam" ? "gender-male" : "gender-female")">
-                                    @item.GioiTinh
-                                </span>
-                            }
-                        </td>
-                        <td>@item.SDT</td>
-                        <td>@(item.NgaySinh.HasValue ? item.NgaySinh.Value.ToString("dd/MM/yyyy") : "")</td>
-                        <td>@item.TenDangNhap</td>
-                        <td>@item.MatKhau</td>
-                        <td class="action-links">
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.MaNV }, new { @class = "btn-edit" })
-                            @Html.ActionLink("Chi tiết", "Details", new { id = item.MaNV }, new { @class = "btn-details" })
-                            @Html.ActionLink("Xóa", "Delete", new { id = item.MaNV }, new { @class = "btn-delete" })
-                        </td>
-                    </tr>
-                }
-            </tbody>
+            }
         </table>
     </div>
 </div>

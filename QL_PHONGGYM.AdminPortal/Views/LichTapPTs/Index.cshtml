@@ -1,62 +1,172 @@
 ﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.LichTapPT>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản Lý Lịch Tập PT";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<style>
+    /* Nền chung và padding */
+    .content-card {
+        background-color: #e6f0ff; /* xanh dương nhạt */
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        max-width: 1000px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MaLichPT)
-        <th>
-            @Html.DisplayNameFor(model => model.DangKyPT.MaDKPT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayTap)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GioBatDau)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GioKetThuc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrangThai)
-        </th>
-        <th></th>
-    </tr>
+    .card-header {
+        border-bottom: 2px solid #b3d1ff;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaLichPT)
-        <td>
-            @Html.DisplayFor(modelItem => item.DangKyPT.MaDKPT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayTap)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GioBatDau)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GioKetThuc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrangThai)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaLichPT }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaLichPT }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaLichPT })
-        </td>
-    </tr>
-}
+    .card-title {
+        color: #003366;
+        font-size: 26px;
+        margin: 0;
+    }
 
-</table>
+    .card-toolbar {
+        margin-bottom: 15px;
+    }
+
+    .btn-primary {
+        background-color: #3399ff;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #2673cc;
+        }
+
+    .table-custom {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px; /* tạo khoảng cách giữa các dòng */
+    }
+
+        .table-custom th {
+            background-color: #99c2ff;
+            color: #003366;
+            padding: 10px;
+            text-align: left;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .table-custom td {
+            background-color: #cce0ff;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .table-custom tr {
+            transition: transform 0.2s;
+        }
+
+            .table-custom tr:hover td {
+                transform: scale(1.02);
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            }
+
+    .badge-info {
+        background-color: #3399ff;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    .text-success {
+        color: #006600;
+        font-weight: bold;
+    }
+
+    .text-warning {
+        color: #cc6600;
+        font-weight: bold;
+    }
+
+    .action-links a {
+        margin-right: 8px;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 6px;
+        color: white;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-edit {
+        background-color: #4da6ff;
+    }
+
+        .btn-edit:hover {
+            background-color: #2673cc;
+        }
+
+    .btn-delete {
+        background-color: #ff6666;
+    }
+
+        .btn-delete:hover {
+            background-color: #cc3333;
+        }
+</style>
+
+<div class="content-card">
+    <div class="card-header">
+        <h2 class="card-title">📅 Quản Lý Lịch Tập PT</h2>
+    </div>
+
+    <div class="card-toolbar">
+        @Html.ActionLink("➕ Thêm Lịch Tập Mới", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Ngày Tập</th>
+                <th>Giờ Bắt Đầu</th>
+                <th>Giờ Kết Thúc</th>
+                <th>Khách Hàng</th>
+                <th>PT Hướng Dẫn</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.NgayTap.ToString("dd/MM/yyyy")</td>
+                    <td>@item.GioBatDau.ToString(@"hh\:mm")</td>
+                    <td>@item.GioKetThuc.ToString(@"hh\:mm")</td>
+                    <td><strong>@Html.DisplayFor(modelItem => item.DangKyPT.KhachHang.TenKH)</strong></td>
+                    <td><span class="badge badge-info">@Html.DisplayFor(modelItem => item.DangKyPT.NhanVien.TenNV)</span></td>
+                    <td>
+                        @if (item.TrangThai == "Đã tập")
+                        {
+                            <span class="text-success">@item.TrangThai</span>
+                        }
+                        else
+                        {
+                            <span class="text-warning">@item.TrangThai</span>
+                        }
+                    </td>
+                    <td class="action-links">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaLichPT }, new { @class = "btn-edit" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaLichPT }, new { @class = "btn-delete" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

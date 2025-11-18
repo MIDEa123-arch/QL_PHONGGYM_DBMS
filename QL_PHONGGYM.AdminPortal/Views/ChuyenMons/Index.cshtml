@@ -1,10 +1,21 @@
-﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.ChuyenMon>
+﻿<!--
+  Model này là một DANH SÁCH (IEnumerable) các ChuyenMon
+  Nó được Controller gửi sang
+-->
+@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.ChuyenMon>
+
 @{
     ViewBag.Title = "Quản Lý Chuyên Môn";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    // Layout đã được set tự động trong _ViewStart.cshtml
 }
 
+<!--
+  Đây là file giao diện gốc của bạn,
+  tôi đã thêm vào cột "Nhân Viên Dạy"
+-->
+
 <style>
+    /* CSS của bạn (Giữ nguyên) */
     .container-custom {
         padding: 30px;
         background: #f8f9fa;
@@ -19,12 +30,12 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .page-header h2 {
-        color: white;
-        margin: 0;
-        font-weight: 500;
-        font-size: 26px;
-    }
+        .page-header h2 {
+            color: white;
+            margin: 0;
+            font-weight: 500;
+            font-size: 26px;
+        }
 
     .btn-create {
         background: #5dade2;
@@ -38,11 +49,11 @@
         border: none;
     }
 
-    .btn-create:hover {
-        background: #3498db;
-        color: white;
-        text-decoration: none;
-    }
+        .btn-create:hover {
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+        }
 
     .table-container {
         background: white;
@@ -57,43 +68,42 @@
         margin: 0;
     }
 
-    .table-custom thead {
-        background: #5dade2;
-    }
+        .table-custom thead {
+            background: #5dade2;
+        }
 
-    .table-custom thead th {
-        color: white;
-        font-weight: 500;
-        padding: 15px;
-        border: none;
-        text-align: left;
-        font-size: 14px;
-        white-space: nowrap;
-    }
+            .table-custom thead th {
+                color: white;
+                font-weight: 500;
+                padding: 15px;
+                border: none;
+                text-align: left;
+                font-size: 14px;
+                white-space: nowrap;
+            }
 
-    .table-custom tbody tr {
-        border-bottom: 1px solid #e9ecef;
-        transition: all 0.3s;
-    }
+        .table-custom tbody tr {
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s;
+        }
 
-    .table-custom tbody tr:hover {
-        background: #f0f8ff;
-    }
+            .table-custom tbody tr:hover {
+                background: #f0f8ff;
+            }
 
-    .table-custom tbody td {
-        padding: 15px;
-        vertical-align: middle;
-        font-size: 14px;
-    }
+        .table-custom tbody td {
+            padding: 15px;
+            vertical-align: middle;
+            font-size: 14px;
+        }
 
     .description {
-        white-space: normal; /* Cho phép xuống dòng */
-        overflow: visible; /* Hiện toàn bộ nội dung */
-        text-overflow: unset; /* Bỏ dấu “…” */
-        max-width: none; /* Không giới hạn chiều rộng */
-        word-wrap: break-word; /* Tự ngắt dòng khi quá dài */
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        max-width: none;
+        word-wrap: break-word;
     }
-
 
     .action-links a {
         padding: 6px 15px;
@@ -111,40 +121,35 @@
         color: white;
     }
 
-    .action-links .btn-edit:hover {
-        background: #45a049;
-    }
+        .action-links .btn-edit:hover {
+            background: #45a049;
+        }
 
     .action-links .btn-details {
         background: #2196F3;
         color: white;
     }
 
-    .action-links .btn-details:hover {
-        background: #0b7dda;
-    }
+        .action-links .btn-details:hover {
+            background: #0b7dda;
+        }
 
     .action-links .btn-delete {
         background: #f44336;
         color: white;
     }
 
-    .action-links .btn-delete:hover {
-        background: #da190b;
-    }
-
-    @@media (max-width: 768px) {
-        .table-container {
-            padding: 15px;
+        .action-links .btn-delete:hover {
+            background: #da190b;
         }
 
-        .page-header {
-            padding: 20px;
-        }
-
-        .page-header h2 {
-            font-size: 22px;
-        }
+    /* CSS cho "Tag" Nhân Viên (Bạn đã thêm ở Site.css) */
+    .employee-tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 0;
+        margin: 0;
     }
 </style>
 
@@ -161,8 +166,10 @@
         <table class="table-custom">
             <thead>
                 <tr>
+                    <th>Mã chuyên môn</th>
                     <th>Tên Chuyên Môn</th>
                     <th>Mô Tả</th>
+                    <th>Nhân Viên Chuyên Môn</th>
                     <th>Thao Tác</th>
                 </tr>
             </thead>
@@ -170,10 +177,38 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td style="text-align:center">@item.MaCM</td>
                         <td><strong>@item.TenChuyenMon</strong></td>
                         <td>
                             <div class="description" title="@item.MoTa">@item.MoTa</div>
                         </td>
+
+                        <!--
+                          ============================================
+                          == BƯỚC 2: HIỂN THỊ DANH SÁCH NHÂN VIÊN ==
+                          ============================================
+                          (Controller đã 'Include' NhanVienChuyenMons cho chúng ta)
+                        -->
+                        <td>
+                            <div class="employee-tag-list">
+                                @if (item.NhanVienChuyenMons.Any())
+                                {
+                                    // Lặp qua từng "mối nối" (NhanVienChuyenMon)
+                                    foreach (var nvcm in item.NhanVienChuyenMons)
+                                    {
+                                        // Từ "mối nối", chúng ta lấy Tên Nhân Viên
+                                        <span class="employee-tag">
+                                            @nvcm.NhanVien.TenNV 
+                                        </span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="employee-tag-none">(Chưa có)</span>
+                                }
+                            </div>
+                        </td>
+
                         <td class="action-links">
                             @Html.ActionLink("Sửa", "Edit", new { id = item.MaCM }, new { @class = "btn-edit" })
                             @Html.ActionLink("Chi tiết", "Details", new { id = item.MaCM }, new { @class = "btn-details" })

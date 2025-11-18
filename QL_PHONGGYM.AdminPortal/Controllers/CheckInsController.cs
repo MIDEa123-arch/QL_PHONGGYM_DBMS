@@ -44,7 +44,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
         // GET: CheckIns/Create
         public ActionResult Create()
         {
-            ViewBag.MaKH = new SelectList(db.KhachHang, "MaKH", "TenKH");
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH");
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaKH = new SelectList(db.KhachHang, "MaKH", "TenKH", checkIn.MaKH);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", checkIn.MaKH);
             return View(checkIn);
         }
 
@@ -78,7 +78,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MaKH = new SelectList(db.KhachHang, "MaKH", "TenKH", checkIn.MaKH);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", checkIn.MaKH);
             return View(checkIn);
         }
 
@@ -95,7 +95,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaKH = new SelectList(db.KhachHang, "MaKH", "TenKH", checkIn.MaKH);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", checkIn.MaKH);
             return View(checkIn);
         }
 

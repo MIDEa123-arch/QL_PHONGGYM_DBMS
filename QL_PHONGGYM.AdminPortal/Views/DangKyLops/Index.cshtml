@@ -1,4 +1,4 @@
-﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.LichLop>
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.DangKyLop>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -134,29 +134,6 @@
         background: #da190b;
     }
 
-    .status-badge {
-        padding: 5px 12px;
-        border-radius: 15px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
-    }
-
-    .status-active {
-        background: #d4edda;
-        color: #155724;
-    }
-
-    .status-completed {
-        background: #d1ecf1;
-        color: #0c5460;
-    }
-
-    .status-cancelled {
-        background: #f8d7da;
-        color: #721c24;
-    }
-
     @@media (max-width: 768px) {
         .container-custom {
             padding: 20px;
@@ -178,30 +155,24 @@
 
 <div class="container-custom">
     <div class="page-header">
-        <h2>📅 Quản Lý Lịch Lớp</h2>
+        <h2>📚 Quản Lý Đăng Ký Lớp</h2>
     </div>
 
     <p style="margin-bottom: 20px;">
-        @Html.ActionLink("➕ Thêm Lịch Lớp Mới", "Create", null, new { @class = "btn-create" })
+        @Html.ActionLink("➕ Thêm Đăng Ký Lớp Mới", "Create", null, new { @class = "btn-create" })
     </p>
 
     <div class="table-container">
         <table class="table">
             <tr>
                 <th>
+                    Tên Khách Hàng
+                </th>
+                <th>
                     Tên Lớp
                 </th>
                 <th>
-                    Tên Nhân Viên
-                </th>
-                <th>
-                    Ngày Học
-                </th>
-                <th>
-                    Giờ Bắt Đầu
-                </th>
-                <th>
-                    Giờ Kết Thúc
+                    Ngày Đăng Ký
                 </th>
                 <th>
                     Trạng Thái
@@ -212,27 +183,21 @@
             {
                 <tr>
                     <td>
+                        @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.LopHoc.TenLop)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NhanVien.TenNV)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NgayHoc)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GioBatDau)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GioKetThuc)
+                        @Html.DisplayFor(modelItem => item.NgayDangKy)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TrangThai)
                     </td>
                     <td class="action-links">
-                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaLichLop }, new { @class = "btn-edit" })
-                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaLichLop }, new { @class = "btn-details" })
-                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaLichLop }, new { @class = "btn-delete" })
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaDKLop }, new { @class = "btn-edit" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaDKLop }, new { @class = "btn-details" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaDKLop }, new { @class = "btn-delete" })
                     </td>
                 </tr>
             }

@@ -11,107 +11,116 @@ using QL_PHONGGYM.AdminPortal.Models;
 
 namespace QL_PHONGGYM.AdminPortal.Controllers
 {
-    public class LoaiKhachHangsController : Controller
+    public class DangKyGoiTapsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: LoaiKhachHangs
+        // GET: DangKyGoiTaps
         public ActionResult Index()
         {
-            return View(db.LoaiKhachHangs.ToList());
+            var dangKyGoiTaps = db.DangKyGoiTaps.Include(d => d.GoiTap).Include(d => d.KhachHang);
+            return View(dangKyGoiTaps.ToList());
         }
 
-        // GET: LoaiKhachHangs/Details/5
+        // GET: DangKyGoiTaps/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiKhachHang loaiKhachHang = db.LoaiKhachHangs.Find(id);
-            if (loaiKhachHang == null)
+            DangKyGoiTap dangKyGoiTap = db.DangKyGoiTaps.Find(id);
+            if (dangKyGoiTap == null)
             {
                 return HttpNotFound();
             }
-            return View(loaiKhachHang);
+            return View(dangKyGoiTap);
         }
 
-        // GET: LoaiKhachHangs/Create
+        // GET: DangKyGoiTaps/Create
         public ActionResult Create()
         {
+            ViewBag.MaGoiTap = new SelectList(db.GoiTaps, "MaGoiTap", "TenGoi");
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH");
             return View();
         }
 
-        // POST: LoaiKhachHangs/Create
+        // POST: DangKyGoiTaps/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaLoaiKH,TenLoai,MucGiam")] LoaiKhachHang loaiKhachHang)
+        public ActionResult Create([Bind(Include = "MaDKGT,MaKH,MaGoiTap,NgayDangKy,NgayBatDau,NgayKetThuc,TrangThai")] DangKyGoiTap dangKyGoiTap)
         {
             if (ModelState.IsValid)
             {
-                db.LoaiKhachHangs.Add(loaiKhachHang);
+                db.DangKyGoiTaps.Add(dangKyGoiTap);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(loaiKhachHang);
+            ViewBag.MaGoiTap = new SelectList(db.GoiTaps, "MaGoiTap", "TenGoi", dangKyGoiTap.MaGoiTap);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", dangKyGoiTap.MaKH);
+            return View(dangKyGoiTap);
         }
 
-        // GET: LoaiKhachHangs/Edit/5
+        // GET: DangKyGoiTaps/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiKhachHang loaiKhachHang = db.LoaiKhachHangs.Find(id);
-            if (loaiKhachHang == null)
+            DangKyGoiTap dangKyGoiTap = db.DangKyGoiTaps.Find(id);
+            if (dangKyGoiTap == null)
             {
                 return HttpNotFound();
             }
-            return View(loaiKhachHang);
+            ViewBag.MaGoiTap = new SelectList(db.GoiTaps, "MaGoiTap", "TenGoi", dangKyGoiTap.MaGoiTap);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", dangKyGoiTap.MaKH);
+            return View(dangKyGoiTap);
         }
 
-        // POST: LoaiKhachHangs/Edit/5
+        // POST: DangKyGoiTaps/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaLoaiKH,TenLoai,MucGiam")] LoaiKhachHang loaiKhachHang)
+        public ActionResult Edit([Bind(Include = "MaDKGT,MaKH,MaGoiTap,NgayDangKy,NgayBatDau,NgayKetThuc,TrangThai")] DangKyGoiTap dangKyGoiTap)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(loaiKhachHang).State = EntityState.Modified;
+                db.Entry(dangKyGoiTap).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(loaiKhachHang);
+            ViewBag.MaGoiTap = new SelectList(db.GoiTaps, "MaGoiTap", "TenGoi", dangKyGoiTap.MaGoiTap);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", dangKyGoiTap.MaKH);
+            return View(dangKyGoiTap);
         }
 
-        // GET: LoaiKhachHangs/Delete/5
+        // GET: DangKyGoiTaps/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiKhachHang loaiKhachHang = db.LoaiKhachHangs.Find(id);
-            if (loaiKhachHang == null)
+            DangKyGoiTap dangKyGoiTap = db.DangKyGoiTaps.Find(id);
+            if (dangKyGoiTap == null)
             {
                 return HttpNotFound();
             }
-            return View(loaiKhachHang);
+            return View(dangKyGoiTap);
         }
 
-        // POST: LoaiKhachHangs/Delete/5
+        // POST: DangKyGoiTaps/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LoaiKhachHang loaiKhachHang = db.LoaiKhachHangs.Find(id);
-            db.LoaiKhachHangs.Remove(loaiKhachHang);
+            DangKyGoiTap dangKyGoiTap = db.DangKyGoiTaps.Find(id);
+            db.DangKyGoiTaps.Remove(dangKyGoiTap);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

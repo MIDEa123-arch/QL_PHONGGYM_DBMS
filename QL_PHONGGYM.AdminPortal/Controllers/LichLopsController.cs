@@ -41,7 +41,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
         public ActionResult Create()
         {
             ViewBag.MaLop = new SelectList(db.LopHocs, "MaLop", "TenLop");
-            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "TenDangNhap");
+            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "TenNV");
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
             }
 
             ViewBag.MaLop = new SelectList(db.LopHocs, "MaLop", "TenLop", lichLop.MaLop);
-            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "TenDangNhap", lichLop.MaNV);
+            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "TenNV", lichLop.MaNV);
             return View(lichLop);
         }
 
@@ -77,10 +77,10 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
                 return HttpNotFound();
             }
             ViewBag.MaLop = new SelectList(db.LopHocs, "MaLop", "TenLop", lichLop.MaLop);
-            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "TenDangNhap", lichLop.MaNV);
+            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "TenNV", lichLop.MaNV);
             return View(lichLop);
         }
-
+            
         // POST: LichLops/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -95,7 +95,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MaLop = new SelectList(db.LopHocs, "MaLop", "TenLop", lichLop.MaLop);
-            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "TenDangNhap", lichLop.MaNV);
+            ViewBag.MaNV = new SelectList(db.NhanViens, "MaNV", "TenNV", lichLop.MaNV);
             return View(lichLop);
         }
 

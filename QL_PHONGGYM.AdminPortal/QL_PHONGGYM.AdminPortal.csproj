@@ -131,6 +131,10 @@
     <Compile Include="Controllers\CheckInsController.cs" />
     <Compile Include="Controllers\ChucVusController.cs" />
     <Compile Include="Controllers\ChuyenMonsController.cs" />
+    <Compile Include="Controllers\DangKyDichVuController.cs" />
+    <Compile Include="Controllers\DangKyGoiTapsController.cs" />
+    <Compile Include="Controllers\DangKyLopsController.cs" />
+    <Compile Include="Controllers\DangKyPTsController.cs" />
     <Compile Include="Controllers\GoiTapsController.cs" />
     <Compile Include="Controllers\HINHANHsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -141,6 +145,7 @@
     <Compile Include="Controllers\LoaiSanPhamsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LopHocsController.cs" />
+    <Compile Include="Controllers\NhanVienChuyenMonsController.cs" />
     <Compile Include="Controllers\NhanViensController.cs" />
     <Compile Include="Controllers\SanPhamsController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
@@ -163,6 +168,7 @@
     <Compile Include="Models\LopHoc.cs" />
     <Compile Include="Models\NhanVien.cs" />
     <Compile Include="Models\NhanVienChuyenMon.cs" />
+    <Compile Include="Models\NhanVienEditViewModel.cs" />
     <Compile Include="Models\SanPham.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -453,6 +459,27 @@
     <Content Include="Views\LichTapPTs\Details.cshtml" />
     <Content Include="Views\LichTapPTs\Edit.cshtml" />
     <Content Include="Views\LichTapPTs\Index.cshtml" />
+    <Content Include="Views\DangKyDichVu\Index.cshtml" />
+    <Content Include="Views\DangKyGoiTaps\Create.cshtml" />
+    <Content Include="Views\DangKyGoiTaps\Delete.cshtml" />
+    <Content Include="Views\DangKyGoiTaps\Details.cshtml" />
+    <Content Include="Views\DangKyGoiTaps\Edit.cshtml" />
+    <Content Include="Views\DangKyGoiTaps\Index.cshtml" />
+    <Content Include="Views\DangKyLops\Create.cshtml" />
+    <Content Include="Views\DangKyLops\Delete.cshtml" />
+    <Content Include="Views\DangKyLops\Details.cshtml" />
+    <Content Include="Views\DangKyLops\Edit.cshtml" />
+    <Content Include="Views\DangKyLops\Index.cshtml" />
+    <Content Include="Views\DangKyPTs\Create.cshtml" />
+    <Content Include="Views\DangKyPTs\Delete.cshtml" />
+    <Content Include="Views\DangKyPTs\Details.cshtml" />
+    <Content Include="Views\DangKyPTs\Edit.cshtml" />
+    <Content Include="Views\DangKyPTs\Index.cshtml" />
+    <Content Include="Views\NhanVienChuyenMons\Create.cshtml" />
+    <Content Include="Views\NhanVienChuyenMons\Delete.cshtml" />
+    <Content Include="Views\NhanVienChuyenMons\Details.cshtml" />
+    <Content Include="Views\NhanVienChuyenMons\Edit.cshtml" />
+    <Content Include="Views\NhanVienChuyenMons\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -59,7 +59,7 @@
                             Check-in tự động
                         </a>
                         <a href="@Url.Action("Index", "CheckIns")" class="nav-subitem">
-                           Check-in thủ công
+                            Check-in thủ công
                         </a>
 
                     </div>
@@ -77,10 +77,10 @@
                     </div>
                     <div class="nav-submenu">
                         <a href="@Url.Action("Index", "CheckIn")" class="nav-subitem">
-                             Check-in tự động
+                            Check-in tự động
                         </a>
                         <a href="@Url.Action("Index1", "CheckIns")" class="nav-subitem">
-                             Check-in thủ công
+                            Check-in thủ công
                         </a>
 
                     </div>
@@ -163,8 +163,28 @@
                             Quản lý lịch PT
                         </a>
                     }
-                    <a href="@Url.Action("RegisterService", "Service")" class="nav-subitem">
+                    <a href="@Url.Action("Index", "DangKyDichVu")" class="nav-subitem">
                         Đăng ký dịch vụ
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-item nav-toggle" onclick="toggleSubmenu(this)">
+                    <div class="nav-item-content">
+                        <i data-lucide="user-round-cog"></i> <span>Quản lý dịch vụ</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                </div>
+                <div class="nav-submenu">
+                    <a href="@Url.Action("Index", "DangKyPTs")" class="nav-subitem">
+                        Quản lý đăng ký PT
+                    </a>
+                    <a href="@Url.Action("Index", "DangKyLops")" class="nav-subitem">
+                        Quản lý đăng ký lớp học
+                    </a>
+                    <a href="@Url.Action("Index", "DangKyGoiTaps")" class="nav-subitem">
+                        Quản lý đăng ký gói tập
                     </a>
                 </div>
             </div>
@@ -210,6 +230,8 @@
                     </div>
                 }
             </div>
+
+
 
             <!-- Bán hàng (Tất cả đều thấy) -->
             <div class="nav-group">
@@ -311,6 +333,9 @@
                         </a>
                         <a href="@Url.Action("Index", "ChuyenMons")" class="nav-subitem">
                             Chuyên môn
+                        </a>
+                        <a href="@Url.Action("Index", "NhanVienChuyenMons")" class="nav-subitem">
+                            Nhân viên chuyên môn
                         </a>
                     </div>
                 </div>

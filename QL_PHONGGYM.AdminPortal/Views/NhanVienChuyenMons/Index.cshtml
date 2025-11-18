@@ -1,6 +1,6 @@
-﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.NhanVien>
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.NhanVienChuyenMon>
 @{
-    ViewBag.Title = "Quản Lý Nhân Viên";
+    ViewBag.Title = "Gán Chuyên Môn Cho Nhân Viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,9 +21,15 @@
 
     .page-header h2 {
         color: white;
-        margin: 0;
+        margin: 0 0 10px 0;
         font-weight: 500;
         font-size: 26px;
+    }
+
+    .page-header p {
+        color: rgba(255,255,255,0.9);
+        margin: 0;
+        font-size: 14px;
     }
 
     .btn-create {
@@ -55,6 +61,7 @@
     .table-custom {
         width: 100%;
         margin: 0;
+        border-collapse: collapse;
     }
 
     .table-custom thead {
@@ -84,6 +91,15 @@
         padding: 15px;
         vertical-align: middle;
         font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .table-custom tbody td:first-child {
+        font-weight: 600;
+    }
+
+    .table-custom tbody td:last-child {
+        white-space: normal;
     }
 
     .action-links a {
@@ -124,24 +140,11 @@
         background: #da190b;
     }
 
-    .gender-badge {
-        padding: 5px 12px;
-        border-radius: 15px;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    .gender-male {
-        background: #e3f2fd;
-        color: #1976d2;
-    }
-
-    .gender-female {
-        background: #fce4ec;
-        color: #c2185b;
-    }
-
     @@media (max-width: 768px) {
+        .container-custom {
+            padding: 20px;
+        }
+
         .table-container {
             padding: 15px;
         }
@@ -158,25 +161,24 @@
 
 <div class="container-custom">
     <div class="page-header">
-        <h2>👥 Quản Lý Nhân Viên</h2>
+        <h2>🎯 Quản Lý Gán Chuyên Môn</h2>
+        <p>Đây là danh sách các chuyên môn đã được gán cho nhân viên.</p>
     </div>
 
-    <div style="margin-bottom: 20px;">
-        @Html.ActionLink("➕ Thêm Nhân Viên Mới", "Create", null, new { @class = "btn-create" })
-    </div>
+    <p style="margin-bottom: 20px;">
+        @Html.ActionLink("➕ Gán Chuyên Môn Mới", "Create", null, new { @class = "btn-create" })
+    </p>
 
     <div class="table-container">
         <table class="table-custom">
             <thead>
                 <tr>
-                    <th>Mã Nhân Viên</th>
-                    <th>Tên Nhân Viên</th>
-                    <th>Chức Vụ</th>
-                    <th>Giới Tính</th>
-                    <th>Số Điện Thoại</th>
-                    <th>Ngày Sinh</th>
-                    <th>Tên Đăng Nhập</th>
-                    <th>Mật Khẩu</th>
+                    <th>
+                        Tên Nhân Viên
+                    </th>
+                    <th>
+                        Tên Chuyên Môn
+                    </th>
                     <th>Thao Tác</th>
                 </tr>
             </thead>
@@ -184,25 +186,16 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td style="text-align:center">@item.MaNV</td>
-                        <td><strong>@item.TenNV</strong></td>
-                        <td>@item.ChucVu.TenChucVu</td>
                         <td>
-                            @if (item.GioiTinh != null)
-                            {
-                                <span class="gender-badge @(item.GioiTinh.ToLower() == "nam" ? "gender-male" : "gender-female")">
-                                    @item.GioiTinh
-                                </span>
-                            }
+                            @Html.DisplayFor(modelItem => item.NhanVien.TenNV)
                         </td>
-                        <td>@item.SDT</td>
-                        <td>@(item.NgaySinh.HasValue ? item.NgaySinh.Value.ToString("dd/MM/yyyy") : "")</td>
-                        <td>@item.TenDangNhap</td>
-                        <td>@item.MatKhau</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChuyenMon.TenChuyenMon)
+                        </td>
                         <td class="action-links">
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.MaNV }, new { @class = "btn-edit" })
-                            @Html.ActionLink("Chi tiết", "Details", new { id = item.MaNV }, new { @class = "btn-details" })
-                            @Html.ActionLink("Xóa", "Delete", new { id = item.MaNV }, new { @class = "btn-delete" })
+                            @Html.ActionLink("Sửa", "Edit", new { MaNV = item.MaNV, MaCM = item.MaCM }, new { @class = "btn-edit" })
+                            @Html.ActionLink("Chi tiết", "Details", new { MaNV = item.MaNV, MaCM = item.MaCM }, new { @class = "btn-details" })
+                            @Html.ActionLink("Xóa", "Delete", new { MaNV = item.MaNV, MaCM = item.MaCM }, new { @class = "btn-delete" })
                         </td>
                     </tr>
                 }

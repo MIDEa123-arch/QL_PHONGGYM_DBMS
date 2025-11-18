@@ -11,48 +11,40 @@ namespace QL_PHONGGYM.AdminPortal.Data
         {
         }
 
-        // Khai báo cho DbContext biết về Model/Bảng KhachHang
-        // Tên "KhachHangs" sẽ được EF tự động ánh xạ (map) 
-        // tới bảng "KhachHang" mà chúng ta định nghĩa trong Model
-        public DbSet<KhachHang> KhachHang { get; set; }
+        // === PHẦN KHÁCH HÀNG ===
+        public DbSet<KhachHang> KhachHangs { get; set; }
+        public DbSet<LoaiKhachHang> LoaiKhachHangs { get; set; }
+        public DbSet<CheckIn> CheckIns { get; set; }
+        // public DbSet<DiaChi> DiaChis { get; set; } // (Chúng ta chưa tạo Model cho bảng này)
 
-        // Thêm các DbSet khác cho các bảng khác (NhanVien, GoiTap...) ở đây
-        // Ví dụ:
-        // public DbSet<NhanVien> NhanViens { get; set; }
-        // public DbSet<GoiTap> GoiTaps { get; set; }
-
-        public DbSet<LoaiKhachHang> LoaiKhachHang { get; set; }
-
-        public DbSet<SanPham> SanPhams { get; set; }
-        public DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
-        public DbSet<HINHANH> HINHANHs { get; set; }
+        // === PHẦN NHÂN VIÊN ===
         public DbSet<NhanVien> NhanViens { get; set; }
         public DbSet<ChucVu> ChucVus { get; set; }
         public DbSet<ChuyenMon> ChuyenMons { get; set; }
         public DbSet<NhanVienChuyenMon> NhanVienChuyenMons { get; set; }
 
-        public DbSet<CheckIn> CheckIns { get; set; }
+        // === PHẦN SẢN PHẨM ===
+        public DbSet<SanPham> SanPhams { get; set; }
+        public DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
+        public DbSet<HINHANH> HINHANHs { get; set; }
+
+        // === PHẦN DỊCH VỤ - GÓI TẬP ===
         public DbSet<GoiTap> GoiTaps { get; set; }
+        public DbSet<DangKyGoiTap> DangKyGoiTaps { get; set; }
 
-
-        // Cấu hình nâng cao (cho Khóa chính phức tạp)
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            // Cấu hình Khóa chính TỔ HỢP (Composite Key) cho bảng NhanVienChuyenMon
-            // (Bảng này có 2 khóa chính là MaNV và MaCM)
-            modelBuilder.Entity<NhanVienChuyenMon>()
-                .HasKey(nvc => new { nvc.MaNV, nvc.MaCM });
-
-            // (Bạn có thể thêm các cấu hình Fluent API khác ở đây nếu cần)
-
-            base.OnModelCreating(modelBuilder);
-        } 
+        // === PHẦN DỊCH VỤ - LỚP HỌC ===
         public DbSet<LopHoc> LopHocs { get; set; }
         public DbSet<DangKyLop> DangKyLops { get; set; }
         public DbSet<LichLop> LichLops { get; set; }
 
-        
-         public DbSet<LichTapPT> LichTapPTs { get; set; }
-         public DbSet<DangKyPT> DangKyPTs { get; set; }
+        // === PHẦN DỊCH VỤ - PT ===
+        public DbSet<DangKyPT> DangKyPTs { get; set; }
+        public DbSet<LichTapPT> LichTapPTs { get; set; }
+
+        // === CÁC BẢNG KHÁC (Hóa Đơn, Giỏ Hàng...) ===
+        // (Chúng ta sẽ thêm sau khi tạo Model cho chúng)
+        // public DbSet<HoaDon> HoaDons { get; set; }
+        // public DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
+        // public DbSet<ChiTietGioHang> ChiTietGioHangs { get; set; }
     }
 }

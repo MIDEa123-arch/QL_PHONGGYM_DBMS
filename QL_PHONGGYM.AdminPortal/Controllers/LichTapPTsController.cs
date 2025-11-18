@@ -11,6 +11,7 @@ using QL_PHONGGYM.AdminPortal.Models;
 
 namespace QL_PHONGGYM.AdminPortal.Controllers
 {
+   // [Authorize(Roles = "ManagerRole")]
     public class LichTapPTsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -18,7 +19,14 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
         // GET: LichTapPTs
         public ActionResult Index()
         {
-            var lichTapPTs = db.LichTapPTs.Include(l => l.DangKyPT);
+            // ================================================================
+            // == ĐÃ SỬA: Lấy thêm thông tin Nhân Viên (PT) và Khách Hàng ==
+            // ================================================================
+            var lichTapPTs = db.LichTapPTs
+                .Include(l => l.DangKyPT) // Lấy thông tin gói đăng ký
+                .Include(l => l.DangKyPT.NhanVien) // Lấy tên PT (từ gói đăng ký)
+                .Include(l => l.DangKyPT.KhachHang); // Lấy tên Khách (từ gói đăng ký)
+
             return View(lichTapPTs.ToList());
         }
 
@@ -29,7 +37,12 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LichTapPT lichTapPT = db.LichTapPTs.Find(id);
+            // Thêm Include để hiển thị chi tiết đầy đủ
+            LichTapPT lichTapPT = db.LichTapPTs
+                .Include(l => l.DangKyPT.NhanVien)
+                .Include(l => l.DangKyPT.KhachHang)
+                .SingleOrDefault(l => l.MaLichPT == id);
+
             if (lichTapPT == null)
             {
                 return HttpNotFound();
@@ -40,13 +53,21 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
         // GET: LichTapPTs/Create
         public ActionResult Create()
         {
-            ViewBag.MaDKPT = new SelectList(db.DangKyPTs, "MaDKPT", "TrangThai");
+            // Dropdown chỉ cần hiện Mã Đăng Ký (hoặc tên Khách để dễ chọn)
+            // Ở đây tôi nối chuỗi để hiện: "Mã DK - Tên Khách (PT: Tên PT)" cho dễ chọn
+            var danhSachDangKy = db.DangKyPTs
+                .Where(d => d.TrangThai == "Còn hiệu lực" || d.TrangThai == "Chờ duyệt")
+                .Select(d => new
+                {
+                    MaDKPT = d.MaDKPT,
+                    ThongTin = "Mã: " + d.MaDKPT + " - KH: " + d.KhachHang.TenKH + " (PT: " + d.NhanVien.TenNV + ")"
+                }).ToList();
+
+            ViewBag.MaDKPT = new SelectList(danhSachDangKy, "MaDKPT", "ThongTin");
             return View();
         }
 
         // POST: LichTapPTs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MaLichPT,MaDKPT,NgayTap,GioBatDau,GioKetThuc,TrangThai")] LichTapPT lichTapPT)
@@ -58,7 +79,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaDKPT = new SelectList(db.DangKyPTs, "MaDKPT", "TrangThai", lichTapPT.MaDKPT);
+            ViewBag.MaDKPT = new SelectList(db.DangKyPTs, "MaDKPT", "MaDKPT", lichTapPT.MaDKPT);
             return View(lichTapPT);
         }
 
@@ -74,13 +95,19 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MaDKPT = new SelectList(db.DangKyPTs, "MaDKPT", "TrangThai", lichTapPT.MaDKPT);
+
+            // Tương tự như Create, hiển thị thông tin rõ ràng
+            var danhSachDangKy = db.DangKyPTs.Select(d => new
+            {
+                MaDKPT = d.MaDKPT,
+                ThongTin = "Mã: " + d.MaDKPT + " - KH: " + d.KhachHang.TenKH + " (PT: " + d.NhanVien.TenNV + ")"
+            }).ToList();
+
+            ViewBag.MaDKPT = new SelectList(danhSachDangKy, "MaDKPT", "ThongTin", lichTapPT.MaDKPT);
             return View(lichTapPT);
         }
 
         // POST: LichTapPTs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MaLichPT,MaDKPT,NgayTap,GioBatDau,GioKetThuc,TrangThai")] LichTapPT lichTapPT)
@@ -91,7 +118,7 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaDKPT = new SelectList(db.DangKyPTs, "MaDKPT", "TrangThai", lichTapPT.MaDKPT);
+            ViewBag.MaDKPT = new SelectList(db.DangKyPTs, "MaDKPT", "MaDKPT", lichTapPT.MaDKPT);
             return View(lichTapPT);
         }
 
@@ -102,7 +129,11 @@ namespace QL_PHONGGYM.AdminPortal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LichTapPT lichTapPT = db.LichTapPTs.Find(id);
+            LichTapPT lichTapPT = db.LichTapPTs
+                .Include(l => l.DangKyPT.NhanVien)
+                .Include(l => l.DangKyPT.KhachHang)
+                .SingleOrDefault(l => l.MaLichPT == id);
+
             if (lichTapPT == null)
             {
                 return HttpNotFound();
