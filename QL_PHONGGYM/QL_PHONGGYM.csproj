@@ -216,6 +216,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
     <Compile Include="Repositories\CartRepository.cs" />
+    <Compile Include="Repositories\GoiTapRepository.cs" />
     <Compile Include="Repositories\KhachHangRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="ViewModel\GioHangViewModel.cs" />
@@ -245,6 +246,8 @@
     <Content Include="Content\Images\abe-preworkout-energy-2.jpg" />
     <Content Include="Content\Images\abe-preworkout-energy-3.jpg" />
     <Content Include="Content\Images\abe-preworkout-facts-4.jpg" />
+    <Content Include="Content\Images\AdobeStock_725186100.jpeg" />
+    <Content Include="Content\Images\AdobeStock_728899813.jpeg" />
     <Content Include="Content\Images\Aerobics.jpg" />
     <Content Include="Content\Images\ao-balo-nam-trang-1.jpg" />
     <Content Include="Content\Images\ao-balo-nam-trang-2.jpg" />
@@ -583,11 +586,14 @@
     <Content Include="Views\CartCheckout\ThanhToanfinal.cshtml" />
     <Content Include="Views\CartCheckout\ThanhToanThanhCong.cshtml" />
     <Content Include="Views\Product\Product.cshtml" />
+    <Content Include="Views\GoiTap\CheckoutGoiTap.cshtml" />
+    <Content Include="Views\GoiTap\GoiTap.cshtml" />
+    <Content Include="Views\Shared\_LayoutGoiTap.cshtml" />
+    <Content Include="Views\GoiTap\DangKyPT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Services\" />
-    <Folder Include="Views\GoiTap\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

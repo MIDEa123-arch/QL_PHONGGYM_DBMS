@@ -21,40 +21,129 @@ namespace QL_PHONGGYM.Repositories
             _context = context;
         }
 
-        public void TaoHoaDon(FormCollection form, int makh, List<GioHangViewModel> cart)
+        public bool DangKyPT(FormCollection form, int makh)
         {
+            try
+            { 
+                DangKyPT dangKy = new DangKyPT
+                {
+                    MaKH = makh,
+                    SoBuoi = Convert.ToInt32(form["soBuoi"]),
+                    NgayDangKy = DateTime.Now,
+                    TrangThai = "Chờ duyệt",
+                    GhiChu = form["ghiChu"]
+                };
+                _context.DangKyPT.Add(dangKy);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public bool KiemTraTrung(int makh)
+        {
+            var goiHienTai = _context.DangKyGoiTap
+                         .Where(x => x.MaKH == makh && x.TrangThai == "Còn hiệu lực")
+                         .OrderByDescending(x => x.NgayKetThuc)
+                         .FirstOrDefault();
+            if (goiHienTai == null)
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+
+        public void TaoHoaDon(FormCollection form, int makh, List<GioHangViewModel> cart = null, int? maGoiTap = null)
+        {            
             HoaDon hoaDon = new HoaDon
             {
                 MaKH = makh,
                 TongTien = Convert.ToDecimal(form["tongTien"]),
                 ThanhTien = Convert.ToDecimal(form["thanhTien"]),
                 TrangThai = form["paymentMethod"] == "BANK" ? "Đã thanh toán" : "Chưa thanh toán",
-                GiamGia = Convert.ToDecimal(form["giamGia"]),
+                GiamGia = form["giamGia"] != null ? Convert.ToDecimal(form["giamGia"]) : 0,
                 NgayLap = DateTime.Now,
             };
-
             _context.HoaDon.Add(hoaDon);
             _context.SaveChanges();
 
-            foreach (var item in cart)
+            if (cart != null && cart.Count > 0)
             {
-                if (item.MaSP != null)
+                foreach (var item in cart)
                 {
-                    var DonGia = item.GiaKhuyenMaiSP ?? item.DonGia;
-                    ChiTietHoaDon ct = new ChiTietHoaDon
+                    if (item.MaSP != null)
+                    {
+                        var DonGia = item.GiaKhuyenMaiSP ?? item.DonGia;
+                        ChiTietHoaDon ct = new ChiTietHoaDon
+                        {
+                            MaHD = hoaDon.MaHD,
+                            MaSP = item.MaSP,
+                            MaDKGT = null,
+                            MaDKLop = null,
+                            MaDKPT = null,
+                            SoLuong = item.SoLuong ?? 1,
+                            DonGia = DonGia
+                        };
+                        _context.ChiTietHoaDon.Add(ct);
+
+                        var list = _context.ChiTietGioHang.Where(sp => sp.MaSP == item.MaSP && sp.MaKH == makh);
+                        _context.ChiTietGioHang.RemoveRange(list);
+                        
+                    }
+                }
+            }
+
+            if (maGoiTap.HasValue)
+            {
+                var goiTap = _context.GoiTap.FirstOrDefault(gt => gt.MaGoiTap == maGoiTap);
+                if (goiTap != null)
+                {                    
+                    var goiHienTai = _context.DangKyGoiTap
+                        .Where(x => x.MaKH == makh && x.TrangThai == "Còn hiệu lực")
+                        .OrderByDescending(x => x.NgayKetThuc)
+                        .FirstOrDefault();
+
+                    DangKyGoiTap dangKy;
+
+                    if (goiHienTai != null)
+                    {                        
+                        goiHienTai.NgayKetThuc = goiHienTai.NgayKetThuc.AddMonths(goiTap.ThoiHan);
+                        _context.SaveChanges();
+                        dangKy = goiHienTai;
+                    }
+                    else
+                    {                        
+                        dangKy = new DangKyGoiTap
+                        {
+                            MaKH = makh,
+                            MaGoiTap = goiTap.MaGoiTap,
+                            NgayDangKy = DateTime.Now,
+                            NgayBatDau = DateTime.Now,
+                            NgayKetThuc = DateTime.Now.AddMonths(goiTap.ThoiHan),
+                            TrangThai = "Còn hiệu lực"
+                        };
+                        _context.DangKyGoiTap.Add(dangKy);
+                        _context.SaveChanges();
+                    }
+                    
+                    ChiTietHoaDon ctGoiTap = new ChiTietHoaDon
                     {
                         MaHD = hoaDon.MaHD,
-                        MaSP = item.MaSP,
-                        MaDKGT = null,
+                        MaSP = null,
+                        MaDKGT = dangKy.MaDKGT,
                         MaDKLop = null,
                         MaDKPT = null,
-                        SoLuong = item.SoLuong ?? 1,
-                        DonGia = DonGia                       
+                        SoLuong = 1,
+                        DonGia = goiTap.Gia
                     };
-                    _context.ChiTietHoaDon.Add(ct);
-                    XoaDon(item.MaSP.Value, makh);
-                }                             
+                    _context.ChiTietHoaDon.Add(ctGoiTap);
+                }
             }
+
             _context.SaveChanges();
         }
         public void Xoa(int id)

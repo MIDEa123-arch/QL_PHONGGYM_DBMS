@@ -67,11 +67,12 @@
           </Key>
           <Property Name="MaDKPT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaKH" Type="int" Nullable="false" />
-          <Property Name="MaNV" Type="int" Nullable="false" />
+          <Property Name="MaNV" Type="int" />
           <Property Name="SoBuoi" Type="int" Nullable="false" />
           <Property Name="GiaMoiBuoi" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="NgayDangKy" Type="date" Nullable="false" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="20" />
+          <Property Name="GhiChu" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="DiaChi">
           <Key>
@@ -715,7 +716,7 @@
           </Key>
           <Property Name="MaDKPT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaKH" Type="Int32" Nullable="false" />
-          <Property Name="MaNV" Type="Int32" Nullable="false" />
+          <Property Name="MaNV" Type="Int32" />
           <Property Name="SoBuoi" Type="Int32" Nullable="false" />
           <Property Name="GiaMoiBuoi" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="NgayDangKy" Type="DateTime" Nullable="false" Precision="0" />
@@ -723,6 +724,7 @@
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_DKPT_KH" FromRole="DangKyPT" ToRole="KhachHang" />
           <NavigationProperty Name="LichTapPT" Relationship="Self.FK_LichPT_DKPT" FromRole="DangKyPT" ToRole="LichTapPT" />
           <NavigationProperty Name="ChiTietHoaDon" Relationship="QL_PHONGGYMModel.FK_CT_HD_DKPT" FromRole="DangKyPT" ToRole="ChiTietHoaDon" />
+          <Property Name="GhiChu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DiaChi">
           <Key>
@@ -1431,6 +1433,7 @@
           <EntitySetMapping Name="DangKyPT">
             <EntityTypeMapping TypeName="QL_PHONGGYMModel.DangKyPT">
               <MappingFragment StoreEntitySet="DangKyPT">
+                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
                 <ScalarProperty Name="MaDKPT" ColumnName="MaDKPT" />
                 <ScalarProperty Name="MaKH" ColumnName="MaKH" />
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
@@ -1666,7 +1669,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

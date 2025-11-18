@@ -23,11 +23,12 @@ namespace QL_PHONGGYM.Models
     
         public int MaDKPT { get; set; }
         public int MaKH { get; set; }
-        public int MaNV { get; set; }
+        public Nullable<int> MaNV { get; set; }
         public int SoBuoi { get; set; }
         public decimal GiaMoiBuoi { get; set; }
         public System.DateTime NgayDangKy { get; set; }
         public string TrangThai { get; set; }
+        public string GhiChu { get; set; }
     
         public virtual KhachHang KhachHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

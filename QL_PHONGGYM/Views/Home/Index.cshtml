@@ -13,7 +13,6 @@
     .extended-card:hover img {
         filter: brightness(100%) !important;
     }
-
 </style>
 <div class="w-100 py-5" style="background-color: #c5eff7; border-top: 2px solid #5eb1ec">
     <div class="d-flex flex-column gap-2 text-center container mx-auto">
@@ -24,7 +23,7 @@
                 Cả hai đều cho bạn tham gia tập luyện không giới hạn trong không gian <strong>Không phán xét</strong>,
                 nơi mọi người cảm thấy luôn được chào đón và thuộc về từ khi bước vào.
             </span>
-            <a class="link-primary" href="">Xem chi tiết</a>
+            <a class="link-primary" href="@Url.Action("GoiTap", "GoiTap")">Xem chi tiết</a>
         </div>
     </div>
 
@@ -53,7 +52,20 @@
                      style="font-size: 15px; height: 100px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;">
                     @item.MoTa
                 </div>
-                <a class="w-50 mx-auto btn rounded-pill btn-outline-primary border-0 fw-bold mt-4 text-white btn-info" href="">Tham gia</a>
+                @if (Session["MaKH"] != null)
+                {
+                    <a class="w-50 mx-auto btn rounded-pill btn-outline-primary border-0 fw-bold mt-4 text-white btn-info"
+                       href="@Url.Action("CheckoutGoiTap", "GoiTap", new { id = item.MaGoiTap, url = Request.RawUrl })">
+                        Tham gia
+                    </a>
+                }
+                else
+                {
+                    <button class="w-50 mx-auto btn rounded-pill btn-outline-primary border-0 fw-bold mt-4 text-white btn-info"
+                            data-bs-toggle="modal" data-bs-target="#loginModal">
+                        Tham gia
+                    </button>
+                }
             </div>
         }
     </div>
@@ -329,6 +341,30 @@
     </div>
 </div>
 
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 w-75 mx-auto shadow-lg border-0 position-relative">
+            <div class="mt-3 border-0 text-center w-100">
+                <h5 class="modal-title fw-bold text-primary text-center" id="loginModalLabel">THE-GYM MEMBER</h5>
+            </div>
+            <img src="@Url.Content("~/Content/Images/Logo.png")" class="mx-auto" style="width: 5rem" />
+            <div class="modal-body text-center py-2">
+                <p class="mb-4 fw-semibold" style="font-size: 16px">
+                    Vui lòng đăng nhập tài khoản <strong>The GYM</strong> để xem ưu đãi và thanh toán dễ dàng hơn.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="@Url.Action("Login", "Account", new { returnUrl = Request.RawUrl })" class="btn btn-primary py-2 fw-semibold" style="width: 10rem">
+                        Đăng nhập
+                    </a>
+                    <a href="@Url.Action("Register", "Account", new { returnUrl = Request.RawUrl })" class="btn btn-outline-primary py-2 fw-semibold" style="width: 10rem">
+                        Đăng ký
+                    </a>
+                </div>
+            </div>
+            <button type="button" class="btn-close position-absolute mt-2" data-bs-dismiss="modal" style="right: 0.7rem" aria-label="Đóng"></button>
+        </div>
+    </div>
+</div>
 
 @Scripts.Render("~/bundles/jquery")
 <script>
